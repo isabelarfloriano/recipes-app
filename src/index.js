@@ -6,7 +6,6 @@ import * as serviceWorker from './serviceWorker';
 import Provider from './context/Provider';
 
 ReactDOM.render(
-
   <Provider>
     <App />
   </Provider>,
