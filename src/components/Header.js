@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchTopBTN from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 export default function Header() {
   const [title, setTitle] = useState('');
   const [hasSearchBtn, setHasSearchBtn] = useState(true);
+  const [hasSearchBar, setHasSearchBar] = useState(false);
   const history = useHistory();
   const { location: { pathname } } = history;
 
@@ -64,10 +66,11 @@ export default function Header() {
       && (
         <button
           type="button"
-          onClick={ () => console.log('teste search') }
+          onClick={ () => setHasSearchBar(!hasSearchBar) }
         >
           <img src={ searchTopBTN } alt="Search Icon" data-testid="search-top-btn" />
         </button>) }
+      { hasSearchBar && <SearchBar />}
     </header>
   );
 }
