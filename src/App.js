@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
@@ -18,13 +18,14 @@ import NationalitiesFoods from './pages/NationalitiesFoods';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
+import Provider from './context/Provider';
 
 function App() {
   return (
-    <BrowserRouter>
+    <Provider>
       <Switch>
         <Route exact path="/" component={ Login } />
-        <Route path="/foods" component={ Foods } />
+        <Route exact path="/foods" component={ Foods } />
         <Route path="/drinks" component={ Drinks } />
         <Route path="/foods/:id" component={ DetailsFoods } />
         <Route path="/drinks/:id" component={ DetailsDrinks } />
@@ -40,7 +41,7 @@ function App() {
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoritesRecipes } />
       </Switch>
-    </BrowserRouter>
+    </Provider>
   );
 }
 
