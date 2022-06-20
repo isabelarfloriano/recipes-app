@@ -1,18 +1,22 @@
 import React from 'react';
+import Navbar from 'react-bootstrap/Navbar';
+import drinkIcon from '../images/drinkIcon.svg';
+import exploreIcon from '../images/exploreIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 
 function Footer() {
   return (
-    <footer data-testid="footer">
-      <button type="button" data-testid="drinks-bottom-btn">
-        drinks
+    <Navbar data-testid="footer" fixed="bottom">
+      <button type="button">
+        <img src={ drinkIcon } alt="Drink Icon" data-testid="drinks-bottom-btn" />
       </button>
-      <button type="button" data-testid="explore-bottom-btn">
-        explore
+      <button type="button">
+        <img src={ exploreIcon } alt="Explore Icon" data-testid="explore-bottom-btn" />
       </button>
-      <button type="button" data-testid="food-bottom-btn">
-        food
+      <button type="button">
+        <img src={ mealIcon } alt="Food Icon" data-testid="food-bottom-btn" />
       </button>
-    </footer>
+    </Navbar>
   );
 }
 
