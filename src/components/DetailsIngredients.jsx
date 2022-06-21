@@ -1,15 +1,51 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import Context from '../context/Context';
 
 function DetailsIngredients() {
-  const index = 0;
+  const { recipeDetails } = useContext(Context);
+  const [ingredients, setIngredients] = useState({
+    usedIngredients: [],
+    ingredientQuantity: [],
+  });
+
+  const { usedIngredients, ingredientQuantity } = ingredients;
+
+  const setIngredientsInfo = (searchedStr) => {
+    const info = [];
+    Object.keys(recipeDetails).forEach((key) => {
+      if (key.includes(searchedStr) && recipeDetails[key]) {
+        info.push(recipeDetails[key]);
+      }
+    });
+    return info;
+  };
+
+  useEffect(() => {
+    const usedIngredientsInfo = setIngredientsInfo('strIngredient');
+    const ingredientQuantityInfo = setIngredientsInfo('strMeasure');
+
+    setIngredients({
+      usedIngredients: usedIngredientsInfo,
+      ingredientQuantity: ingredientQuantityInfo,
+    });
+  }, [recipeDetails]);
+
   return (
     <section>
       <h2>Ingredients</h2>
       <ul>
-        <li data-testid={ `${index}-ingredient-name-and-measure` }>1</li>
-        <li>1</li>
-        <li>1</li>
-        <li>1</li>
+        {usedIngredients.map((ingredient, index) => (
+          <li
+            key={ index }
+            data-testid="ingredient-name-and-measure"
+          >
+            {ingredient}
+            {' '}
+            -
+            {' '}
+            {ingredientQuantity[index]}
+          </li>
+        ))}
       </ul>
     </section>
   );
