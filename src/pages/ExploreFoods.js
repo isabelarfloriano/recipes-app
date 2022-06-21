@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
 import { fetchFood } from '../services/API';
+import Header from '../components/Header';
 
 const ExploreFoods = () => {
   const history = useHistory();
@@ -19,6 +20,7 @@ const ExploreFoods = () => {
 
   return (
     <div>
+    <Header />
       <button
         type="button"
         data-testid="explore-by-ingredient"
