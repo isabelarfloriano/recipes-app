@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
 import { fetchDrink } from '../services/API';
+import Header from '../components/Header';
 
 const ExploreDrinks = () => {
   const history = useHistory();
-
   const { setIsdisabledExplore } = useContext(Context);
 
   const handleClick = () => {
@@ -24,6 +24,7 @@ const ExploreDrinks = () => {
 
   return (
     <div>
+    <Header />
       <button
         type="button"
         data-testid="explore-by-ingredient"
