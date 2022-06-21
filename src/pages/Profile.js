@@ -18,7 +18,9 @@ const Profile = () => {
 
   return (
     <>
+
       <Header />
+
       <p data-testid="profile-email">{getEmail}</p>
 
       <button

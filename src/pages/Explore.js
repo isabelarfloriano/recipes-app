@@ -8,7 +8,9 @@ const Explore = () => {
 
   return (
     <div>
+
       <Header />
+
       <button
         type="button"
         data-testid="explore-foods"

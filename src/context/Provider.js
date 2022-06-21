@@ -10,6 +10,7 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState({ email: '', password: '' });
   console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
+  const [isdisabledExplore, setIsdisabledExplore] = useState(false);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -47,6 +48,8 @@ const Provider = ({ children }) => {
     handleChange,
     isdisabled,
     handleClick,
+    setIsdisabledExplore,
+    isdisabledExplore,
   };
 
   return (
