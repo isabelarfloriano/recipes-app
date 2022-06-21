@@ -1,26 +1,60 @@
-import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import FormInput from './FormInput';
-import fetchAPI from '../services/API';
 
 export default function SearchBar() {
   const [searchData, setSearchData] = useState({
     searchValue: '',
     searchRadio: '',
   });
-  const { pathname } = useLocation();
+  const [data, setData] = useState([]);
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
-  const switchSearchAPIUrl = (radioType, inputSearch, baseUrl) => {
+  useEffect(() => {
+    console.log('foods api', data);
+    console.log(data.length);
+    switch (pathname) {
+    case '/foods':
+      if (data.length === 1) {
+        history.push(`/foods/${data[0].idMeal}`);
+      }
+      break;
+    case '/drinks':
+      if (data.length === 1) {
+        history.push(`/drinks/${data[0].idDrink}`);
+      }
+      break;
+    default:
+      break;
+    }
+  }, [data, history, pathname]);
+
+  const fetchAPI = async (URL) => {
+    try {
+      const response = await fetch(URL);
+      const dataAPI = await response.json();
+      if (pathname === '/foods') {
+        setData(dataAPI.meals);
+      } else {
+        setData(dataAPI.drinks);
+      }
+    } catch (error) {
+      global.alert(error.message);
+    }
+  };
+
+  const switchSearchAPIUrl = async (radioType, inputSearch, baseUrl) => {
     switch (radioType) {
     case 'Ingredient':
-      fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${inputSearch}`);
       break;
     case 'Name':
-      fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${inputSearch}`);
       break;
     case 'First Letter':
       if (inputSearch.length <= 1) {
-        fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
         break;
       } else {
         global.alert('Your search must have only 1 (one) character');
@@ -39,13 +73,18 @@ export default function SearchBar() {
     ),
   ));
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const { searchValue, searchRadio } = searchData;
-    if (pathname === '/foods') {
-      switchSearchAPIUrl(searchRadio, searchValue, 'themealdb');
-    } else {
-      switchSearchAPIUrl(searchRadio, searchValue, 'thecocktaildb');
+    switch (pathname) {
+    case '/foods':
+      await switchSearchAPIUrl(searchRadio, searchValue, 'themealdb');
+      break;
+    case '/drinks':
+      await switchSearchAPIUrl(searchRadio, searchValue, 'thecocktaildb');
+      break;
+    default:
+      break;
     }
   };
 
