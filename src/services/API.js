@@ -1,8 +1,12 @@
 const fetchAPI = async (URL) => {
-  const response = await fetch(URL);
-  console.log(URL);
-  const data = await response.json();
-  console.log(await data);
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    global.alert(error.message);
+  }
 };
 
 export default fetchAPI;

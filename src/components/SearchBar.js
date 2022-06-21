@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import FormInput from './FormInput';
 import fetchAPI from '../services/API';
 
@@ -7,18 +8,19 @@ export default function SearchBar() {
     searchValue: '',
     searchRadio: '',
   });
+  const { pathname } = useLocation();
 
-  const switchSearchAPIUrl = (radioType, inputSearch) => {
+  const switchSearchAPIUrl = (radioType, inputSearch, baseUrl) => {
     switch (radioType) {
     case 'Ingredient':
-      fetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+      fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${inputSearch}`);
       break;
     case 'Name':
-      fetchAPI(`https://www.themealdb.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${inputSearch}`);
       break;
     case 'First Letter':
       if (inputSearch.length <= 1) {
-        fetchAPI(`https://www.themealdb.com/api/json/v1/1/search.php?f=${inputSearch}`);
+        fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
         break;
       } else {
         global.alert('Your search must have only 1 (one) character');
@@ -40,8 +42,11 @@ export default function SearchBar() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { searchValue, searchRadio } = searchData;
-    switchSearchAPIUrl(searchRadio, searchValue);
-    console.log('value', searchRadio);
+    if (pathname === '/foods') {
+      switchSearchAPIUrl(searchRadio, searchValue, 'themealdb');
+    } else {
+      switchSearchAPIUrl(searchRadio, searchValue, 'thecocktaildb');
+    }
   };
 
   return (
