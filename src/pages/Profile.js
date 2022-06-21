@@ -8,7 +8,7 @@ const Profile = () => {
   const getEmail = getUser('user').email;
   console.log(getEmail);
 
-  // Requisitos 82  ao 87
+  // Requisitos 82 ao 87
   const handleClick = () => {
     console.log('works');
     localStorage.clear();
