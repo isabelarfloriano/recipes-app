@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Context from '../context/Context';
+import { fetchDrink } from '../services/API';
 
 const ExploreDrinks = () => {
   const history = useHistory();
@@ -11,8 +12,14 @@ const ExploreDrinks = () => {
   const handleClick = () => {
     console.log('works');
     history.push('/explore/drinks/ingredients');
-
     setIsdisabledExplore(true);
+  };
+
+  const handleRandomDrink = async () => {
+    const response = await fetchDrink();
+    console.log(response.length);
+    console.log(response);
+    history.push(`/drinks/${response[0].idDrink}`);
   };
 
   return (
@@ -28,7 +35,7 @@ const ExploreDrinks = () => {
       <button
         type="button"
         data-testid="explore-surprise"
-        onClick={ () => { history.push('/explore/foods/nationalities'); } }
+        onClick={ handleRandomDrink }
       >
         Surprise me!
       </button>
