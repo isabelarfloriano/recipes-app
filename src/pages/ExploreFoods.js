@@ -11,10 +11,10 @@ const ExploreFoods = () => {
   console.log(isdisabledExplore);
 
   const handleRandomFood = async () => {
-    const response = await fetchFood();
-    console.log(response.length);
-    console.log(response);
-    history.push(`/foods/${response[0].idMeal}`);
+    const data = await fetchFood();
+    console.log(data.length);
+    console.log(data);
+    history.push(`/foods/${data[0].idMeal}`);
   };
 
   return (

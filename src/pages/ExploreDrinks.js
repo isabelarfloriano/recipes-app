@@ -16,10 +16,10 @@ const ExploreDrinks = () => {
   };
 
   const handleRandomDrink = async () => {
-    const response = await fetchDrink();
-    console.log(response.length);
-    console.log(response);
-    history.push(`/drinks/${response[0].idDrink}`);
+    const data = await fetchDrink();
+    console.log(data.length);
+    console.log(data);
+    history.push(`/drinks/${data[0].idDrink}`);
   };
 
   return (
