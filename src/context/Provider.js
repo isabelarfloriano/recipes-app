@@ -8,7 +8,6 @@ const Provider = ({ children }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({ email: '', password: '' });
-  console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
 
   // Requisitos 2 a 8
@@ -36,7 +35,6 @@ const Provider = ({ children }) => {
   }, [user]);
 
   const handleClick = () => {
-    console.log('works');
     setUserLogin({ email: user.email });
     setMealsToken(1);
     setCocktailsToken(1);

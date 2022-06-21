@@ -10,6 +10,7 @@ function FormInput(props) {
     value,
     placeholder: placeHolderText,
     onChange,
+    onClick,
   } = props;
 
   return (
@@ -22,6 +23,7 @@ function FormInput(props) {
         placeholder={ placeHolderText }
         value={ value }
         onChange={ onChange }
+        onClick={ onClick }
       />
       {labelText}
     </label>
@@ -33,6 +35,8 @@ FormInput.defaultProps = {
   dataTestId: '',
   type: 'text',
   placeholder: '',
+  onChange: null,
+  onClick: null,
 };
 
 FormInput.propTypes = {
@@ -42,7 +46,8 @@ FormInput.propTypes = {
   name: PropTypes.string.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
+  onClick: PropTypes.func,
 };
 
 export default FormInput;
