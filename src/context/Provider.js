@@ -11,6 +11,8 @@ const Provider = ({ children }) => {
   console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
   const [isdisabledExplore, setIsdisabledExplore] = useState(false);
+  const [ingredientsFoods, setIngredientsFoods] = useState([]);
+  const [ingredientsDrinks, setIngredientsDrinks] = useState([]);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -50,6 +52,10 @@ const Provider = ({ children }) => {
     handleClick,
     setIsdisabledExplore,
     isdisabledExplore,
+    ingredientsFoods,
+    setIngredientsFoods,
+    ingredientsDrinks,
+    setIngredientsDrinks,
   };
 
   return (
