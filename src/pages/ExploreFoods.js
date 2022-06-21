@@ -20,7 +20,7 @@ const ExploreFoods = () => {
 
   return (
     <div>
-    <Header />
+      <Header />
       <button
         type="button"
         data-testid="explore-by-ingredient"
