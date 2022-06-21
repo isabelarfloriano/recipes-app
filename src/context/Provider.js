@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import Context from './Context';
 import { setMealsToken, setCocktailsToken, setUserLogin } from '../services/login';
+import { requestMealDetails, requestDrinkDetails } from '../services/api';
 
 const Provider = ({ children }) => {
   const history = useHistory();
@@ -10,6 +11,7 @@ const Provider = ({ children }) => {
   const [user, setUser] = useState({ email: '', password: '' });
   console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
+  const [recipeDetails, setRecipeDetails] = useState([]);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -43,10 +45,27 @@ const Provider = ({ children }) => {
     history.push('/foods');
   };
 
+  const handleCardClick = async (cardId, recipeType) => {
+    let response = [];
+
+    if (recipeType === 'meals') {
+      response = await requestMealDetails(cardId);
+    } else {
+      response = await requestDrinkDetails(cardId);
+    }
+    setRecipeDetails(response[0]);
+  };
+
+  useEffect(() => {
+    handleCardClick('52772', 'meals');
+  }, []);
+
   const context = {
     handleChange,
     isdisabled,
     handleClick,
+    recipeDetails,
+    handleCardClick,
   };
 
   return (
