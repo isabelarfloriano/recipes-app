@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
+import Context from '../context/Context';
 
 function DetailsImage() {
+  const { recipeDetails } = useContext(Context);
   const [favorite, setFavorite] = useState(whiteHeartIcon);
 
   const handleFavoriteIcon = () => {
@@ -17,18 +19,21 @@ function DetailsImage() {
     <Card>
       <Card.Img
         variant="top"
-        src="https://img.itdg.com.br/tdg/images/blog/uploads/2017/07/shutterstock_413580649-768x512.jpg"
+        src={ recipeDetails.strMealThumb
+          ? recipeDetails.strMealThumb : recipeDetails.strDrinkThumb }
         data-testid="recipe-photo"
       />
       <Card.Body>
         <Card.Title data-testid="recipe-title">
-          Título
+          {recipeDetails.strMeal
+            ? recipeDetails.strMeal : recipeDetails.strDrink}
         </Card.Title>
         <Card.Subtitle
           className="mb-2 text-muted"
           data-testid="recipe-category"
         >
-          Subtítulo
+          {recipeDetails.strMeal
+            ? recipeDetails.strCategory : recipeDetails.strAlcoholic}
         </Card.Subtitle>
         <button
           type="button"
