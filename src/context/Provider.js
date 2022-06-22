@@ -9,9 +9,9 @@ const Provider = ({ children }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({ email: '', password: '' });
-  console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
   const [recipeDetails, setRecipeDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -38,34 +38,32 @@ const Provider = ({ children }) => {
   }, [user]);
 
   const handleClick = () => {
-    console.log('works');
     setUserLogin({ email: user.email });
     setMealsToken(1);
     setCocktailsToken(1);
     history.push('/foods');
   };
 
-  const handleCardClick = async (cardId, recipeType) => {
+  const getDetailsPageInfo = async (recipeType, cardId) => {
     let response = [];
-
-    if (recipeType === 'meals') {
+    if (recipeType === 'foods') {
+      setLoading(true);
       response = await requestMealDetails(cardId);
     } else {
+      setLoading(true);
       response = await requestDrinkDetails(cardId);
     }
     setRecipeDetails(response[0]);
+    setLoading(false);
   };
-
-  useEffect(() => {
-    handleCardClick('52772', 'meals');
-  }, []);
 
   const context = {
     handleChange,
     isdisabled,
     handleClick,
     recipeDetails,
-    handleCardClick,
+    getDetailsPageInfo,
+    loading,
   };
 
   return (
