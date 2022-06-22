@@ -2,7 +2,13 @@ import React from 'react';
 
 function InitRecipeBtn() {
   return (
-    <button type="button" data-testid="start-recipe-btn">Start Recipe</button>
+    <button
+      type="button"
+      className="fixed-bottom"
+      data-testid="start-recipe-btn"
+    >
+      Start Recipe
+    </button>
   );
 }
 
