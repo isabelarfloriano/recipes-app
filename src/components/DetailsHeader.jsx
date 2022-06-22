@@ -1,18 +1,46 @@
 import React, { useContext, useState } from 'react';
 import Card from 'react-bootstrap/Card';
+import { useLocation } from 'react-router-dom';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import Context from '../context/Context';
+import { FAVORITE_RECIPES_TOKEN, SaveStorage } from '../services/recipesStorage';
 
 function DetailsImage() {
+  const location = useLocation();
   const { recipeDetails } = useContext(Context);
   const [favorite, setFavorite] = useState(whiteHeartIcon);
 
-  const handleFavoriteIcon = () => {
+  const handleFavoriteRecipe = () => {
     setFavorite((prevFavorite) => (
       prevFavorite === whiteHeartIcon ? BlackHeartIcon : whiteHeartIcon
     ));
+    const foodPage = location.pathname.includes('foods');
+    let favoriteRecipe = {};
+    if (foodPage) {
+      favoriteRecipe = {
+        id: recipeDetails.idMeal,
+        type: 'food',
+        nationality: recipeDetails.strArea,
+        category: recipeDetails.strCategory,
+        alcoholicOrNot: '',
+        name: recipeDetails.strMeal,
+        image: recipeDetails.strMealThumb,
+      };
+    } else {
+      favoriteRecipe = {
+        id: recipeDetails.idDrink,
+        type: 'drink',
+        nationality: '',
+        category: '',
+        alcoholicOrNot: recipeDetails.strAlcoholic,
+        name: recipeDetails.strDrink,
+        image: recipeDetails.strDrinkThumb,
+      };
+    }
+
+    SaveStorage(FAVORITE_RECIPES_TOKEN, favoriteRecipe);
   };
 
   return (
@@ -43,7 +71,7 @@ function DetailsImage() {
         </button>
         <button
           type="button"
-          onClick={ handleFavoriteIcon }
+          onClick={ handleFavoriteRecipe }
           data-testid="favorite-btn"
         >
           <img src={ favorite } alt="Favorite Icon" />
