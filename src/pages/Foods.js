@@ -11,7 +11,8 @@ const Foods = () => {
   const { recipesFoods, setRecipesFoods,
     categoriesFoods, setCategoriesFoods,
     isdisabledFilter, setIsdisabledFilter,
-    filterFoods, setFilterFoods } = useContext(Context);
+    filterFoods, setFilterFoods,
+    filterErase, setFilterErase } = useContext(Context);
   console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
@@ -50,6 +51,11 @@ const Foods = () => {
     // console.log(dataSlice);
     setFilterFoods(dataSlice);
     setIsdisabledFilter(true);
+    setFilterErase(getCategoryName);
+
+    if (getCategoryName === filterErase) {
+      setIsdisabledFilter(false);
+    }
     return data;
   };
 

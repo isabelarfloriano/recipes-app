@@ -12,7 +12,8 @@ const Drinks = () => {
   const { recipesDrinks, setRecipesDrinks,
     categoriesDrinks, setCategoriesDrinks,
     isdisabledFilterDrinks, setIsdisabledFilterDrinks,
-    filterDrinks, setFilterDrinks } = useContext(Context);
+    filterDrinks, setFilterDrinks,
+    filterErase, setFilterErase } = useContext(Context);
   console.log(recipesDrinks);
 
   const getRecipesDrinks = async () => {
@@ -51,6 +52,10 @@ const Drinks = () => {
     // console.log(dataSlice);
     setFilterDrinks(dataSlice);
     setIsdisabledFilterDrinks(true);
+    setFilterErase(getCategoryName);
+    if (getCategoryName === filterErase) {
+      setIsdisabledFilterDrinks(false);
+    }
     return data;
   };
 
@@ -62,7 +67,8 @@ const Drinks = () => {
   return (
     <div>
       <Header />
-      {isdisabledFilterDrinks === false && recipesDrinks !== null
+      {isdisabledFilterDrinks === false
+      && recipesDrinks !== null
       && recipesDrinks.map((recipeDrink, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
           <button
