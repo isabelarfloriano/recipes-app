@@ -1,13 +1,12 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
-// import App from '../App';
-import Profile from '../pages/Profile';
+import Explore from '../pages/Explore';
 
 describe('Tests Explore', () => {
   test('Verify if the elements are correctly render', () => {
-    renderWithRouter(<Profile />);
+    renderWithRouter(<Explore />);
     const profileIcon = screen.getByRole('img', {
       name: /Profile Icon/i,
     });
@@ -26,5 +25,18 @@ describe('Tests Explore', () => {
       name: /Explore Drinks/i,
     });
     expect(drinksButton).toBeInTheDocument();
+  });
+  test('Test buttons redirection', async () => {
+    const { history } = renderWithRouter(<Explore />);
+    const foodsButton = screen.getByRole('button', {
+      name: /Explore Foods/i,
+    });
+    userEvent.click(foodsButton);
+    expect(history.location.pathname).toBe('/explore/foods');
+    const drinksButton = screen.getByRole('button', {
+      name: /Explore Drinks/i,
+    });
+    userEvent.click(drinksButton);
+    expect(history.location.pathname).toBe('/explore/drinks');
   });
 });
