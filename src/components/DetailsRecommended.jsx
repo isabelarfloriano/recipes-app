@@ -1,11 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { CardGroup, Carousel } from 'react-bootstrap';
-import Context from '../context/Context';
 import CarouselCard from './CarouselCard';
 
 function DetailsRecommended() {
-  const { recomendation } = useContext(Context);
-  console.log(recomendation);
   return (
     <section className="mb-5">
       <h2>Recommended</h2>
