@@ -6,13 +6,10 @@ import Context from '../context/Context';
 
 const IngredientsFoods = () => {
   const { ingredientsFoods, setIngredientsFoods } = useContext(Context);
-  console.log(ingredientsFoods);
 
   const getIngredientsFoods = async () => {
     const MAX_N_INGREDIENTS = 12;
     const data = await fetchFoodIngredient();
-    console.log(data);
-    console.log(data.slice(0, MAX_N_INGREDIENTS));
     setIngredientsFoods(data.slice(0, MAX_N_INGREDIENTS));
     return data.slice(0, MAX_N_INGREDIENTS);
   };

@@ -13,13 +13,10 @@ const Foods = () => {
     isdisabledFilter, setIsdisabledFilter,
     filterFoods, setFilterFoods,
     filterErase, setFilterErase } = useContext(Context);
-  console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
     const MAX_N_RECIPES = 12;
     const data = await fetchFoodRecipe();
-    // console.log(data);
-    // console.log(data.slice(0, MAX_N_RECIPES));
     setRecipesFoods(data.slice(0, MAX_N_RECIPES));
     return data.slice(0, MAX_N_RECIPES);
   };
@@ -31,8 +28,6 @@ const Foods = () => {
   const getCategory = async () => {
     const MAX_N_CATEGORIES = 5;
     const data = await fetchFoodCategory();
-    // console.log(data);
-    // console.log(data.slice(0, MAX_N_CATEGORIES));
     setCategoriesFoods(data.slice(0, MAX_N_CATEGORIES));
     return data.slice(0, MAX_N_CATEGORIES);
   };
@@ -43,12 +38,9 @@ const Foods = () => {
 
   const filterByCategory = async ({ target }) => {
     const MAX_N_CATEGORIES = 12;
-    // console.log('works');
-    // console.log(target.innerHTML);
     const getCategoryName = target.innerHTML;
     const data = await fetchFoodByCategory(getCategoryName);
     const dataSlice = data.slice(0, MAX_N_CATEGORIES);
-    // console.log(dataSlice);
     setFilterFoods(dataSlice);
     setIsdisabledFilter(true);
     setFilterErase(getCategoryName);
@@ -60,7 +52,6 @@ const Foods = () => {
   };
 
   const filterByAll = async () => {
-    console.log('works');
     setIsdisabledFilter(false);
   };
 
