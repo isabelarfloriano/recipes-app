@@ -49,26 +49,8 @@ const Provider = ({ children }) => {
     history.push('/foods');
   };
 
-  const shuffleAndSliceRecommendations = (recommendationsArray) => {
-    const NUMBER_OF_RECIPES = 6;
-    const shuffledRecommendations = [];
-    // Fisher-Yates algorithm
-    // https://dev.to/codebubb/how-to-shuffle-an-array-in-javascript-2ikj
-    for (let i = recommendationsArray.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [recommendationsArray[i],
-        recommendationsArray[j]] = [recommendationsArray[j], recommendationsArray[i]];
-      shuffledRecommendations.push(recommendationsArray[i]);
-    }
-
-    if (shuffledRecommendations.length > NUMBER_OF_RECIPES) {
-      return shuffledRecommendations.slice(0, NUMBER_OF_RECIPES);
-    }
-
-    return shuffledRecommendations;
-  };
-
   const getDetailsPageInfo = async (recipeType, cardId) => {
+    const NUMBER_OF_RECIPES = 6;
     let recipeDetail = [];
     let recipesRecommendation = [];
 
@@ -81,10 +63,9 @@ const Provider = ({ children }) => {
       recipeDetail = await requestDrinkDetails(cardId);
       recipesRecommendation = await requestMeal();
     }
-    const recommendationsShuffled = shuffleAndSliceRecommendations(recipesRecommendation);
 
     setRecipeDetails(recipeDetail[0]);
-    setRecomendation(recommendationsShuffled);
+    setRecomendation(recipesRecommendation.slice(0, NUMBER_OF_RECIPES));
     setLoading(false);
   };
 
