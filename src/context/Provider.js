@@ -17,6 +17,17 @@ const Provider = ({ children }) => {
   const [recomendation, setRecomendation] = useState([]);
   const [loading, setLoading] = useState(false);
   const [isdisabledExplore, setIsdisabledExplore] = useState(false);
+  const [ingredientsFoods, setIngredientsFoods] = useState([]);
+  const [ingredientsDrinks, setIngredientsDrinks] = useState([]);
+  const [recipesFoods, setRecipesFoods] = useState([]);
+  const [recipesDrinks, setRecipesDrinks] = useState([]);
+  const [categoriesFoods, setCategoriesFoods] = useState([]);
+  const [categoriesDrinks, setCategoriesDrinks] = useState([]);
+  const [isdisabledFilter, setIsdisabledFilter] = useState(false);
+  const [filterFoods, setFilterFoods] = useState([]);
+  const [isdisabledFilterDrinks, setIsdisabledFilterDrinks] = useState(false);
+  const [filterDrinks, setFilterDrinks] = useState([]);
+  const [filterErase, setFilterErase] = useState('');
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -79,6 +90,28 @@ const Provider = ({ children }) => {
     setIsdisabledExplore,
     isdisabledExplore,
     recomendation,
+    ingredientsFoods,
+    setIngredientsFoods,
+    ingredientsDrinks,
+    setIngredientsDrinks,
+    recipesFoods,
+    setRecipesFoods,
+    recipesDrinks,
+    setRecipesDrinks,
+    categoriesFoods,
+    setCategoriesFoods,
+    categoriesDrinks,
+    setCategoriesDrinks,
+    isdisabledFilter,
+    setIsdisabledFilter,
+    filterFoods,
+    setFilterFoods,
+    isdisabledFilterDrinks,
+    setIsdisabledFilterDrinks,
+    filterDrinks,
+    setFilterDrinks,
+    filterErase,
+    setFilterErase,
   };
 
   return (

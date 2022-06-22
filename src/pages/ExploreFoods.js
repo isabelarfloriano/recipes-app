@@ -9,12 +9,9 @@ const ExploreFoods = () => {
   const history = useHistory();
 
   const { isdisabledExplore } = useContext(Context);
-  console.log(isdisabledExplore);
 
   const handleRandomFood = async () => {
     const data = await fetchFood();
-    console.log(data.length);
-    console.log(data);
     history.push(`/foods/${data[0].idMeal}`);
   };
 
