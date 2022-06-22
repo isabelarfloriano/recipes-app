@@ -11,7 +11,8 @@ if (!JSON.parse(localStorage.getItem(FAVORITE_RECIPES_TOKEN))) {
 }
 
 if (!JSON.parse(localStorage.getItem(IN_PROGRESS_RECIPES_TOKEN))) {
-  localStorage.setItem(IN_PROGRESS_RECIPES_TOKEN, JSON.stringify({}));
+  localStorage
+    .setItem(IN_PROGRESS_RECIPES_TOKEN, JSON.stringify({ cocktails: {}, meals: {} }));
 }
 
 export const readStorage = (token) => (
@@ -28,4 +29,10 @@ export const SaveStorage = (token, data) => {
   const updateStorage = [...storage, data];
 
   saveStorageData(token, updateStorage);
+};
+
+export const removeFromStorage = (token, idToRemove) => {
+  const storage = readStorage(token);
+  const removedRecipe = storage.filter(({ id }) => id !== idToRemove);
+  saveStorageData(token, removedRecipe);
 };
