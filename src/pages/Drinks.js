@@ -54,6 +54,11 @@ const Drinks = () => {
     return data;
   };
 
+  const filterByAll = async () => {
+    console.log('works');
+    setIsdisabledFilterDrinks(false);
+  };
+
   return (
     <div>
       <Header />
@@ -105,6 +110,19 @@ const Drinks = () => {
           </button>
         </div>
       ))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ filterByAll }
+      >
+        All
+      </button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <Footer />
     </div>
   );

@@ -12,7 +12,7 @@ const Foods = () => {
     categoriesFoods, setCategoriesFoods,
     isdisabledFilter, setIsdisabledFilter,
     filterFoods, setFilterFoods } = useContext(Context);
-  // console.log(recipesFoods);
+  console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
     const MAX_N_RECIPES = 12;
@@ -55,12 +55,7 @@ const Foods = () => {
 
   const filterByAll = async () => {
     console.log('works');
-    const data = await fetchFoodRecipe();
-    console.log(data);
-    // console.log(data.slice(0, MAX_N_CATEGORIES));
-    setRecipesFoods(data);
     setIsdisabledFilter(false);
-    return data;
   };
 
   return (
@@ -122,6 +117,12 @@ const Foods = () => {
       >
         All
       </button>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <Footer />
     </div>
   );
