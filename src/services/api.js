@@ -21,19 +21,19 @@ export const requestDrinkDetails = async (id) => {
   }
 };
 
-export const requestDrink = async (name) => {
+export const requestDrink = async () => {
   try {
-    const response = await fetch(`${MEAL_BASE}search.php?s=${name}`);
-    const { meals } = await response.json();
-    return meals;
+    const response = await fetch(`${DRINK_BASE}search.php?s=`);
+    const { drinks } = await response.json();
+    return drinks;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const requestMeal = async (name) => {
+export const requestMeal = async () => {
   try {
-    const response = await fetch(`${DRINK_BASE}search.php?s=${name}`);
+    const response = await fetch(`${MEAL_BASE}search.php?s=`);
     const { meals } = await response.json();
     return meals;
   } catch (error) {
