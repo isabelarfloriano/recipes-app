@@ -12,6 +12,7 @@ const Provider = ({ children }) => {
   const [isdisabled, setIsdisabled] = useState(true);
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isdisabledExplore, setIsdisabledExplore] = useState(false);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -64,6 +65,8 @@ const Provider = ({ children }) => {
     recipeDetails,
     getDetailsPageInfo,
     loading,
+    setIsdisabledExplore,
+    isdisabledExplore,
   };
 
   return (
