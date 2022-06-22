@@ -24,19 +24,19 @@ const Foods = () => {
   return (
     <div>
       <Header />
-      {/* {recipesFoods.map((recipeFood, index) => (
-        <div key={ index } data-testid={ `${index}-ingredient-card` }>
+      {recipesFoods.map((recipeFood, index) => (
+        <div key={ index } data-testid={ `${index}-recipe-card` }>
           <img
-            src={ `https://www.themealdb.com/images/ingredients/${recipeFood.strIngredient}-Small.png` }
-            alt={ recipeFood.strIngredient }
+            src={ recipeFood.strMealThumb }
+            alt={ recipeFood.strMeal }
             data-testid={ `${index}-card-img` }
           />
 
           <p data-testid={ `${index}-card-name` }>
-            {ingredientFood.strIngredient}
+            {recipeFood.strMeal}
           </p>
-        </div> */}
-      {/* ))} */}
+        </div>
+      ))}
       <Footer />
     </div>
   );
