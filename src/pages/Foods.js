@@ -7,7 +7,7 @@ import { fetchFoodRecipe, fetchFoodCategory } from '../services/API';
 const Foods = () => {
   const { recipesFoods, setRecipesFoods,
     categoriesFoods, setCategoriesFoods } = useContext(Context);
-  // console.log(recipesFoods);
+  console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
     const MAX_N_RECIPES = 12;
@@ -35,10 +35,20 @@ const Foods = () => {
     getCategory();
   }, []);
 
+  const filterByCategory = ({ target }) => {
+    console.log('works');
+    console.log(target.innerHTML);
+    const getCategoryName = target.innerHTML;
+    const filterCategory = recipesFoods.filter((food) => food.strCategory
+    === getCategoryName);
+    console.log(filterCategory);
+    return filterByCategory;
+  };
+
   return (
     <div>
       <Header />
-      {recipesFoods.map((recipeFood, index) => (
+      {recipesFoods !== null && recipesFoods.map((recipeFood, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
           <img
             src={ recipeFood.strMealThumb }
@@ -52,11 +62,12 @@ const Foods = () => {
         </div>
       ))}
 
-      {categoriesFoods.map((categoryFood, index) => (
+      {categoriesFoods !== null && categoriesFoods.map((categoryFood, index) => (
         <div key={ index }>
           <button
             type="button"
             data-testid={ `${categoryFood.strCategory}-category-filter` }
+            onClick={ filterByCategory }
           >
             {categoryFood.strCategory}
           </button>

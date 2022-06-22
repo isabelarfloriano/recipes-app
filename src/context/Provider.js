@@ -17,6 +17,8 @@ const Provider = ({ children }) => {
   const [recipesDrinks, setRecipesDrinks] = useState([]);
   const [categoriesFoods, setCategoriesFoods] = useState([]);
   const [categoriesDrinks, setCategoriesDrinks] = useState([]);
+  const [isdisabledFilter, setIsdisabledFilter] = useState(false);
+  const [filterFoods, setFilterFoods] = useState([]);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -68,6 +70,10 @@ const Provider = ({ children }) => {
     setCategoriesFoods,
     categoriesDrinks,
     setCategoriesDrinks,
+    isdisabledFilter,
+    setIsdisabledFilter,
+    filterFoods,
+    setFilterFoods,
   };
 
   return (
