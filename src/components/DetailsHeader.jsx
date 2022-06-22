@@ -7,17 +7,23 @@ import shareIcon from '../images/shareIcon.svg';
 import Context from '../context/Context';
 import { FAVORITE_RECIPES_TOKEN, SaveStorage } from '../services/recipesStorage';
 
+const copy = require('clipboard-copy');
+
 function DetailsImage() {
   const location = useLocation();
   const { recipeDetails } = useContext(Context);
   const [favorite, setFavorite] = useState(whiteHeartIcon);
+  const [showMessage, setShowMessage] = useState(false);
 
   const handleFavoriteRecipe = () => {
     setFavorite((prevFavorite) => (
       prevFavorite === whiteHeartIcon ? BlackHeartIcon : whiteHeartIcon
     ));
+
     const foodPage = location.pathname.includes('foods');
+
     let favoriteRecipe = {};
+
     if (foodPage) {
       favoriteRecipe = {
         id: recipeDetails.idMeal,
@@ -43,6 +49,18 @@ function DetailsImage() {
     SaveStorage(FAVORITE_RECIPES_TOKEN, favoriteRecipe);
   };
 
+  const handleShareRecipe = () => {
+    copy(window.location.href);
+    setShowMessage(true);
+  };
+
+  if (showMessage) {
+    const MESSAGE_TIME = 2000;
+    setTimeout(() => {
+      setShowMessage(false);
+    }, MESSAGE_TIME);
+  }
+
   return (
     <Card>
       <Card.Img
@@ -65,17 +83,17 @@ function DetailsImage() {
         </Card.Subtitle>
         <button
           type="button"
-          data-testid="share-btn"
+          onClick={ handleShareRecipe }
         >
-          <img src={ shareIcon } alt="Share Icon" />
+          <img src={ shareIcon } alt="Share Icon" data-testid="share-btn" />
         </button>
         <button
           type="button"
           onClick={ handleFavoriteRecipe }
-          data-testid="favorite-btn"
         >
-          <img src={ favorite } alt="Favorite Icon" />
+          <img src={ favorite } alt="Favorite Icon" data-testid="favorite-btn" />
         </button>
+        {showMessage ? 'Link copied!' : ''}
       </Card.Body>
     </Card>
   );
