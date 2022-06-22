@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
@@ -6,11 +7,13 @@ import { fetchDrinkRecipe, fetchDrinkCategory,
   fetchDrinkByCategory } from '../services/API';
 
 const Drinks = () => {
+  const history = useHistory();
+
   const { recipesDrinks, setRecipesDrinks,
     categoriesDrinks, setCategoriesDrinks,
     isdisabledFilterDrinks, setIsdisabledFilterDrinks,
     filterDrinks, setFilterDrinks } = useContext(Context);
-  // console.log(recipesDrinks);
+  console.log(recipesDrinks);
 
   const getRecipesDrinks = async () => {
     const MAX_N_RECIPES = 12;
@@ -57,21 +60,27 @@ const Drinks = () => {
       {isdisabledFilterDrinks === false && recipesDrinks !== null
       && recipesDrinks.map((recipeDrink, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
-          <img
-            src={ recipeDrink.strDrinkThumb }
-            alt={ recipeDrink.strDrink }
-            data-testid={ `${index}-card-img` }
-          />
+          <button
+            type="button"
+            onClick={ () => { history.push(`/drinks/${recipeDrink.idDrink}`); } }
+          >
+            <img
+              src={ recipeDrink.strDrinkThumb }
+              alt={ recipeDrink.strDrink }
+              data-testid={ `${index}-card-img` }
+            />
 
-          <p data-testid={ `${index}-card-name` }>
-            {recipeDrink.strDrink}
-          </p>
+            <p data-testid={ `${index}-card-name` }>
+              {recipeDrink.strDrink}
+            </p>
+          </button>
         </div>
       ))}
 
       {isdisabledFilterDrinks && filterDrinks.length > 0
       && filterDrinks.map((filterDrink, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
+
           <img
             src={ filterDrink.strDrinkThumb }
             alt={ filterDrink.strDrink }
@@ -81,6 +90,7 @@ const Drinks = () => {
           <p data-testid={ `${index}-card-name` }>
             {filterDrink.strDrink}
           </p>
+
         </div>
       ))}
 

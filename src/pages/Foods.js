@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
 import { fetchFoodRecipe, fetchFoodCategory, fetchFoodByCategory } from '../services/API';
 
 const Foods = () => {
+  const history = useHistory();
+
   const { recipesFoods, setRecipesFoods,
     categoriesFoods, setCategoriesFoods,
     isdisabledFilter, setIsdisabledFilter,
@@ -39,14 +42,24 @@ const Foods = () => {
 
   const filterByCategory = async ({ target }) => {
     const MAX_N_CATEGORIES = 12;
-    console.log('works');
-    console.log(target.innerHTML);
+    // console.log('works');
+    // console.log(target.innerHTML);
     const getCategoryName = target.innerHTML;
     const data = await fetchFoodByCategory(getCategoryName);
     const dataSlice = data.slice(0, MAX_N_CATEGORIES);
-    console.log(dataSlice);
+    // console.log(dataSlice);
     setFilterFoods(dataSlice);
     setIsdisabledFilter(true);
+    return data;
+  };
+
+  const filterByAll = async () => {
+    console.log('works');
+    const data = await fetchFoodRecipe();
+    console.log(data);
+    // console.log(data.slice(0, MAX_N_CATEGORIES));
+    setRecipesFoods(data);
+    setIsdisabledFilter(false);
     return data;
   };
 
@@ -56,15 +69,21 @@ const Foods = () => {
       {isdisabledFilter === false && recipesFoods !== null
        && recipesFoods.map((recipeFood, index) => (
          <div key={ index } data-testid={ `${index}-recipe-card` }>
-           <img
-             src={ recipeFood.strMealThumb }
-             alt={ recipeFood.strMeal }
-             data-testid={ `${index}-card-img` }
-           />
+           <button
+             type="button"
+             onClick={ () => { history.push(`/foods/${recipeFood.idMeal}`); } }
+           >
 
-           <p data-testid={ `${index}-card-name` }>
-             {recipeFood.strMeal}
-           </p>
+             <img
+               src={ recipeFood.strMealThumb }
+               alt={ recipeFood.strMeal }
+               data-testid={ `${index}-card-img` }
+             />
+
+             <p data-testid={ `${index}-card-name` }>
+               {recipeFood.strMeal}
+             </p>
+           </button>
          </div>
        ))}
 
@@ -83,6 +102,8 @@ const Foods = () => {
         </div>
       ))}
 
+      {/* Repetir de cima */}
+
       {categoriesFoods !== null && categoriesFoods.map((categoryFood, index) => (
         <div key={ index }>
           <button
@@ -94,6 +115,13 @@ const Foods = () => {
           </button>
         </div>
       ))}
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ filterByAll }
+      >
+        All
+      </button>
       <Footer />
     </div>
   );
