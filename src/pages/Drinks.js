@@ -2,10 +2,11 @@ import React, { useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
-import { fetchDrinkRecipe } from '../services/API';
+import { fetchDrinkRecipe, fetchDrinkCategory } from '../services/API';
 
 const Drinks = () => {
-  const { recipesDrinks, setRecipesDrinks } = useContext(Context);
+  const { recipesDrinks, setRecipesDrinks,
+    categoriesDrinks, setCategoriesDrinks } = useContext(Context);
   console.log(recipesDrinks);
 
   const getRecipesDrinks = async () => {
@@ -19,6 +20,19 @@ const Drinks = () => {
 
   useEffect(() => {
     getRecipesDrinks();
+  }, []);
+
+  const getCategory = async () => {
+    const MAX_N_CATEGORIES = 5;
+    const data = await fetchDrinkCategory();
+    console.log(data);
+    console.log(data.slice(0, MAX_N_CATEGORIES));
+    setCategoriesDrinks(data.slice(0, MAX_N_CATEGORIES));
+    return data.slice(0, MAX_N_CATEGORIES);
+  };
+
+  useEffect(() => {
+    getCategory();
   }, []);
 
   return (
@@ -35,6 +49,17 @@ const Drinks = () => {
           <p data-testid={ `${index}-card-name` }>
             {recipeDrink.strDrink}
           </p>
+        </div>
+      ))}
+
+      {categoriesDrinks.map((categoryDrink, index) => (
+        <div key={ index }>
+          <button
+            type="button"
+            data-testid={ `${categoryDrink.strCategory}-category-filter` }
+          >
+            {categoryDrink.strCategory}
+          </button>
         </div>
       ))}
       <Footer />

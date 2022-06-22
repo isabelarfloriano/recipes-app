@@ -2,23 +2,37 @@ import React, { useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
-import { fetchFoodRecipe } from '../services/API';
+import { fetchFoodRecipe, fetchFoodCategory } from '../services/API';
 
 const Foods = () => {
-  const { recipesFoods, setRecipesFoods } = useContext(Context);
-  console.log(recipesFoods);
+  const { recipesFoods, setRecipesFoods,
+    categoriesFoods, setCategoriesFoods } = useContext(Context);
+  // console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
     const MAX_N_RECIPES = 12;
     const data = await fetchFoodRecipe();
-    console.log(data);
-    console.log(data.slice(0, MAX_N_RECIPES));
+    // console.log(data);
+    // console.log(data.slice(0, MAX_N_RECIPES));
     setRecipesFoods(data.slice(0, MAX_N_RECIPES));
     return data.slice(0, MAX_N_RECIPES);
   };
 
   useEffect(() => {
     getRecipesFoods();
+  }, []);
+
+  const getCategory = async () => {
+    const MAX_N_CATEGORIES = 5;
+    const data = await fetchFoodCategory();
+    console.log(data);
+    console.log(data.slice(0, MAX_N_CATEGORIES));
+    setCategoriesFoods(data.slice(0, MAX_N_CATEGORIES));
+    return data.slice(0, MAX_N_CATEGORIES);
+  };
+
+  useEffect(() => {
+    getCategory();
   }, []);
 
   return (
@@ -35,6 +49,17 @@ const Foods = () => {
           <p data-testid={ `${index}-card-name` }>
             {recipeFood.strMeal}
           </p>
+        </div>
+      ))}
+
+      {categoriesFoods.map((categoryFood, index) => (
+        <div key={ index }>
+          <button
+            type="button"
+            data-testid={ `${categoryFood.strCategory}-category-filter` }
+          >
+            {categoryFood.strCategory}
+          </button>
         </div>
       ))}
       <Footer />
