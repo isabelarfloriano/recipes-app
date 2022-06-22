@@ -2,12 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
-import { fetchFoodRecipe, fetchFoodCategory } from '../services/API';
+import { fetchFoodRecipe, fetchFoodCategory, fetchFoodByCategory } from '../services/API';
 
 const Foods = () => {
   const { recipesFoods, setRecipesFoods,
-    categoriesFoods, setCategoriesFoods } = useContext(Context);
-  console.log(recipesFoods);
+    categoriesFoods, setCategoriesFoods,
+    isdisabledFilter, setIsdisabledFilter,
+    filterFoods, setFilterFoods } = useContext(Context);
+  // console.log(recipesFoods);
 
   const getRecipesFoods = async () => {
     const MAX_N_RECIPES = 12;
@@ -25,8 +27,8 @@ const Foods = () => {
   const getCategory = async () => {
     const MAX_N_CATEGORIES = 5;
     const data = await fetchFoodCategory();
-    console.log(data);
-    console.log(data.slice(0, MAX_N_CATEGORIES));
+    // console.log(data);
+    // console.log(data.slice(0, MAX_N_CATEGORIES));
     setCategoriesFoods(data.slice(0, MAX_N_CATEGORIES));
     return data.slice(0, MAX_N_CATEGORIES);
   };
@@ -35,29 +37,48 @@ const Foods = () => {
     getCategory();
   }, []);
 
-  const filterByCategory = ({ target }) => {
+  const filterByCategory = async ({ target }) => {
+    const MAX_N_CATEGORIES = 12;
     console.log('works');
     console.log(target.innerHTML);
     const getCategoryName = target.innerHTML;
-    const filterCategory = recipesFoods.filter((food) => food.strCategory
-    === getCategoryName);
-    console.log(filterCategory);
-    return filterByCategory;
+    const data = await fetchFoodByCategory(getCategoryName);
+    const dataSlice = data.slice(0, MAX_N_CATEGORIES);
+    console.log(dataSlice);
+    setFilterFoods(dataSlice);
+    setIsdisabledFilter(true);
+    return data;
   };
 
   return (
     <div>
       <Header />
-      {recipesFoods !== null && recipesFoods.map((recipeFood, index) => (
+      {isdisabledFilter === false && recipesFoods !== null
+       && recipesFoods.map((recipeFood, index) => (
+         <div key={ index } data-testid={ `${index}-recipe-card` }>
+           <img
+             src={ recipeFood.strMealThumb }
+             alt={ recipeFood.strMeal }
+             data-testid={ `${index}-card-img` }
+           />
+
+           <p data-testid={ `${index}-card-name` }>
+             {recipeFood.strMeal}
+           </p>
+         </div>
+       ))}
+
+      {isdisabledFilter && filterFoods.length > 0
+      && filterFoods.map((filterFood, index) => (
         <div key={ index } data-testid={ `${index}-recipe-card` }>
           <img
-            src={ recipeFood.strMealThumb }
-            alt={ recipeFood.strMeal }
+            src={ filterFood.strMealThumb }
+            alt={ filterFood.strMeal }
             data-testid={ `${index}-card-img` }
           />
 
           <p data-testid={ `${index}-card-name` }>
-            {recipeFood.strMeal}
+            {filterFood.strMeal}
           </p>
         </div>
       ))}

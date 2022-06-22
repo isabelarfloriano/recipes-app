@@ -8,7 +8,7 @@ const Provider = ({ children }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({ email: '', password: '' });
-  console.log(user.email, user.password);
+  // console.log(user.email, user.password);
   const [isdisabled, setIsdisabled] = useState(true);
   const [isdisabledExplore, setIsdisabledExplore] = useState(false);
   const [ingredientsFoods, setIngredientsFoods] = useState([]);
@@ -19,6 +19,8 @@ const Provider = ({ children }) => {
   const [categoriesDrinks, setCategoriesDrinks] = useState([]);
   const [isdisabledFilter, setIsdisabledFilter] = useState(false);
   const [filterFoods, setFilterFoods] = useState([]);
+  const [isdisabledFilterDrinks, setIsdisabledFilterDrinks] = useState(false);
+  const [filterDrinks, setFilterDrinks] = useState([]);
 
   // Requisitos 2 a 8
   const validate = () => {
@@ -74,6 +76,10 @@ const Provider = ({ children }) => {
     setIsdisabledFilter,
     filterFoods,
     setFilterFoods,
+    isdisabledFilterDrinks,
+    setIsdisabledFilterDrinks,
+    filterDrinks,
+    setFilterDrinks,
   };
 
   return (

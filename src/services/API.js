@@ -89,9 +89,9 @@ const fetchDrinkCategory = async () => {
 const fetchFoodByCategory = async (category) => {
   try {
     const response = await
-    fetch(`www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
     const data = await response.json();
-    console.log(data.meals);
+    // console.log(data.meals);
     return data.meals;
   } catch (error) {
     console.error(error);
@@ -101,9 +101,9 @@ const fetchFoodByCategory = async (category) => {
 const fetchDrinkByCategory = async (category) => {
   try {
     const response = await
-    fetch(`www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
     const data = await response.json();
-    // console.log(data.drinks);
+    console.log(data.drinks);
     return data.drinks;
   } catch (error) {
     console.error(error);
