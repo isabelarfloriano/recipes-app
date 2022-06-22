@@ -9,8 +9,7 @@ function Footer() {
   const history = useHistory();
 
   return (
-    // fixed="bottom" removido por interferência nos botões, depois reinserimos
-    <Navbar data-testid="footer">
+    <Navbar data-testid="footer" fixed="bottom">
       <button type="button" onClick={ () => history.push('/drinks') }>
         <img src={ drinkIcon } alt="Drink Icon" data-testid="drinks-bottom-btn" />
       </button>
