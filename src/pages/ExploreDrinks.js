@@ -10,15 +10,12 @@ const ExploreDrinks = () => {
   const { setIsdisabledExplore } = useContext(Context);
 
   const handleClick = () => {
-    console.log('works');
     history.push('/explore/drinks/ingredients');
     setIsdisabledExplore(true);
   };
 
   const handleRandomDrink = async () => {
     const data = await fetchDrink();
-    console.log(data.length);
-    console.log(data);
     history.push(`/drinks/${data[0].idDrink}`);
   };
 
