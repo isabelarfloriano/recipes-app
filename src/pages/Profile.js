@@ -7,9 +7,7 @@ import Header from '../components/Header';
 const Profile = () => {
   const history = useHistory();
   const getEmail = getUser('user');
-  console.log(getEmail);
 
-  // Requisitos 82 ao 87
   const handleClick = () => {
     console.log('works');
     localStorage.clear();

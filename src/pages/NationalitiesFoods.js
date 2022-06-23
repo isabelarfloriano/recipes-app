@@ -15,12 +15,9 @@ const NationalitiesFoods = () => {
     nationatilyCategoriesFoods, setNationatilyCategoriesFoods,
     isdisabledFilter, setIsdisabledFilter,
     filterFoods, setFilterFoods } = useContext(Context);
-  console.log(nationalityFilter.name);
-  console.log(filterFoods);
 
   const getNacionalities = async () => {
     const data = await fetchFoodNationality();
-    // console.log(data);
     setNationatilyFoods(data);
   };
 
@@ -34,10 +31,8 @@ const NationalitiesFoods = () => {
     });
 
     const MAX_N_RECIPES = 12;
-    console.log('value', value);
 
     const data = await fetchFoodByArea(value) || [];
-    console.log(data);
 
     setFilterFoods(data.slice(0, MAX_N_RECIPES));
 
