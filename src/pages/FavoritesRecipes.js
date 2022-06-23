@@ -17,13 +17,13 @@ const FavoritesRecipes = () => {
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
   const { showMessage, favorite } = useContext(Context);
-  const [filteredRecipes, setFilteredRecipes] = useState(
-    ['there are no favorite recipes'],
-  );
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
   }, []);
+
+  console.log(filteredRecipes);
 
   const handleFavoriteRecipe = () => {
     if (!favorite) {
@@ -48,8 +48,7 @@ const FavoritesRecipes = () => {
   }
 
   const redirectClick = (recipe) => {
-    if (recipe.alcoholicOrNot === 'Alcoholic'
-    || recipe.alcoholicOrNot === 'Optional alcohol') {
+    if (recipe.type === 'drinks') {
       history.push(`/drinks/${recipe.id}`);
     } else {
       history.push(`/foods/${recipe.id}`);
@@ -60,44 +59,39 @@ const FavoritesRecipes = () => {
     setFilteredRecipes(favoriteRecipes);
   };
 
-  const filterFoods = async () => {
-    favoriteRecipes.filter((food) => !(food.alcoholicOrNot.includes(
-      /alcohol/i || /alcoholic/i,
-    )
-    ));
-  };
-
-  const filterDrinks = async () => {
-    favoriteRecipes.filter((food) => (food.alcoholicOrNot.includes(
-      /alcohol/i || /alcoholic/i,
-    )
-    ));
+  const foodOrDrink = async () => {
+    // filteredRecipes.filter((r));
+    console.log('xablçaau');
   };
 
   return (
     <>
       <Header />
-      <div>FavoritesRecipes</div>
+      <div>Favorites Recipes</div>
       <button
         type="button"
-        onClick={ filterFoods }
+        onClick={ foodOrDrink }
+        data-testid="filter-by-food-btn"
       >
         Foods
       </button>
       <button
         type="button"
-        onClick={ filterDrinks }
+        onClick={ foodOrDrink }
+        data-testid="filter-by-drink-btn"
       >
         Drinks
       </button>
       <button
         type="button"
         onClick={ filterByAll }
+        data-testid="filter-by-all-btn"
       >
         All
       </button>
       {
-        filteredRecipes.map((recipe, index) => (
+        filteredRecipes.length > 0
+        && filteredRecipes.map((recipe, index) => (
           <Card key={ `${recipe.name}${index}` }>
             <button
               type="button"
@@ -106,10 +100,10 @@ const FavoritesRecipes = () => {
               <Card.Img
                 variant="top"
                 src={ recipe.image }
-                data-testid="recipe-photo"
+                data-testid={ `${index}-horizontal-image` }
               />
               <Card.Body>
-                <Card.Title data-testid="recipe-title">
+                <Card.Title data-testid={ `${index}-horizontal-name` }>
                   { recipe.name }
                 </Card.Title>
                 <Card.Subtitle
@@ -122,7 +116,11 @@ const FavoritesRecipes = () => {
                   type="button"
                   onClick={ handleShareRecipe }
                 >
-                  <img src={ shareIcon } alt="Share Icon" data-testid="share-btn" />
+                  <img
+                    src={ shareIcon }
+                    alt="Share Icon"
+                    data-testid={ `${index}-horizontal-share-btn` }
+                  />
                 </button>
                 <button
                   type="button"
