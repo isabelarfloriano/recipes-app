@@ -15,8 +15,6 @@ export default function SearchBar() {
   const { setRecipesFoods, setRecipesDrinks } = useContext(Context);
 
   useEffect(() => {
-    console.log('foods api', data);
-    console.log(data.length);
     switch (pathname) {
     case '/foods':
       if (data.length === 1) {
@@ -38,12 +36,23 @@ export default function SearchBar() {
       const MAX_N_RECIPES = 12;
       const response = await fetch(URL);
       const dataAPI = await response.json();
-      if (pathname === '/foods') {
+      switch (pathname) {
+      case '/foods':
+        if (dataAPI.meals === null) {
+          return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
         setData(dataAPI.meals.slice(0, MAX_N_RECIPES));
         setRecipesFoods(dataAPI.meals.slice(0, MAX_N_RECIPES));
-      } else {
+        break;
+      case '/drinks':
+        if (dataAPI.drinks === null) {
+          return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        }
         setData(dataAPI.drinks.slice(0, MAX_N_RECIPES));
         setRecipesDrinks(dataAPI.drinks.slice(0, MAX_N_RECIPES));
+        break;
+      default:
+        break;
       }
     } catch (error) {
       global.alert(error.message);
@@ -59,13 +68,8 @@ export default function SearchBar() {
       await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${inputSearch}`);
       break;
     case 'First Letter':
-      if (inputSearch.length <= 1) {
-        await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
-        break;
-      } else {
-        global.alert('Your search must have only 1 (one) character');
-        break;
-      }
+      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
+      break;
     default:
       return undefined;
     }
@@ -82,6 +86,9 @@ export default function SearchBar() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { searchValue, searchRadio } = searchData;
+    if (searchValue.length > 1 && searchRadio === 'First Letter') {
+      return global.alert('Your search must have only 1 (one) character');
+    }
     switch (pathname) {
     case '/foods':
       await switchSearchAPIUrl(searchRadio, searchValue, 'themealdb');
