@@ -39,6 +39,7 @@ function DetailsIngredientsInProgress() {
             key={ index }
             data-testid={ `${index}-ingredient-step` }
           >
+            <input type="checkbox" />
             {ingredient}
             {' '}
             -
