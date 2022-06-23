@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Card from 'react-bootstrap/Card';
 import Header from '../components/Header';
@@ -17,6 +17,13 @@ const FavoritesRecipes = () => {
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
   const { showMessage, favorite } = useContext(Context);
+  const [filteredRecipes, setFilteredRecipes] = useState(
+    ['there are no favorite recipes'],
+  );
+
+  useEffect(() => {
+    setFilteredRecipes(favoriteRecipes);
+  }, []);
 
   const handleFavoriteRecipe = () => {
     if (!favorite) {
@@ -41,20 +48,57 @@ const FavoritesRecipes = () => {
   }
 
   const redirectClick = (recipe) => {
-    if (recipe.alcoholicOrNot === 'Alcoholic') {
+    if (recipe.alcoholicOrNot === 'Alcoholic'
+    || recipe.alcoholicOrNot === 'Optional alcohol') {
       history.push(`/drinks/${recipe.id}`);
     } else {
       history.push(`/foods/${recipe.id}`);
     }
   };
 
+  const filterByAll = async () => {
+    setFilteredRecipes(favoriteRecipes);
+  };
+
+  const filterFoods = async () => {
+    favoriteRecipes.filter((food) => !(food.alcoholicOrNot.includes(
+      /alcohol/i || /alcoholic/i,
+    )
+    ));
+  };
+
+  const filterDrinks = async () => {
+    favoriteRecipes.filter((food) => (food.alcoholicOrNot.includes(
+      /alcohol/i || /alcoholic/i,
+    )
+    ));
+  };
+
   return (
     <>
       <Header />
       <div>FavoritesRecipes</div>
+      <button
+        type="button"
+        onClick={ filterFoods }
+      >
+        Foods
+      </button>
+      <button
+        type="button"
+        onClick={ filterDrinks }
+      >
+        Drinks
+      </button>
+      <button
+        type="button"
+        onClick={ filterByAll }
+      >
+        All
+      </button>
       {
-        favoriteRecipes.map((recipe) => (
-          <Card key={ recipe.name }>
+        filteredRecipes.map((recipe, index) => (
+          <Card key={ `${recipe.name}${index}` }>
             <button
               type="button"
               onClick={ () => redirectClick(recipe) }
