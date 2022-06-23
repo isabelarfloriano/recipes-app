@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import Context from '../context/Context';
 import FormInput from './FormInput';
 
 export default function SearchBar() {
@@ -10,6 +11,8 @@ export default function SearchBar() {
   const [data, setData] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
+
+  const { setRecipesFoods, setRecipesDrinks } = useContext(Context);
 
   useEffect(() => {
     console.log('foods api', data);
@@ -32,12 +35,15 @@ export default function SearchBar() {
 
   const fetchAPI = async (URL) => {
     try {
+      const MAX_N_RECIPES = 12;
       const response = await fetch(URL);
       const dataAPI = await response.json();
       if (pathname === '/foods') {
-        setData(dataAPI.meals);
+        setData(dataAPI.meals.slice(0, MAX_N_RECIPES));
+        setRecipesFoods(dataAPI.meals.slice(0, MAX_N_RECIPES));
       } else {
-        setData(dataAPI.drinks);
+        setData(dataAPI.drinks.slice(0, MAX_N_RECIPES));
+        setRecipesDrinks(dataAPI.drinks.slice(0, MAX_N_RECIPES));
       }
     } catch (error) {
       global.alert(error.message);
