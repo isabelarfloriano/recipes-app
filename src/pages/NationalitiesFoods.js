@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Context from '../context/Context';
 import { fetchFoodNationality, fetchFoodRecipe,
-  fetchFoodCategory } from '../services/API';
+  fetchFoodCategory, fetchFoodByArea } from '../services/API';
 
 const NationalitiesFoods = () => {
   const history = useHistory();
@@ -16,7 +16,7 @@ const NationalitiesFoods = () => {
     isdisabledFilter, setIsdisabledFilter,
     filterFoods, setFilterFoods } = useContext(Context);
   console.log(nationalityFilter.name);
-  console.log(filterFoods.length);
+  console.log(filterFoods);
 
   const getNacionalities = async () => {
     const data = await fetchFoodNationality();
@@ -29,27 +29,21 @@ const NationalitiesFoods = () => {
   }, []);
 
   const handleChange = async ({ target: { value } }) => {
-    const MAX_N_RECIPES = 12;
-
     setNationalityFilter({
       name: value,
     });
 
-    // const MAX_N_RECIPES = 12;
+    const MAX_N_RECIPES = 12;
     console.log('value', value);
-    // console.log(dataSlice);
 
-    const data = await fetchFoodRecipe();
-    // const dataSlice = data.slice(0, MAX_N_RECIPES);
+    const data = await fetchFoodByArea(value) || [];
     console.log(data);
 
-    const filter = data.filter((recipe) => recipe.strArea === value);
+    setFilterFoods(data.slice(0, MAX_N_RECIPES));
 
-    setFilterFoods(filter);
-
-    if (filterFoods.length === 0) {
+    if (data.length === 0) {
       setIsdisabledFilter(false);
-      setRecipesFoods(data.slice(0, MAX_N_RECIPES));
+      setFilterFoods(recipesFoods);
     }
     setIsdisabledFilter(true);
 
@@ -103,9 +97,9 @@ const NationalitiesFoods = () => {
         onChange={ handleChange }
       >
         <option>Selecione uma categoria</option>
-        { nationatilyCategoriesFoods.map((categories, index) => (
+        { nationatilyCategoriesFoods.map((categories, index3) => (
           <option
-            key={ index }
+            key={ index3 }
             data-testid={ `${categories.strCategory}-option` }
             value={ `${categories.strCategory}` }
           >
@@ -137,15 +131,15 @@ const NationalitiesFoods = () => {
 
       {nationalityFilter.name !== undefined
       && isdisabledFilter && filterFoods.length > 0
-      && filterFoods.map((filterFood, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
+      && filterFoods.map((filterFood, index2) => (
+        <div key={ index2 } data-testid={ `${index2}-recipe-card` }>
           <img
             src={ filterFood.strMealThumb }
             alt={ filterFood.strMeal }
-            data-testid={ `${index}-card-img` }
+            data-testid={ `${index2}-card-img` }
           />
 
-          <p data-testid={ `${index}-card-name` }>
+          <p data-testid={ `${index2}-card-name` }>
             {filterFood.strMeal}
           </p>
         </div>

@@ -48,6 +48,16 @@ const fetchFoodRecipe = async () => {
   }
 };
 
+const fetchFoodByArea = async (name) => {
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${name}`);
+    const data = await response.json();
+    return data.meals;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 const fetchDrinkRecipe = async () => {
   try {
     const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -157,4 +167,4 @@ export const requestMeal = async () => {
 export { fetchFood, fetchDrink, fetchFoodIngredient,
   fetchDrinkIngredient, fetchFoodRecipe,
   fetchDrinkRecipe, fetchFoodCategory, fetchDrinkCategory,
-  fetchFoodByCategory, fetchDrinkByCategory, fetchFoodNationality };
+  fetchFoodByCategory, fetchDrinkByCategory, fetchFoodNationality, fetchFoodByArea };
