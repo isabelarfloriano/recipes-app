@@ -6,7 +6,7 @@ import Header from '../components/Header';
 
 const Profile = () => {
   const history = useHistory();
-  const getEmail = getUser('user').email;
+  const getEmail = getUser('user');
   console.log(getEmail);
 
   // Requisitos 82 ao 87
@@ -21,7 +21,7 @@ const Profile = () => {
 
       <Header />
 
-      <p data-testid="profile-email">{getEmail}</p>
+      <p data-testid="profile-email">{getEmail?.email}</p>
 
       <button
         type="button"
