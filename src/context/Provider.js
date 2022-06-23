@@ -5,7 +5,7 @@ import Context from './Context';
 import { setMealsToken, setCocktailsToken, setUserLogin } from '../services/login';
 import {
   requestMealDetails, requestDrinkDetails,
-  requestDrink, requestMeal,
+  fetchDrinkRecipe, fetchFoodRecipe,
 } from '../services/API';
 
 const Provider = ({ children }) => {
@@ -31,7 +31,7 @@ const Provider = ({ children }) => {
   const [nationatilyFoods, setNationatilyFoods] = useState([]);
   const [nationalityFilter, setNationalityFilter] = useState('');
   const [nationatilyCategoriesFoods, setNationatilyCategoriesFoods] = useState([]);
-  // Requisitos 2 a 8
+
   const validate = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const MIN_EMAIL_LENGTH = 6;
@@ -70,11 +70,11 @@ const Provider = ({ children }) => {
     if (recipeType === 'foods') {
       setLoading(true);
       recipeDetail = await requestMealDetails(cardId);
-      recipesRecommendation = await requestDrink();
+      recipesRecommendation = await fetchDrinkRecipe();
     } else {
       setLoading(true);
       recipeDetail = await requestDrinkDetails(cardId);
-      recipesRecommendation = await requestMeal();
+      recipesRecommendation = await fetchFoodRecipe();
     }
 
     setRecipeDetails(recipeDetail[0]);
