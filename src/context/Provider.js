@@ -6,7 +6,7 @@ import { setMealsToken, setCocktailsToken, setUserLogin } from '../services/logi
 import {
   requestMealDetails, requestDrinkDetails,
   requestDrink, requestMeal,
-} from '../services/api';
+} from '../services/API';
 
 const Provider = ({ children }) => {
   const history = useHistory();
@@ -28,7 +28,9 @@ const Provider = ({ children }) => {
   const [isdisabledFilterDrinks, setIsdisabledFilterDrinks] = useState(false);
   const [filterDrinks, setFilterDrinks] = useState([]);
   const [filterErase, setFilterErase] = useState('');
-
+  const [nationatilyFoods, setNationatilyFoods] = useState([]);
+  const [nationalityFilter, setNationalityFilter] = useState('');
+  const [nationatilyCategoriesFoods, setNationatilyCategoriesFoods] = useState([]);
   // Requisitos 2 a 8
   const validate = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -112,6 +114,12 @@ const Provider = ({ children }) => {
     setFilterDrinks,
     filterErase,
     setFilterErase,
+    nationatilyFoods,
+    setNationatilyFoods,
+    nationalityFilter,
+    setNationalityFilter,
+    nationatilyCategoriesFoods,
+    setNationatilyCategoriesFoods,
   };
 
   return (

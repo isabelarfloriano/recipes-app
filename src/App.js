@@ -19,6 +19,7 @@ import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 import Provider from './context/Provider';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoritesRecipes } />
+        <Route component={ NotFound } />
       </Switch>
     </Provider>
   );
