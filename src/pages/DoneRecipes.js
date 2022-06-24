@@ -37,9 +37,11 @@ function DoneRecipes() {
             categoryText={ recipe.category }
             recipeName={ recipe.name }
             dateText={ recipe.doneDate }
-            tags={ recipe.tags }
-            nationality={ recipe.nationality }
+            tags={ recipe.tags || [] }
+            nationality={ recipe.nationality || '' }
             alcoholic={ recipe.alcoholicOrNot }
+            type={ recipe.type }
+            id={ Number(recipe.id) }
           />
         )) }
       </section>
@@ -49,9 +51,11 @@ function DoneRecipes() {
 
 export default DoneRecipes;
 
-/* {
+/* Mock Recipes
+
+{
   id: '52882',
-  type: 'comida-ou-bebida',
+  type: 'food',
   nationality: 'British',
   category: 'Seafood',
   alcoholicOrNot: '',
@@ -59,4 +63,14 @@ export default DoneRecipes;
   image: 'https://www.themealdb.com/images/media/meals/spswqs1511558697.jpg',
   doneDate: '22/10/2022',
   tags: ['Fish', 'Seafood', 'Dairy', 'Pie'],
+},
+{
+  id: '178319',
+  type: 'drink',
+  category: 'Cocktail',
+  alcoholicOrNot: 'Alcoholic',
+  name: 'Aquamarine',
+  image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+  doneDate: '22/10/2022',
+  tags: null,
 }, */

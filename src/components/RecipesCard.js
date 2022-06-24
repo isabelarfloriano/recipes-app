@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
 import shareIcon from '../images/shareIcon.svg';
 
+const copy = require('clipboard-copy');
+
 function RecipesCard(props) {
+  const [showMessage, setShowMessage] = useState(false);
+
   const {
     index,
     image,
@@ -14,7 +18,22 @@ function RecipesCard(props) {
     tags,
     nationality,
     alcoholic,
+    type,
+    id,
   } = props;
+
+  const handleShareRecipe = (typeRecipe, idRecipe) => {
+    const BASE_URL = 'http://localhost:3000/';
+    copy(`${BASE_URL}${typeRecipe}s/${idRecipe}`);
+    setShowMessage(true);
+  };
+
+  if (showMessage) {
+    const MESSAGE_TIME = 2000;
+    setTimeout(() => {
+      setShowMessage(false);
+    }, MESSAGE_TIME);
+  }
 
   return (
     <Card
@@ -36,7 +55,7 @@ function RecipesCard(props) {
           }
           <button
             type="button"
-            onClick={ () => console.log('clicou share Button') }
+            onClick={ () => handleShareRecipe(type, id) }
           >
             <img
               src={ shareIcon }
@@ -45,6 +64,7 @@ function RecipesCard(props) {
             />
           </button>
         </Card.Subtitle>
+        {showMessage ? 'Link copied!' : ''}
         <Card.Title
           data-testid={ `${index}-horizontal-name` }
         >
@@ -83,6 +103,8 @@ RecipesCard.propTypes = {
   tags: PropTypes.arrayOf(PropTypes.string),
   nationality: PropTypes.string.isRequired,
   alcoholic: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 };
 
 export default RecipesCard;
