@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
@@ -39,12 +40,14 @@ function RecipesCard(props) {
     <Card
       className="d-flex flex-row mw-50"
     >
-      <Card.Img
-        className="w-25"
-        variant="top"
-        src={ image }
-        data-testid={ `${index}-horizontal-image` }
-      />
+      <Link to={ `/${type}s/${id}` }>
+        <Card.Img
+          className="w-25"
+          variant="top"
+          src={ image }
+          data-testid={ `${index}-horizontal-image` }
+        />
+      </Link>
       <Card.Body>
         <Card.Subtitle
           className="mb-2 text-muted"
@@ -65,11 +68,13 @@ function RecipesCard(props) {
           </button>
         </Card.Subtitle>
         {showMessage ? 'Link copied!' : ''}
-        <Card.Title
-          data-testid={ `${index}-horizontal-name` }
-        >
-          {recipeName}
-        </Card.Title>
+        <Link to={ `/${type}s/${id}` }>
+          <Card.Title
+            data-testid={ `${index}-horizontal-name` }
+          >
+            {recipeName}
+          </Card.Title>
+        </Link>
         <Card.Text
           data-testid={ `${index}-horizontal-done-date` }
         >
