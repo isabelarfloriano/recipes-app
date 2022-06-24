@@ -39,6 +39,7 @@ function DoneRecipes() {
             dateText={ recipe.doneDate }
             tags={ recipe.tags }
             nationality={ recipe.nationality }
+            alcoholic={ recipe.alcoholicOrNot }
           />
         )) }
       </section>
