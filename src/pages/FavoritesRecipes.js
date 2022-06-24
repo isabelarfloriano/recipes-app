@@ -7,7 +7,7 @@ import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 import {
   FAVORITE_RECIPES_TOKEN, readStorage,
-  removeFromStorage, SaveStorage,
+  removeFromStorage,
 } from '../services/recipesStorage';
 
 const copy = require('clipboard-copy');
@@ -17,23 +17,20 @@ const FavoritesRecipes = () => {
 
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
-  const [favorite, setFavorite] = useState(false);
+  const [favorite, setFavorite] = useState(true);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
   const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
-    setFavorite(true);
   }, []);
 
   console.log(filteredRecipes);
 
-  const handleFavoriteRecipe = (recipe) => {
-    if (favorite) {
-      SaveStorage(FAVORITE_RECIPES_TOKEN, recipe);
-    } else {
-      removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
-    }
+  const removeFavoriteRecipe = (recipe) => {
+    removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
+    const removeState = filteredRecipes.filter((index) => index.id !== recipe.id);
+    setFilteredRecipes(removeState);
 
     setFavorite((prevFavorite) => (!prevFavorite));
   };
@@ -141,7 +138,7 @@ const FavoritesRecipes = () => {
               </button>
               <button
                 type="button"
-                onClick={ () => handleFavoriteRecipe(recipe) }
+                onClick={ () => removeFavoriteRecipe(recipe) }
               >
                 <img
                   src={ favorite ? BlackHeartIcon : whiteHeartIcon }
