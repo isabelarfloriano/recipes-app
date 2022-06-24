@@ -11,25 +11,29 @@ import {
   removeFromStorage, SaveStorage,
 } from '../services/recipesStorage';
 
+const copy = require('clipboard-copy');
+
 const FavoritesRecipes = () => {
   const history = useHistory();
 
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
-  const { showMessage, favorite } = useContext(Context);
+  const { showMessage } = useContext(Context);
+  const [favorite, setFavorite] = useState(false);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
+    setFavorite(true);
   }, []);
 
   console.log(filteredRecipes);
 
-  const handleFavoriteRecipe = () => {
-    if (!favorite) {
-      SaveStorage(FAVORITE_RECIPES_TOKEN, recipe);
-    } else {
+  const handleFavoriteRecipe = (recipe) => {
+    if (favorite) {
       removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
+    } else {
+      SaveStorage(FAVORITE_RECIPES_TOKEN, recipe);
     }
 
     setFavorite((prevFavorite) => (!prevFavorite));
@@ -102,41 +106,41 @@ const FavoritesRecipes = () => {
                 src={ recipe.image }
                 data-testid={ `${index}-horizontal-image` }
               />
-              <Card.Body>
-                <Card.Title data-testid={ `${index}-horizontal-name` }>
-                  { recipe.name }
-                </Card.Title>
-                <Card.Subtitle
-                  className="mb-2 text-muted"
-                  data-testid={ `${index}-horizontal-top-text` }
-                >
-                  { recipe.type === 'food'
-                    ? (` ${recipe.nationality} - ${recipe.category}`)
-                    : recipe.alcoholicOrNot}
-                </Card.Subtitle>
-                <button
-                  type="button"
-                  onClick={ handleShareRecipe }
-                >
-                  <img
-                    src={ shareIcon }
-                    alt="Share Icon"
-                    data-testid={ `${index}-horizontal-share-btn` }
-                  />
-                </button>
-                <button
-                  type="button"
-                  onClick={ handleFavoriteRecipe }
-                >
-                  <img
-                    src={ favorite ? BlackHeartIcon : whiteHeartIcon }
-                    alt="Favorite Icon"
-                    data-testid={ `${index}-horizontal-favorite-btn` }
-                  />
-                </button>
-                {showMessage ? 'Link copied!' : ''}
-              </Card.Body>
+              <Card.Title data-testid={ `${index}-horizontal-name` }>
+                { recipe.name }
+              </Card.Title>
             </button>
+            <Card.Body>
+              <Card.Subtitle
+                className="mb-2 text-muted"
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                { recipe.type === 'food'
+                  ? (` ${recipe.nationality} - ${recipe.category}`)
+                  : recipe.alcoholicOrNot}
+              </Card.Subtitle>
+              <button
+                type="button"
+                onClick={ handleShareRecipe }
+              >
+                <img
+                  src={ shareIcon }
+                  alt="Share Icon"
+                  data-testid={ `${index}-horizontal-share-btn` }
+                />
+              </button>
+              <button
+                type="button"
+                onClick={ () => handleFavoriteRecipe(recipe) }
+              >
+                <img
+                  src={ favorite ? BlackHeartIcon : whiteHeartIcon }
+                  alt="Favorite Icon"
+                  data-testid={ `${index}-horizontal-favorite-btn` }
+                />
+              </button>
+              {showMessage ? 'Link copied!' : ''}
+            </Card.Body>
           </Card>
         ))
       }
