@@ -5,10 +5,25 @@ import RecipesCard from '../components/RecipesCard';
 import { readStorage, DONE_RECIPES_TOKEN } from '../services/recipesStorage';
 
 function DoneRecipes() {
-  const [doneRecipes, setDoneRecipes] = useState([]);
+  const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [recipeFilters, setRecipeFilters] = useState({
+    all: true,
+    foods: false,
+    drinks: false,
+  });
   useEffect(() => {
-    setDoneRecipes(readStorage(DONE_RECIPES_TOKEN));
-  }, []);
+    if (recipeFilters.foods) {
+      const foodsRecipe = readStorage(DONE_RECIPES_TOKEN)
+        .filter((recipe) => recipe.type === 'food');
+      return setFilteredRecipes(foodsRecipe);
+    }
+    if (recipeFilters.drinks) {
+      const drinksRecipe = readStorage(DONE_RECIPES_TOKEN)
+        .filter((recipe) => recipe.type === 'drink');
+      return setFilteredRecipes(drinksRecipe);
+    }
+    return setFilteredRecipes(readStorage(DONE_RECIPES_TOKEN));
+  }, [recipeFilters]);
   return (
 
     <>
@@ -16,20 +31,26 @@ function DoneRecipes() {
       <Button
         dataTestId="filter-by-all-btn"
         buttonText="All"
-        onClick={ () => console.log('clicou em all') }
+        onClick={
+          () => setRecipeFilters({ all: true, foods: false, drinks: false })
+        }
       />
       <Button
         dataTestId="filter-by-food-btn"
         buttonText="Food"
-        onClick={ () => console.log('clicou em food') }
+        onClick={
+          () => setRecipeFilters({ all: false, foods: true, drinks: false })
+        }
       />
       <Button
         dataTestId="filter-by-drink-btn"
         buttonText="Drinks"
-        onClick={ () => console.log('clicou em drinks') }
+        onClick={
+          () => setRecipeFilters({ all: false, foods: false, drinks: true })
+        }
       />
       <section>
-        { doneRecipes.map((recipe, index) => (
+        { filteredRecipes.map((recipe, index) => (
           <RecipesCard
             key={ `${recipe.id}` }
             index={ index }
