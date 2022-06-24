@@ -108,9 +108,11 @@ const FavoritesRecipes = () => {
                 </Card.Title>
                 <Card.Subtitle
                   className="mb-2 text-muted"
-                  data-testid="recipe-category"
+                  data-testid={ `${index}-horizontal-top-text` }
                 >
-                  { recipe.type === 'food' ? recipe.category : recipe.alcoholicOrNot}
+                  { recipe.type === 'food'
+                    ? (` ${recipe.nationality} - ${recipe.category}`)
+                    : recipe.alcoholicOrNot}
                 </Card.Subtitle>
                 <button
                   type="button"
@@ -129,7 +131,7 @@ const FavoritesRecipes = () => {
                   <img
                     src={ favorite ? BlackHeartIcon : whiteHeartIcon }
                     alt="Favorite Icon"
-                    data-testid="favorite-btn"
+                    data-testid={ `${index}-horizontal-favorite-btn` }
                   />
                 </button>
                 {showMessage ? 'Link copied!' : ''}
