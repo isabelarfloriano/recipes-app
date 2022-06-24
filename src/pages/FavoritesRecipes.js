@@ -30,9 +30,9 @@ const FavoritesRecipes = () => {
 
   const handleFavoriteRecipe = (recipe) => {
     if (favorite) {
-      removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
-    } else {
       SaveStorage(FAVORITE_RECIPES_TOKEN, recipe);
+    } else {
+      removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
     }
 
     setFavorite((prevFavorite) => (!prevFavorite));
@@ -51,7 +51,7 @@ const FavoritesRecipes = () => {
   }
 
   const redirectClick = (recipe) => {
-    if (recipe.type === 'drinks') {
+    if (recipe.type === 'drink') {
       history.push(`/drinks/${recipe.id}`);
     } else {
       history.push(`/foods/${recipe.id}`);
@@ -63,12 +63,12 @@ const FavoritesRecipes = () => {
   };
 
   const filterFoods = async () => {
-    const foods = filteredRecipes.filter((recipe) => recipe.type === /food/i);
+    const foods = filteredRecipes.filter((recipe) => recipe.type === 'food');
     setFilteredRecipes(foods);
   };
 
   const filterDrinks = async () => {
-    const drinks = filteredRecipes.filter((recipe) => recipe.type === /drink/i);
+    const drinks = filteredRecipes.filter((recipe) => recipe.type === 'drink');
     setFilteredRecipes(drinks);
   };
 
@@ -110,11 +110,16 @@ const FavoritesRecipes = () => {
                 src={ recipe.image }
                 data-testid={ `${index}-horizontal-image` }
               />
-              <Card.Title data-testid={ `${index}-horizontal-name` }>
-                { recipe.name }
-              </Card.Title>
             </button>
             <Card.Body>
+              <button
+                type="button"
+                onClick={ () => redirectClick(recipe) }
+              >
+                <Card.Title data-testid={ `${index}-horizontal-name` }>
+                  { recipe.name }
+                </Card.Title>
+              </button>
               <Card.Subtitle
                 className="mb-2 text-muted"
                 data-testid={ `${index}-horizontal-top-text` }
