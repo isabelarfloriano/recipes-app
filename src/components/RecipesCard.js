@@ -12,6 +12,7 @@ function RecipesCard(props) {
     recipeName,
     dateText,
     tags,
+    nationality,
   } = props;
 
   return (
@@ -29,7 +30,9 @@ function RecipesCard(props) {
           className="mb-2 text-muted"
           data-testid={ `${index}-horizontal-top-text` }
         >
-          {categoryText}
+          {
+            nationality ? `${nationality} - ${categoryText}` : categoryText
+          }
           <button
             type="button"
             onClick={ () => console.log('clicou share Button') }
@@ -77,7 +80,7 @@ RecipesCard.propTypes = {
   recipeName: PropTypes.string.isRequired,
   dateText: PropTypes.string.isRequired,
   tags: PropTypes.arrayOf(PropTypes.string),
-  // key: PropTypes.number.isRequired,
+  nationality: PropTypes.string.isRequired,
 };
 
 export default RecipesCard;
