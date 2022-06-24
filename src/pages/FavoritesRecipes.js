@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Card from 'react-bootstrap/Card';
 import Header from '../components/Header';
-import Context from '../context/Context';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
@@ -18,9 +17,9 @@ const FavoritesRecipes = () => {
 
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
-  const { showMessage } = useContext(Context);
   const [favorite, setFavorite] = useState(false);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
@@ -39,8 +38,8 @@ const FavoritesRecipes = () => {
     setFavorite((prevFavorite) => (!prevFavorite));
   };
 
-  const handleShareRecipe = () => {
-    copy(window.location.href);
+  const handleShareRecipe = ({ target }) => {
+    copy(`${window.location.origin}${target.name}`);
     setShowMessage(true);
   };
 
@@ -63,9 +62,14 @@ const FavoritesRecipes = () => {
     setFilteredRecipes(favoriteRecipes);
   };
 
-  const foodOrDrink = async () => {
-    // filteredRecipes.filter((r));
-    console.log('xablçaau');
+  const filterFoods = async () => {
+    const foods = filteredRecipes.filter((recipe) => recipe.type === /food/i);
+    setFilteredRecipes(foods);
+  };
+
+  const filterDrinks = async () => {
+    const drinks = filteredRecipes.filter((recipe) => recipe.type === /drink/i);
+    setFilteredRecipes(drinks);
   };
 
   return (
@@ -74,14 +78,14 @@ const FavoritesRecipes = () => {
       <div>Favorites Recipes</div>
       <button
         type="button"
-        onClick={ foodOrDrink }
+        onClick={ filterFoods }
         data-testid="filter-by-food-btn"
       >
         Foods
       </button>
       <button
         type="button"
-        onClick={ foodOrDrink }
+        onClick={ filterDrinks }
         data-testid="filter-by-drink-btn"
       >
         Drinks
@@ -127,6 +131,7 @@ const FavoritesRecipes = () => {
                   src={ shareIcon }
                   alt="Share Icon"
                   data-testid={ `${index}-horizontal-share-btn` }
+                  name={ `/${recipe.type}s/${recipe.id}` }
                 />
               </button>
               <button
