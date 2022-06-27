@@ -8,7 +8,7 @@ import DetailsVideo from '../components/DetailsVideo';
 import InitRecipeBtn from '../components/InitRecipeBtn';
 import Context from '../context/Context';
 
-const DetailsFoods = () => {
+const Details = () => {
   const { getDetailsPageInfo, loading } = useContext(Context);
   const location = useLocation();
 
@@ -22,11 +22,11 @@ const DetailsFoods = () => {
       <DetailsHeader />
       <DetailsIngredients />
       <DetailsInstructions />
-      <DetailsVideo />
+      {location.pathname.includes('foods') && <DetailsVideo />}
       <DetailsRecommended />
       <InitRecipeBtn />
     </>
   );
 };
 
-export default DetailsFoods;
+export default Details;
