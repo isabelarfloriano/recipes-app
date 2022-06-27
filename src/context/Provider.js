@@ -7,6 +7,7 @@ import {
   requestMealDetails, requestDrinkDetails,
   fetchDrinkRecipe, fetchFoodRecipe, fetchDrinkCategory,
   fetchFoodCategory, fetchFoodByCategory, fetchDrinkByCategory,
+  fetchFoodIngredient, fetchDrinkIngredient,
 } from '../services/API';
 
 const Provider = ({ children }) => {
@@ -17,21 +18,18 @@ const Provider = ({ children }) => {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [ingredientsFoods, setIngredientsFoods] = useState([]);
-  const [ingredientsDrinks, setIngredientsDrinks] = useState([]);
   const [nationatilyFoods, setNationatilyFoods] = useState([]);
   const [nationalityFilter, setNationalityFilter] = useState('');
   const [nationatilyCategoriesFoods, setNationatilyCategoriesFoods] = useState([]);
-
+  const [recipesByIngredient, setRecipesByIngredient] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState({
     categories: [],
     currentCategory: '',
   });
 
-  /*  const [ingredients, setIngredients] = useState([]);
-  const [natiotalityRecipes, setNationalityRecipes] = useState([]);
-   */
+  const [ingredients, setIngredients] = useState([]);
+  // const [natiotalityRecipes, setNationalityRecipes] = useState([]);
 
   const validate = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -132,6 +130,50 @@ const Provider = ({ children }) => {
     setRecipes(dataSlice);
   };
 
+  const getIngredients = async (recipeType) => {
+    const MAX_N_INGREDIENTS = 12;
+
+    let ingredientsList = [];
+
+    if (recipeType === 'foods') {
+      ingredientsList = await fetchFoodIngredient();
+    } else {
+      ingredientsList = await fetchDrinkIngredient();
+    }
+
+    setIngredients(ingredientsList.slice(0, MAX_N_INGREDIENTS));
+  };
+
+  const handleIngredientFilter = async (recipeType, ingredientName) => {
+    let data = [];
+    const filteredData = [];
+    console.log('teste', ingredientName);
+
+    if (recipeType.includes('foods')) {
+      data = await fetchFoodRecipe();
+    } else {
+      data = await fetchDrinkRecipe();
+    }
+
+    data.forEach((recipe, index) => {
+      Object.keys(recipe).forEach((key) => {
+        if (key.includes('strIngredient') && recipe[key].includes(ingredientName)) {
+          console.log('recipe', recipe);
+          console.log('key', recipe[key] === ingredientName);
+          console.log('recipe/key', recipe[key]);
+          filteredData.push(data[index]);
+        }
+      });
+    });
+
+    setRecipesByIngredient(filteredData);
+    if (recipeType.includes('foods')) {
+      history.push('/foods');
+    } else {
+      history.push('/drinks');
+    }
+  };
+
   const { categories } = categoriesFilter;
 
   const context = {
@@ -142,10 +184,6 @@ const Provider = ({ children }) => {
     getDetailsPageInfo,
     loading,
     recomendation,
-    ingredientsFoods,
-    setIngredientsFoods,
-    ingredientsDrinks,
-    setIngredientsDrinks,
     nationatilyFoods,
     setNationatilyFoods,
     nationalityFilter,
@@ -156,6 +194,10 @@ const Provider = ({ children }) => {
     categories,
     getRecipesInfo,
     handleCategoryFilters,
+    getIngredients,
+    ingredients,
+    recipesByIngredient,
+    handleIngredientFilter,
   };
 
   return <Context.Provider value={ context }>{children}</Context.Provider>;

@@ -1,15 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 
 function Recipes() {
-  const { recipes } = useContext(Context);
+  const { recipes, recipesByIngredient } = useContext(Context);
+  const [usedRecipes, setUsedRecipes] = useState([]);
   const history = useHistory();
+
+  useEffect(() => {
+    if (recipesByIngredient.length) {
+      setUsedRecipes(recipesByIngredient);
+      console.log('teste');
+    } else {
+      setUsedRecipes(recipes);
+      console.log('teste2');
+      console.log(recipes);
+    }
+  }, [recipesByIngredient, recipes]);
 
   return (
     <section>
-      {recipes
-        && recipes.map((recipe, index) => (
+      {usedRecipes
+        && usedRecipes.map((recipe, index) => (
           <div key={ index } data-testid={ `${index}-recipe-card` }>
             <button
               type="button"
