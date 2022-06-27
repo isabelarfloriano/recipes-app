@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import Context from '../context/Context';
 
-const Foods = () => {
+const RecipesPage = () => {
   const location = useLocation();
 
   const { getRecipesInfo } = useContext(Context);
@@ -26,4 +26,4 @@ const Foods = () => {
   );
 };
 
-export default Foods;
+export default RecipesPage;

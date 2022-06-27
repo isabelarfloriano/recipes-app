@@ -5,7 +5,8 @@ import Context from './Context';
 import { setMealsToken, setCocktailsToken, setUserLogin } from '../services/login';
 import {
   requestMealDetails, requestDrinkDetails,
-  fetchDrinkRecipe, fetchFoodRecipe,
+  fetchDrinkRecipe, fetchFoodRecipe, fetchDrinkCategory,
+  fetchFoodCategory, fetchFoodByCategory, fetchDrinkByCategory,
 } from '../services/API';
 
 const Provider = ({ children }) => {
@@ -19,18 +20,19 @@ const Provider = ({ children }) => {
   const [isdisabledExplore, setIsdisabledExplore] = useState(false);
   const [ingredientsFoods, setIngredientsFoods] = useState([]);
   const [ingredientsDrinks, setIngredientsDrinks] = useState([]);
-  const [recipesFoods, setRecipesFoods] = useState([]);
-  const [recipesDrinks, setRecipesDrinks] = useState([]);
-  const [categoriesFoods, setCategoriesFoods] = useState([]);
-  const [categoriesDrinks, setCategoriesDrinks] = useState([]);
-  const [isdisabledFilter, setIsdisabledFilter] = useState(false);
-  const [filterFoods, setFilterFoods] = useState([]);
-  const [isdisabledFilterDrinks, setIsdisabledFilterDrinks] = useState(false);
-  const [filterDrinks, setFilterDrinks] = useState([]);
-  const [filterErase, setFilterErase] = useState('');
   const [nationatilyFoods, setNationatilyFoods] = useState([]);
   const [nationalityFilter, setNationalityFilter] = useState('');
   const [nationatilyCategoriesFoods, setNationatilyCategoriesFoods] = useState([]);
+
+  const [recipes, setRecipes] = useState([]);
+  const [categoriesFilter, setCategoriesFilter] = useState({
+    categories: [],
+    currentCategory: '',
+  });
+
+  /*  const [ingredients, setIngredients] = useState([]);
+  const [natiotalityRecipes, setNationalityRecipes] = useState([]);
+   */
 
   const validate = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -82,6 +84,57 @@ const Provider = ({ children }) => {
     setLoading(false);
   };
 
+  const getRecipesInfo = async (recipeType) => {
+    const MAX_N_CATEGORIES = 5;
+    const MAX_N_RECIPES = 12;
+
+    let categoriesList = [];
+    let recipesList = [];
+
+    if (recipeType === 'foods') {
+      categoriesList = await fetchFoodCategory();
+      recipesList = await fetchFoodRecipe();
+    } else {
+      categoriesList = await fetchDrinkCategory();
+      recipesList = await fetchDrinkRecipe();
+    }
+    setCategoriesFilter((prevCategories) => ({
+      ...prevCategories,
+      categories: categoriesList.slice(0, MAX_N_CATEGORIES),
+    }));
+    setRecipes(recipesList.slice(0, MAX_N_RECIPES));
+  };
+
+  const handleCategoryFilters = async (recipeType, category) => {
+    const MAX_N_CATEGORIES = 12;
+    let data = [];
+
+    setCategoriesFilter((prevCategories) => ({
+      ...prevCategories,
+      currentCategory: category,
+    }));
+
+    if (recipeType === 'foods') {
+      data = await fetchFoodByCategory(category);
+    } else {
+      data = await fetchDrinkByCategory(category);
+    }
+
+    if (category === 'All' || category === categoriesFilter.currentCategory) {
+      if (recipeType === 'foods') {
+        data = await fetchFoodRecipe();
+      } else {
+        data = await fetchDrinkRecipe();
+      }
+    }
+
+    const dataSlice = data.slice(0, MAX_N_CATEGORIES);
+
+    setRecipes(dataSlice);
+  };
+
+  const { categories } = categoriesFilter;
+
   const context = {
     handleChange,
     isdisabled,
@@ -96,37 +149,19 @@ const Provider = ({ children }) => {
     setIngredientsFoods,
     ingredientsDrinks,
     setIngredientsDrinks,
-    recipesFoods,
-    setRecipesFoods,
-    recipesDrinks,
-    setRecipesDrinks,
-    categoriesFoods,
-    setCategoriesFoods,
-    categoriesDrinks,
-    setCategoriesDrinks,
-    isdisabledFilter,
-    setIsdisabledFilter,
-    filterFoods,
-    setFilterFoods,
-    isdisabledFilterDrinks,
-    setIsdisabledFilterDrinks,
-    filterDrinks,
-    setFilterDrinks,
-    filterErase,
-    setFilterErase,
     nationatilyFoods,
     setNationatilyFoods,
     nationalityFilter,
     setNationalityFilter,
     nationatilyCategoriesFoods,
     setNationatilyCategoriesFoods,
+    recipes,
+    categories,
+    getRecipesInfo,
+    handleCategoryFilters,
   };
 
-  return (
-    <Context.Provider value={ context }>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={ context }>{children}</Context.Provider>;
 };
 
 Provider.propTypes = {
