@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
+import './DetailsIngredientsInProgress.css';
 
 function DetailsIngredientsInProgress(props) {
   const { recipeDetails } = useContext(Context);
@@ -63,7 +64,11 @@ function DetailsIngredientsInProgress(props) {
       <h2>Ingredients</h2>
       <ul>
         {usedIngredients.map((ingredient, index) => (
-          <li key={ index } data-testid={ `${index}-ingredient-step` }>
+          <li
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+            className={ checkIngredients[index] && 'listIngredientsinProgress' }
+          >
             <input
               type="checkbox"
               name={ `${index}` }
