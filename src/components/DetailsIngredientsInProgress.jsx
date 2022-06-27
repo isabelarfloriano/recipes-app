@@ -2,16 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Context from '../context/Context';
 import './DetailsIngredientsInProgress.css';
+import {
+  IN_PROGRESS_RECIPES_TOKEN, readStorage, SaveStorageRecipeInProgress,
+} from '../services/recipesStorage';
 
 function DetailsIngredientsInProgress(props) {
   const { recipeDetails } = useContext(Context);
-  const { setdisabedBtn } = props;
+  const { setdisabedBtn, type, id } = props;
   const [ingredients, setIngredients] = useState({
     usedIngredients: [],
     ingredientQuantity: [],
   });
 
   const [checkIngredients, setCheckIngredients] = useState({});
+  const [stateStorage, setStateStorage] = useState({ cocktails: {}, meals: {} });
 
   const { usedIngredients, ingredientQuantity } = ingredients;
 
@@ -33,6 +37,10 @@ function DetailsIngredientsInProgress(props) {
   };
 
   useEffect(() => {
+    SaveStorageRecipeInProgress(IN_PROGRESS_RECIPES_TOKEN, type, id, [checkIngredients]);
+  }, [checkIngredients]);
+
+  useEffect(() => {
     const usedIngredientsInfo = setIngredientsInfo('strIngredient');
     const ingredientQuantityInfo = setIngredientsInfo('strMeasure');
 
@@ -40,6 +48,7 @@ function DetailsIngredientsInProgress(props) {
       usedIngredients: usedIngredientsInfo,
       ingredientQuantity: ingredientQuantityInfo,
     });
+    setStateStorage(readStorage(IN_PROGRESS_RECIPES_TOKEN));
   }, [recipeDetails]);
 
   useEffect(() => {
@@ -54,10 +63,16 @@ function DetailsIngredientsInProgress(props) {
   useEffect(() => {
     const arrayOfCheckeds = Object.values(checkIngredients);
     const isSaveButtonDisabled = !(arrayOfCheckeds.every((checked) => checked === true));
-    console.log(arrayOfCheckeds);
-    // console.log(isSaveButtonDisabled);
     setdisabedBtn(isSaveButtonDisabled);
   }, [checkIngredients]);
+
+  useEffect(() => {
+    const dataByPageType = stateStorage[type];
+    const arrayOfKeys = Object.keys(dataByPageType);
+    const idKey = arrayOfKeys.find((key) => key === id);
+    console.log((dataByPageType[idKey]));
+    // if (idKey) setCheckIngredients({ ...dataByPageType[idKey] });
+  }, [stateStorage, id, type]);
 
   return (
     <section>
@@ -67,7 +82,9 @@ function DetailsIngredientsInProgress(props) {
           <li
             key={ index }
             data-testid={ `${index}-ingredient-step` }
-            className={ checkIngredients[index] && 'listIngredientsinProgress' }
+            className={
+              checkIngredients[index] ? 'listIngredientsinProgress' : undefined
+            }
           >
             <input
               type="checkbox"
@@ -90,4 +107,6 @@ function DetailsIngredientsInProgress(props) {
 export default DetailsIngredientsInProgress;
 DetailsIngredientsInProgress.propTypes = {
   setdisabedBtn: PropTypes.func.isRequired,
+  type: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
 };

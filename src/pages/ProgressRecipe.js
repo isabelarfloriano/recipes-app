@@ -11,17 +11,33 @@ const ProgressRecipe = () => {
   const [disabedBtn, setdisabedBtn] = useState(true);
   const location = useLocation();
 
+  const endpoints = location.pathname.split('/');
+
+  const matchEndPointKey = () => {
+    switch (endpoints[1]) {
+    case 'foods':
+      return 'meals';
+    case 'drinks':
+      return 'cocktails';
+    default:
+      return undefined;
+    }
+  };
+
   useEffect(() => {
-    const endpoints = location.pathname.split('/');
     getDetailsPageInfo(endpoints[1], endpoints[2]);
   }, []);
 
-  console.log(setdisabedBtn);
-
-  return loading ? <h2>Carregando...</h2> : (
+  return loading ? (
+    <h2>Carregando...</h2>
+  ) : (
     <>
       <DetailsHeader />
-      <DetailsIngredientsInProgress setdisabedBtn={ setdisabedBtn } />
+      <DetailsIngredientsInProgress
+        setdisabedBtn={ setdisabedBtn }
+        type={ matchEndPointKey() }
+        id={ endpoints[2] }
+      />
       <DetailsInstructions />
       <FinishRecipeBtn disabedBtn={ disabedBtn } />
     </>

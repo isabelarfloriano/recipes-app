@@ -19,7 +19,7 @@ export const readStorage = (token) => (
   JSON.parse(localStorage.getItem(token))
 );
 
-const saveStorageData = (token, data) => (
+export const saveStorageData = (token, data) => (
   localStorage.setItem(token, JSON.stringify(data))
 );
 
@@ -27,6 +27,14 @@ export const SaveStorage = (token, data) => {
   const storage = readStorage(token);
 
   const updateStorage = [...storage, data];
+
+  saveStorageData(token, updateStorage);
+};
+
+export const SaveStorageRecipeInProgress = (token, type, id, data) => {
+  const storage = readStorage(token);
+
+  const updateStorage = { ...storage, [type]: { ...storage[type], [id]: data } };
 
   saveStorageData(token, updateStorage);
 };
