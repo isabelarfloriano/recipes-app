@@ -17,7 +17,6 @@ const Provider = ({ children }) => {
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [isdisabledExplore, setIsdisabledExplore] = useState(false);
   const [ingredientsFoods, setIngredientsFoods] = useState([]);
   const [ingredientsDrinks, setIngredientsDrinks] = useState([]);
   const [nationatilyFoods, setNationatilyFoods] = useState([]);
@@ -142,8 +141,6 @@ const Provider = ({ children }) => {
     recipeDetails,
     getDetailsPageInfo,
     loading,
-    setIsdisabledExplore,
-    isdisabledExplore,
     recomendation,
     ingredientsFoods,
     setIngredientsFoods,

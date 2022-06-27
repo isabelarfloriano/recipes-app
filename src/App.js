@@ -6,8 +6,6 @@ import Login from './pages/Login';
 import ProgressFoods from './pages/ProgressFoods';
 import ProgressDrinks from './pages/ProgressDrinks';
 import Explore from './pages/Explore';
-import ExploreFoods from './pages/ExploreFoods';
-import ExploreDrinks from './pages/ExploreDrinks';
 import IngredientsFoods from './pages/IngredientsFoods';
 import IngredientsDrinks from './pages/IngredientsDrinks';
 import NationalitiesFoods from './pages/NationalitiesFoods';
@@ -18,6 +16,7 @@ import Provider from './context/Provider';
 import NotFound from './pages/NotFound';
 import RecipesPage from './pages/RecipesPage';
 import Details from './pages/Details';
+import ExploreRecipes from './pages/ExploreRecipes';
 
 function App() {
   return (
@@ -31,8 +30,8 @@ function App() {
         <Route path="/foods/:id/in-progress" component={ ProgressFoods } />
         <Route path="/drinks/:id/in-progress" component={ ProgressDrinks } />
         <Route exact path="/explore" component={ Explore } />
-        <Route exact path="/explore/foods" component={ ExploreFoods } />
-        <Route exact path="/explore/drinks" component={ ExploreDrinks } />
+        <Route exact path="/explore/foods" component={ ExploreRecipes } />
+        <Route exact path="/explore/drinks" component={ ExploreRecipes } />
         <Route path="/explore/foods/ingredients" component={ IngredientsFoods } />
         <Route
           path="/explore/drinks/ingredients"
