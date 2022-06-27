@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import DetailsHeader from '../components/DetailsHeader';
 import DetailsIngredientsInProgress from '../components/DetailsIngredientsInProgress';
@@ -8,6 +8,7 @@ import Context from '../context/Context';
 
 const ProgressRecipe = () => {
   const { getDetailsPageInfo, loading } = useContext(Context);
+  const [disabedBtn, setdisabedBtn] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -15,12 +16,14 @@ const ProgressRecipe = () => {
     getDetailsPageInfo(endpoints[1], endpoints[2]);
   }, []);
 
+  console.log(setdisabedBtn);
+
   return loading ? <h2>Carregando...</h2> : (
     <>
       <DetailsHeader />
-      <DetailsIngredientsInProgress />
+      <DetailsIngredientsInProgress setdisabedBtn={ setdisabedBtn } />
       <DetailsInstructions />
-      <FinishRecipeBtn />
+      <FinishRecipeBtn disabedBtn={ disabedBtn } />
     </>
   );
 };

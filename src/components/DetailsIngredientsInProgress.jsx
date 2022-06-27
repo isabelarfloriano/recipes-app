@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import Context from '../context/Context';
 
-function DetailsIngredientsInProgress() {
+function DetailsIngredientsInProgress(props) {
   const { recipeDetails } = useContext(Context);
+  const { setdisabedBtn } = props;
   const [ingredients, setIngredients] = useState({
     usedIngredients: [],
     ingredientQuantity: [],
@@ -29,8 +31,6 @@ function DetailsIngredientsInProgress() {
     }));
   };
 
-  console.log(ingredientQuantity);
-
   useEffect(() => {
     const usedIngredientsInfo = setIngredientsInfo('strIngredient');
     const ingredientQuantityInfo = setIngredientsInfo('strMeasure');
@@ -41,7 +41,22 @@ function DetailsIngredientsInProgress() {
     });
   }, [recipeDetails]);
 
-  console.log(checkIngredients);
+  useEffect(() => {
+    ingredients.usedIngredients.map((_ingredient, index) => (
+      setCheckIngredients((prevCheckIngredients) => ({
+        ...prevCheckIngredients,
+        [index]: false,
+      }))
+    ));
+  }, [ingredients]);
+
+  useEffect(() => {
+    const arrayOfCheckeds = Object.values(checkIngredients);
+    const isSaveButtonDisabled = !(arrayOfCheckeds.every((checked) => checked === true));
+    console.log(arrayOfCheckeds);
+    // console.log(isSaveButtonDisabled);
+    setdisabedBtn(isSaveButtonDisabled);
+  }, [checkIngredients]);
 
   return (
     <section>
@@ -68,3 +83,6 @@ function DetailsIngredientsInProgress() {
 }
 
 export default DetailsIngredientsInProgress;
+DetailsIngredientsInProgress.propTypes = {
+  setdisabedBtn: PropTypes.func.isRequired,
+};
