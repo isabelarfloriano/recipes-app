@@ -140,3 +140,28 @@ export const requestDrinkDetails = async (id) => {
     console.log(error);
   }
 };
+
+export const fetchFoodsByIngredient = async (ingredient) => {
+  try {
+    const response = await fetch(`${MEAL_BASE}filter.php?i=${ingredient.includes(' ')
+      ? ingredient.replace(' ', '_') : ingredient}`);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchDrinksByIngredient = async (ingredient) => {
+  try {
+    const response = await fetch(
+      `${DRINK_BASE}filter.php?i=${
+        ingredient.includes(' ') ? ingredient.replace(' ', '_') : ingredient
+      }`,
+    );
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    console.log(error);
+  }
+};
