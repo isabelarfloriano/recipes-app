@@ -160,3 +160,39 @@ export const fetchDrinksByIngredient = async (ingredient) => {
     console.log(error);
   }
 };
+
+export const fetchByName = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchByIngredient = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchByFirstLetter = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
