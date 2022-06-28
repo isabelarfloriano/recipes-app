@@ -7,7 +7,7 @@ import {
 } from '../services/recipesStorage';
 
 function DetailsIngredientsInProgress(props) {
-  const { recipeDetails } = useContext(Context);
+  const { recipeDetails, loading } = useContext(Context);
   const { setdisabedBtn, type, id } = props;
   const [ingredients, setIngredients] = useState({
     usedIngredients: [],
@@ -15,9 +15,12 @@ function DetailsIngredientsInProgress(props) {
   });
 
   const [checkIngredients, setCheckIngredients] = useState({});
-  const [stateStorage, setStateStorage] = useState({ cocktails: {}, meals: {} });
+  const [loadStorage, setStorageLoad] = useState(false);
+  const storage = readStorage(IN_PROGRESS_RECIPES_TOKEN);
 
   const { usedIngredients, ingredientQuantity } = ingredients;
+  const { [type]: typeOfRecipe } = storage;
+  const dataFromLocalStorage = typeOfRecipe[id];
 
   const setIngredientsInfo = (searchedStr) => {
     const info = [];
@@ -37,10 +40,6 @@ function DetailsIngredientsInProgress(props) {
   };
 
   useEffect(() => {
-    SaveStorageRecipeInProgress(IN_PROGRESS_RECIPES_TOKEN, type, id, [checkIngredients]);
-  }, [checkIngredients]);
-
-  useEffect(() => {
     const usedIngredientsInfo = setIngredientsInfo('strIngredient');
     const ingredientQuantityInfo = setIngredientsInfo('strMeasure');
 
@@ -48,31 +47,59 @@ function DetailsIngredientsInProgress(props) {
       usedIngredients: usedIngredientsInfo,
       ingredientQuantity: ingredientQuantityInfo,
     });
-    setStateStorage(readStorage(IN_PROGRESS_RECIPES_TOKEN));
-  }, [recipeDetails]);
+  }, [loading]);
 
   useEffect(() => {
-    ingredients.usedIngredients.map((_ingredient, index) => (
-      setCheckIngredients((prevCheckIngredients) => ({
-        ...prevCheckIngredients,
-        [index]: false,
-      }))
-    ));
+    // foi
+    if (Object.keys(checkIngredients).length) {
+      const filteredIngredients = Object.keys(checkIngredients)
+        .filter((value) => checkIngredients[value]);
+      SaveStorageRecipeInProgress(
+        IN_PROGRESS_RECIPES_TOKEN, type, id, filteredIngredients,
+      );
+    }
+  }, [checkIngredients, id, type]);
+
+  useEffect(() => {
+    if (dataFromLocalStorage) {
+      dataFromLocalStorage.map((ingredient) => {
+        const obj = { target: { name: ingredient, checked: true } };
+        return (handleChange(obj));
+      });
+    }
+  }, [loadStorage]);
+
+  // state Inicial
+  useEffect(() => {
+    usedIngredients.map((ingredient) => {
+      const startState = { target: { name: ingredient, checked: false } };
+      return (handleChange(startState));
+    });
+    setStorageLoad(true);
   }, [ingredients]);
 
   useEffect(() => {
     const arrayOfCheckeds = Object.values(checkIngredients);
-    const isSaveButtonDisabled = !(arrayOfCheckeds.every((checked) => checked === true));
+    // if (dataFromLocalStorage.length < usedIngredients.length) {
+    //   setdisabedBtn(false);
+    // }
+    const isSaveButtonDisabled = !(
+      arrayOfCheckeds.every((checked) => checked === true));
     setdisabedBtn(isSaveButtonDisabled);
   }, [checkIngredients]);
 
-  useEffect(() => {
-    const dataByPageType = stateStorage[type];
-    const arrayOfKeys = Object.keys(dataByPageType);
-    const idKey = arrayOfKeys.find((key) => key === id);
-    console.log((dataByPageType[idKey]));
-    // if (idKey) setCheckIngredients({ ...dataByPageType[idKey] });
-  }, [stateStorage, id, type]);
+  // const handleCheckedValue = (ingredient) => {
+  //   if (dataFromLocalStorage.legth > 0) {
+  //     const checkValueFromLocalStorage = dataFromLocalStorage
+  //       .filter((ingredientStorage) => ingredientStorage === ingredient);
+  //     if (checkValueFromLocalStorage) {
+  //       console.log(checkValueFromLocalStorage);
+  //       console.log('oi');
+  //       return true;
+  //     }
+  //   }
+  //   return checkIngredients[ingredient];
+  // };
 
   return (
     <section>
@@ -83,14 +110,14 @@ function DetailsIngredientsInProgress(props) {
             key={ index }
             data-testid={ `${index}-ingredient-step` }
             className={
-              checkIngredients[index] ? 'listIngredientsinProgress' : undefined
+              checkIngredients[ingredient] ? 'listIngredientsinProgress' : undefined
             }
           >
             <input
               type="checkbox"
-              name={ `${index}` }
+              name={ `${ingredient}` }
               onChange={ handleChange }
-              checked={ checkIngredients[`${index}`] }
+              checked={ checkIngredients[ingredient] }
             />
             {ingredient}
             {' '}
