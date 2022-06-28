@@ -14,9 +14,9 @@ export default function Header() {
   useEffect(() => {
     const titleNames = pathname.split(/-|\//gi);
     const handleTitles = [];
-    titleNames.forEach((title1) => {
-      if (title1 !== '') {
-        handleTitles.push(title1.charAt(0).toUpperCase() + title1.slice(1));
+    titleNames.forEach((titleWord) => {
+      if (titleWord !== '') {
+        handleTitles.push(titleWord.charAt(0).toUpperCase() + titleWord.slice(1));
       }
     });
     if (handleTitles.length > 1) {
