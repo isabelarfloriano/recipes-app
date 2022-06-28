@@ -153,6 +153,7 @@ const Provider = ({ children }) => {
       data = await fetchFoodsByIngredient(ingredientName);
     } else {
       data = await fetchDrinksByIngredient(ingredientName);
+      console.log('teste');
     }
 
     setRecipesByIngredient(data.slice(0, MAX_N_INGREDIENTS));

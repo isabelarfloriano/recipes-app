@@ -15,8 +15,6 @@ function Recipes() {
     }
   }, [recipesByIngredient, recipes]);
 
-  console.log(usedRecipes);
-
   return (
     <section>
       {usedRecipes
