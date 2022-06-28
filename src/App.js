@@ -7,8 +7,6 @@ import Foods from './pages/Foods';
 import Drinks from './pages/Drinks';
 import DetailsFoods from './pages/DetailsFoods';
 import DetailsDrinks from './pages/DetailsDrinks';
-import ProgressFoods from './pages/ProgressFoods';
-import ProgressDrinks from './pages/ProgressDrinks';
 import Explore from './pages/Explore';
 import ExploreFoods from './pages/ExploreFoods';
 import ExploreDrinks from './pages/ExploreDrinks';
@@ -20,6 +18,7 @@ import DoneRecipes from './pages/DoneRecipes';
 import FavoritesRecipes from './pages/FavoritesRecipes';
 import Provider from './context/Provider';
 import NotFound from './pages/NotFound';
+import ProgressRecipe from './pages/ProgressRecipe';
 
 function App() {
   return (
@@ -30,8 +29,8 @@ function App() {
         <Route exact path="/drinks" component={ Drinks } />
         <Route exact path="/foods/:id" component={ DetailsFoods } />
         <Route exact path="/drinks/:id" component={ DetailsDrinks } />
-        <Route path="/foods/:id/in-progress" component={ ProgressFoods } />
-        <Route path="/drinks/:id/in-progress" component={ ProgressDrinks } />
+        <Route path="/foods/:id/in-progress" component={ ProgressRecipe } />
+        <Route path="/drinks/:id/in-progress" component={ ProgressRecipe } />
         <Route exact path="/explore" component={ Explore } />
         <Route exact path="/explore/foods" component={ ExploreFoods } />
         <Route exact path="/explore/drinks" component={ ExploreDrinks } />
