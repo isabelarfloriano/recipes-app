@@ -15,7 +15,6 @@ function DetailsIngredientsInProgress(props) {
   });
 
   const [checkIngredients, setCheckIngredients] = useState({});
-  const [loadStorage, setStorageLoad] = useState(false);
   const storage = readStorage(IN_PROGRESS_RECIPES_TOKEN);
 
   const { usedIngredients, ingredientQuantity } = ingredients;
@@ -50,7 +49,6 @@ function DetailsIngredientsInProgress(props) {
   }, [loading]);
 
   useEffect(() => {
-    // foi
     if (Object.keys(checkIngredients).length) {
       const filteredIngredients = Object.keys(checkIngredients)
         .filter((value) => checkIngredients[value]);
@@ -63,43 +61,34 @@ function DetailsIngredientsInProgress(props) {
   useEffect(() => {
     if (dataFromLocalStorage) {
       dataFromLocalStorage.map((ingredient) => {
-        const obj = { target: { name: ingredient, checked: true } };
-        return (handleChange(obj));
+        const startState = { target: { name: ingredient, checked: true } };
+        return (handleChange(startState));
       });
     }
-  }, [loadStorage]);
+  }, [loading]);
 
-  // state Inicial
   useEffect(() => {
-    usedIngredients.map((ingredient) => {
-      const startState = { target: { name: ingredient, checked: false } };
-      return (handleChange(startState));
-    });
-    setStorageLoad(true);
+    if (dataFromLocalStorage) {
+      const filteredStateIngredients = usedIngredients
+        .filter((ingredient) => !dataFromLocalStorage.includes(ingredient));
+      filteredStateIngredients.map((ingredient) => {
+        const startState = { target: { name: ingredient, checked: false } };
+        return (handleChange(startState));
+      });
+    } else {
+      usedIngredients.map((ingredient) => {
+        const startState = { target: { name: ingredient, checked: false } };
+        return (handleChange(startState));
+      });
+    }
   }, [ingredients]);
 
   useEffect(() => {
     const arrayOfCheckeds = Object.values(checkIngredients);
-    // if (dataFromLocalStorage.length < usedIngredients.length) {
-    //   setdisabedBtn(false);
-    // }
     const isSaveButtonDisabled = !(
       arrayOfCheckeds.every((checked) => checked === true));
     setdisabedBtn(isSaveButtonDisabled);
   }, [checkIngredients]);
-
-  // const handleCheckedValue = (ingredient) => {
-  //   if (dataFromLocalStorage.legth > 0) {
-  //     const checkValueFromLocalStorage = dataFromLocalStorage
-  //       .filter((ingredientStorage) => ingredientStorage === ingredient);
-  //     if (checkValueFromLocalStorage) {
-  //       console.log(checkValueFromLocalStorage);
-  //       console.log('oi');
-  //       return true;
-  //     }
-  //   }
-  //   return checkIngredients[ingredient];
-  // };
 
   return (
     <section>
