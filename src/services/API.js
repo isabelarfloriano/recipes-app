@@ -143,8 +143,7 @@ export const requestDrinkDetails = async (id) => {
 
 export const fetchFoodsByIngredient = async (ingredient) => {
   try {
-    const response = await fetch(`${MEAL_BASE}filter.php?i=${ingredient.includes(' ')
-      ? ingredient.replace(' ', '_') : ingredient}`);
+    const response = await fetch(`${MEAL_BASE}filter.php?i=${ingredient}`);
     const { meals } = await response.json();
     return meals;
   } catch (error) {
@@ -154,11 +153,7 @@ export const fetchFoodsByIngredient = async (ingredient) => {
 
 export const fetchDrinksByIngredient = async (ingredient) => {
   try {
-    const response = await fetch(
-      `${DRINK_BASE}filter.php?i=${
-        ingredient.includes(' ') ? ingredient.replace(' ', '_') : ingredient
-      }`,
-    );
+    const response = await fetch(`${DRINK_BASE}filter.php?i=${ingredient}`);
     const { drinks } = await response.json();
     return drinks;
   } catch (error) {
