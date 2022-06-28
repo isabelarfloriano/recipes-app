@@ -10,13 +10,12 @@ function Recipes() {
   useEffect(() => {
     if (recipesByIngredient.length) {
       setUsedRecipes(recipesByIngredient);
-      console.log('teste');
     } else {
       setUsedRecipes(recipes);
-      console.log('teste2');
-      console.log(recipes);
     }
   }, [recipesByIngredient, recipes]);
+
+  console.log(usedRecipes);
 
   return (
     <section>

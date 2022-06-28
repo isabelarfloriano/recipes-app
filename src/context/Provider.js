@@ -8,6 +8,7 @@ import {
   fetchDrinkRecipe, fetchFoodRecipe, fetchDrinkCategory,
   fetchFoodCategory, fetchFoodByCategory, fetchDrinkByCategory,
   fetchFoodIngredient, fetchDrinkIngredient,
+  fetchFoodsByIngredient, fetchDrinksByIngredient,
 } from '../services/API';
 
 const Provider = ({ children }) => {
@@ -145,29 +146,18 @@ const Provider = ({ children }) => {
   };
 
   const handleIngredientFilter = async (recipeType, ingredientName) => {
+    const MAX_N_INGREDIENTS = 12;
     let data = [];
-    const filteredData = [];
-    console.log('teste', ingredientName);
 
-    if (recipeType.includes('foods')) {
-      data = await fetchFoodRecipe();
+    if (recipeType === 'foods') {
+      data = await fetchFoodsByIngredient(ingredientName);
     } else {
-      data = await fetchDrinkRecipe();
+      data = await fetchDrinksByIngredient(ingredientName);
     }
 
-    data.forEach((recipe, index) => {
-      Object.keys(recipe).forEach((key) => {
-        if (key.includes('strIngredient') && recipe[key].includes(ingredientName)) {
-          console.log('recipe', recipe);
-          console.log('key', recipe[key] === ingredientName);
-          console.log('recipe/key', recipe[key]);
-          filteredData.push(data[index]);
-        }
-      });
-    });
+    setRecipesByIngredient(data.slice(0, MAX_N_INGREDIENTS));
 
-    setRecipesByIngredient(filteredData);
-    if (recipeType.includes('foods')) {
+    if (recipeType === 'foods') {
       history.push('/foods');
     } else {
       history.push('/drinks');

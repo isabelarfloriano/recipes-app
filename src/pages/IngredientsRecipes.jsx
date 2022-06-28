@@ -23,20 +23,25 @@ const IngredientsRecipes = () => {
         <button
           type="button"
           onClick={
-            () => handleIngredientFilter(location.pathname, ingredient.strIngredient)
+            () => (location.pathname.includes('foods')
+              ? handleIngredientFilter('foods', ingredient.strIngredient)
+              : handleIngredientFilter('drinks', ingredient.strIngredient1))
           }
           key={ index }
           data-testid={ `${index}-recipe-card` }
         >
           <div data-testid={ `${index}-ingredient-card` }>
             <img
-              src={ `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png` }
+              src={ location.pathname.includes('foods')
+                ? `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`
+                : `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
               alt={ ingredient.strIngredient }
               data-testid={ `${index}-card-img` }
             />
 
             <p data-testid={ `${index}-card-name` }>
-              {ingredient.strIngredient}
+              {location.pathname.includes('foods')
+                ? ingredient.strIngredient : ingredient.strIngredient1}
             </p>
           </div>
         </button>
