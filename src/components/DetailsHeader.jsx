@@ -38,7 +38,7 @@ function DetailsImage() {
   };
 
   const handleShareRecipe = () => {
-    copy(window.location.href);
+    copy(window.location.href.split('/in-progress')[0]);
     setShowMessage(true);
   };
 

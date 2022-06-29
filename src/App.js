@@ -3,8 +3,6 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
-import ProgressFoods from './pages/ProgressFoods';
-import ProgressDrinks from './pages/ProgressDrinks';
 import Explore from './pages/Explore';
 import NationalitiesFoods from './pages/NationalitiesFoods';
 import Profile from './pages/Profile';
@@ -16,6 +14,7 @@ import RecipesPage from './pages/RecipesPage';
 import Details from './pages/Details';
 import ExploreRecipes from './pages/ExploreRecipes';
 import IngredientsRecipes from './pages/IngredientsRecipes';
+import ProgressRecipe from './pages/ProgressRecipe';
 
 function App() {
   return (
@@ -26,8 +25,8 @@ function App() {
         <Route exact path="/drinks" component={ RecipesPage } />
         <Route exact path="/foods/:id" component={ Details } />
         <Route exact path="/drinks/:id" component={ Details } />
-        <Route path="/foods/:id/in-progress" component={ ProgressFoods } />
-        <Route path="/drinks/:id/in-progress" component={ ProgressDrinks } />
+        <Route path="/foods/:id/in-progress" component={ ProgressRecipe } />
+        <Route path="/drinks/:id/in-progress" component={ ProgressRecipe } />
         <Route exact path="/explore" component={ Explore } />
         <Route exact path="/explore/foods" component={ ExploreRecipes } />
         <Route exact path="/explore/drinks" component={ ExploreRecipes } />
