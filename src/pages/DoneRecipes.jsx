@@ -71,27 +71,3 @@ function DoneRecipes() {
 }
 
 export default DoneRecipes;
-
-/* Mock Recipes
-
-{
-  id: '52882',
-  type: 'food',
-  nationality: 'British',
-  category: 'Seafood',
-  alcoholicOrNot: '',
-  name: 'nome-da-receita',
-  image: 'https://www.themealdb.com/images/media/meals/spswqs1511558697.jpg',
-  doneDate: '22/10/2022',
-  tags: ['Fish', 'Seafood', 'Dairy', 'Pie'],
-},
-{
-  id: '178319',
-  type: 'drink',
-  category: 'Cocktail',
-  alcoholicOrNot: 'Alcoholic',
-  name: 'Aquamarine',
-  image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
-  doneDate: '22/10/2022',
-  tags: null,
-}, */

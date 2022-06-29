@@ -6,51 +6,28 @@ import SearchBar from './SearchBar';
 
 export default function Header() {
   const [title, setTitle] = useState('');
-  const [hasSearchBtn, setHasSearchBtn] = useState(true);
+  const [hasSearchBtn, setHasSearchBtn] = useState(false);
   const [hasSearchBar, setHasSearchBar] = useState(false);
   const history = useHistory();
   const { location: { pathname } } = history;
 
   useEffect(() => {
-    switch (pathname) {
-    case '/foods':
-      return setTitle('Foods');
-    case '/drinks':
-      return setTitle('Drinks');
-    case '/explore':
-      setTitle('Explore');
-      setHasSearchBtn(false);
-      break;
-    case '/explore/foods':
-      setTitle('Explore Foods');
-      setHasSearchBtn(false);
-      break;
-    case '/explore/drinks':
-      setTitle('Explore Drinks');
-      setHasSearchBtn(false);
-      break;
-    case '/explore/foods/ingredients':
-    case '/explore/drinks/ingredients':
-      setTitle('Explore Ingredients');
-      setHasSearchBtn(false);
-      break;
-    case '/explore/foods/nationalities':
-      return setTitle('Explore Nationalities');
-    case '/profile':
-      setTitle('Profile');
-      setHasSearchBtn(false);
-      break;
-    case '/done-recipes':
-      setTitle('Done Recipes');
-      setHasSearchBtn(false);
-      break;
-    case '/favorite-recipes':
-      setTitle('Favorite Recipes');
-      setHasSearchBtn(false);
-      break;
-    default:
-      return undefined;
+    const titleNames = pathname.split(/-|\//gi);
+    const handleTitles = [];
+    titleNames.forEach((titleWord) => {
+      if (titleWord !== '') {
+        handleTitles.push(titleWord.charAt(0).toUpperCase() + titleWord.slice(1));
+      }
+    });
+    if (handleTitles.length > 1) {
+      setTitle(`${handleTitles[0]} ${handleTitles[handleTitles.length - 1]}`);
+    } else {
+      setTitle(`${handleTitles[0]}`);
     }
+
+    if (pathname === '/foods'
+      || pathname === '/drinks'
+      || pathname.includes('nationalities')) setHasSearchBtn(true);
   }, [pathname]);
 
   return (

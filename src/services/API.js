@@ -140,3 +140,59 @@ export const requestDrinkDetails = async (id) => {
     console.log(error);
   }
 };
+
+export const fetchFoodsByIngredient = async (ingredient) => {
+  try {
+    const response = await fetch(`${MEAL_BASE}filter.php?i=${ingredient}`);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchDrinksByIngredient = async (ingredient) => {
+  try {
+    const response = await fetch(`${DRINK_BASE}filter.php?i=${ingredient}`);
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const fetchByName = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchByIngredient = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const fetchByFirstLetter = async (baseUrl, name) => {
+  try {
+    const response = await fetch(
+      `https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${name}`,
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+  }
+};

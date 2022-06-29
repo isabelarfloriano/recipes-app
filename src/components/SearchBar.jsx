@@ -1,77 +1,71 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
+import { fetchByFirstLetter, fetchByIngredient, fetchByName } from '../services/API';
 import FormInput from './FormInput';
 
 export default function SearchBar() {
   const [searchData, setSearchData] = useState({
     searchValue: '',
     searchRadio: '',
+    baseUrl: '',
   });
-  const [data, setData] = useState([]);
   const history = useHistory();
   const { location: { pathname } } = history;
 
-  const { setRecipesFoods, setRecipesDrinks } = useContext(Context);
+  const { setRecipes, recipes } = useContext(Context);
 
   useEffect(() => {
     switch (pathname) {
     case '/foods':
-      if (data.length === 1) {
-        history.push(`/foods/${data[0].idMeal}`);
+      setSearchData((prevData) => ({
+        ...prevData,
+        baseUrl: 'themealdb',
+      }));
+      if (recipes.length === 1) {
+        history.push(`/foods/${recipes[0].idMeal}`);
       }
       break;
     case '/drinks':
-      if (data.length === 1) {
-        history.push(`/drinks/${data[0].idDrink}`);
+      setSearchData((prevData) => ({
+        ...prevData,
+        baseUrl: 'thecocktaildb',
+      }));
+      if (recipes.length === 1) {
+        history.push(`/drinks/${recipes[0].idDrink}`);
       }
       break;
     default:
       break;
     }
-  }, [data, history, pathname]);
+  }, [recipes, history, pathname]);
 
-  const fetchAPI = async (URL) => {
-    try {
-      const MAX_N_RECIPES = 12;
-      const response = await fetch(URL);
-      const dataAPI = await response.json();
-      switch (pathname) {
-      case '/foods':
-        if (dataAPI.meals === null) {
-          return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-        }
-        setData(dataAPI.meals.slice(0, MAX_N_RECIPES));
-        setRecipesFoods(dataAPI.meals.slice(0, MAX_N_RECIPES));
-        break;
-      case '/drinks':
-        if (dataAPI.drinks === null) {
-          return global.alert('Sorry, we haven\'t found any recipes for these filters.');
-        }
-        setData(dataAPI.drinks.slice(0, MAX_N_RECIPES));
-        setRecipesDrinks(dataAPI.drinks.slice(0, MAX_N_RECIPES));
-        break;
-      default:
-        break;
-      }
-    } catch (error) {
-      global.alert(error.message);
-    }
-  };
+  const switchSearchAPIUrl = async (radioType, inputSearch) => {
+    const MAX_N_RECIPES = 12;
+    let apiData = [];
 
-  const switchSearchAPIUrl = async (radioType, inputSearch, baseUrl) => {
     switch (radioType) {
     case 'Ingredient':
-      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/filter.php?i=${inputSearch}`);
+      apiData = await fetchByIngredient(searchData.baseUrl, inputSearch);
       break;
     case 'Name':
-      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?s=${inputSearch}`);
+      apiData = await fetchByName(searchData.baseUrl, inputSearch);
       break;
     case 'First Letter':
-      await fetchAPI(`https://www.${baseUrl}.com/api/json/v1/1/search.php?f=${inputSearch}`);
+      apiData = await fetchByFirstLetter(searchData.baseUrl, inputSearch);
       break;
     default:
       return undefined;
+    }
+
+    if (!apiData.meals && !apiData.drinks) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+
+    if (pathname === '/foods') {
+      setRecipes(apiData.meals.slice(0, MAX_N_RECIPES));
+    } else {
+      setRecipes(apiData.drinks.slice(0, MAX_N_RECIPES));
     }
   };
 
@@ -86,19 +80,12 @@ export default function SearchBar() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const { searchValue, searchRadio } = searchData;
+
     if (searchValue.length > 1 && searchRadio === 'First Letter') {
       return global.alert('Your search must have only 1 (one) character');
     }
-    switch (pathname) {
-    case '/foods':
-      await switchSearchAPIUrl(searchRadio, searchValue, 'themealdb');
-      break;
-    case '/drinks':
-      await switchSearchAPIUrl(searchRadio, searchValue, 'thecocktaildb');
-      break;
-    default:
-      break;
-    }
+
+    await switchSearchAPIUrl(searchRadio, searchValue);
   };
 
   return (
