@@ -5,7 +5,7 @@ import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
 import Profile from '../pages/Profile';
 
-const TOTAL_BUTTONS = 6;
+const TOTAL_BUTTONS = 7;
 
 describe('Tests Profile', () => {
   test('Verify if email is correctly render', () => {
