@@ -25,8 +25,6 @@ const FavoritesRecipes = () => {
     setFilteredRecipes(favoriteRecipes);
   }, []);
 
-  console.log(filteredRecipes);
-
   const removeFavoriteRecipe = (recipe) => {
     removeFromStorage(FAVORITE_RECIPES_TOKEN, recipe.id);
     const removeState = filteredRecipes.filter((index) => index.id !== recipe.id);
