@@ -25,7 +25,9 @@ export default function Header() {
       setTitle(`${handleTitles[0]}`);
     }
 
-    if (pathname === '/foods' || pathname === '/drinks') setHasSearchBtn(true);
+    if (pathname === '/foods'
+      || pathname === '/drinks'
+      || pathname.includes('nationalities')) setHasSearchBtn(true);
   }, [pathname]);
 
   return (
