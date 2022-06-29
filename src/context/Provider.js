@@ -15,22 +15,17 @@ const Provider = ({ children }) => {
   const history = useHistory();
 
   const [user, setUser] = useState({ email: '', password: '' });
-  const [isdisabled, setIsdisabled] = useState(true);
+  const [recipes, setRecipes] = useState([]);
+  const [ingredients, setIngredients] = useState([]);
+  const [recipesByIngredient, setRecipesByIngredient] = useState([]);
   const [recipeDetails, setRecipeDetails] = useState([]);
   const [recomendation, setRecomendation] = useState([]);
+  const [isdisabled, setIsdisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [nationatilyFoods, setNationatilyFoods] = useState([]);
-  const [nationalityFilter, setNationalityFilter] = useState('');
-  const [nationatilyCategoriesFoods, setNationatilyCategoriesFoods] = useState([]);
-  const [recipesByIngredient, setRecipesByIngredient] = useState([]);
-  const [recipes, setRecipes] = useState([]);
   const [categoriesFilter, setCategoriesFilter] = useState({
     categories: [],
     currentCategory: '',
   });
-
-  const [ingredients, setIngredients] = useState([]);
-  // const [natiotalityRecipes, setNationalityRecipes] = useState([]);
 
   const validate = () => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -175,12 +170,6 @@ const Provider = ({ children }) => {
     getDetailsPageInfo,
     loading,
     recomendation,
-    nationatilyFoods,
-    setNationatilyFoods,
-    nationalityFilter,
-    setNationalityFilter,
-    nationatilyCategoriesFoods,
-    setNationatilyCategoriesFoods,
     recipes,
     categories,
     getRecipesInfo,

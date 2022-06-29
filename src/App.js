@@ -6,8 +6,6 @@ import Login from './pages/Login';
 import ProgressFoods from './pages/ProgressFoods';
 import ProgressDrinks from './pages/ProgressDrinks';
 import Explore from './pages/Explore';
-// import IngredientsFoods from './pages/IngredientsFoods';
-// import IngredientsDrinks from './pages/IngredientsDrinks';
 import NationalitiesFoods from './pages/NationalitiesFoods';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';
