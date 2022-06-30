@@ -10,7 +10,11 @@ import doneIcon from '../images/doneIcon.svg';
 
 function Footer() {
   return (
-    <Navbar data-testid="footer" fixed="bottom">
+    <Navbar
+      fixed="bottom"
+      className="border-top bg-white"
+      data-testid="footer"
+    >
       <Container>
         <Link to="/foods">
           <img src={ mealIcon } alt="Food Icon" data-testid="food-bottom-btn" />
