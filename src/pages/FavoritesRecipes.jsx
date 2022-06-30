@@ -4,20 +4,17 @@ import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
 import {
   FAVORITE_RECIPES_TOKEN, readStorage,
   removeFromStorage,
 } from '../services/recipesStorage';
-
-const copy = require('clipboard-copy');
+import ShareBtn from '../components/ShareBtn';
 
 const FavoritesRecipes = () => {
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
   const [favorite, setFavorite] = useState(true);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
@@ -29,6 +26,14 @@ const FavoritesRecipes = () => {
     setFilteredRecipes(removeState);
 
     setFavorite((prevFavorite) => (!prevFavorite));
+  };
+
+  const redirectClick = (recipe) => {
+    if (recipe.type === 'drink') {
+      history.push(`/drinks/${recipe.id}`);
+    } else {
+      history.push(`/foods/${recipe.id}`);
+    }
   };
 
   const handleShareRecipe = ({ target }) => {
@@ -106,6 +111,21 @@ const FavoritesRecipes = () => {
                 <Card.Title data-testid={ `${index}-horizontal-name` }>
                   { recipe.name }
                 </Card.Title>
+
+              </button>
+              <Card.Subtitle
+                className="mb-2 text-muted"
+                data-testid={ `${index}-horizontal-top-text` }
+              >
+                { recipe.type === 'food'
+                  ? (` ${recipe.nationality} - ${recipe.category}`)
+                  : recipe.alcoholicOrNot}
+              </Card.Subtitle>
+              <ShareBtn
+                testId={ `${index}-horizontal-share-btn` }
+                route={ `/${recipe.type}s/${recipe.id}` }
+              />
+
                 <Card.Subtitle
                   className="mb-2 text-muted"
                   data-testid={ `${index}-horizontal-top-text` }
@@ -126,6 +146,7 @@ const FavoritesRecipes = () => {
                   name={ `/${recipe.type}s/${recipe.id}` }
                 />
               </button>
+
               <button
                 type="button"
                 onClick={ () => removeFavoriteRecipe(recipe) }
@@ -136,7 +157,6 @@ const FavoritesRecipes = () => {
                   data-testid={ `${index}-horizontal-favorite-btn` }
                 />
               </button>
-              {showMessage ? 'Link copied!' : ''}
             </Card.Body>
           </Card>
         ))
