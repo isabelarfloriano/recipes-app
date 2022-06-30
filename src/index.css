@@ -20,3 +20,7 @@ a {
   background: none !important;
   border: none !important;
 }
+
+.subtitle-text {
+  font-size: 0.7rem !important;
+}
