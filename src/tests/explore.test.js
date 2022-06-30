@@ -6,7 +6,7 @@ import Explore from '../pages/Explore';
 import App from '../App';
 import { fetchDrink, fetchFood } from '../services/API';
 
-const exploreFood = '/explore/drinks';
+const exploreDrinks = '/explore/drinks';
 
 describe('Tests Explore', () => {
   test('Verify if the elements are correctly render', () => {
@@ -50,10 +50,10 @@ describe('Tests Explore', () => {
       name: /Explore Drinks/i,
     });
     userEvent.click(drinksButton);
-    expect(history.location.pathname).toBe(exploreFood);
+    expect(history.location.pathname).toBe(exploreDrinks);
   });
 
-  test('Verify if the button surprise me redirect correctly - ExploreFoods', async () => {
+  test('Verify if the button surprise me redirect correctly, ExploreDrinks', async () => {
     const { history } = renderWithRouter(<App />);
     history.push('/explore/foods');
 
@@ -70,7 +70,7 @@ describe('Tests Explore', () => {
 
   test('Verify if the elements are correctly render - Explore Drinks', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push(exploreFood);
+    history.push(exploreDrinks);
     const byIngredientsButton = screen.getByRole('button', {
       name: /By Ingredient/i,
     });
@@ -99,7 +99,7 @@ describe('Tests Explore', () => {
   });
   test('Verify if button surprise me redirect correctly - ExploreDrinks', async () => {
     const { history } = renderWithRouter(<App />);
-    history.push(exploreFood);
+    history.push(exploreDrinks);
     const surpriseMeButton = screen.getByRole('button', {
       name: /Surprise me!/i,
     });
