@@ -20,10 +20,11 @@ function ShareBtn({ testId, route }) {
   };
 
   return (
-    <section>
+    <section className="d-flex">
       <button
         type="button"
         onClick={ handleShareRecipe }
+        className="icon-button"
       >
         <img
           src={ shareIcon }
@@ -32,7 +33,7 @@ function ShareBtn({ testId, route }) {
         />
       </button>
       {showMessage && (
-        <span>Link copied!</span>
+        <span style={ { fontSize: '12px' } } className="text-muted">Link copied!</span>
       )}
     </section>
   );
