@@ -4,13 +4,11 @@ import Card from 'react-bootstrap/Card';
 import Header from '../components/Header';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
 import {
   FAVORITE_RECIPES_TOKEN, readStorage,
   removeFromStorage,
 } from '../services/recipesStorage';
-
-const copy = require('clipboard-copy');
+import ShareBtn from '../components/ShareBtn';
 
 const FavoritesRecipes = () => {
   const history = useHistory();
@@ -19,7 +17,6 @@ const FavoritesRecipes = () => {
 
   const [favorite, setFavorite] = useState(true);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [showMessage, setShowMessage] = useState(false);
 
   useEffect(() => {
     setFilteredRecipes(favoriteRecipes);
@@ -32,18 +29,6 @@ const FavoritesRecipes = () => {
 
     setFavorite((prevFavorite) => (!prevFavorite));
   };
-
-  const handleShareRecipe = ({ target }) => {
-    copy(`${window.location.origin}${target.name}`);
-    setShowMessage(true);
-  };
-
-  if (showMessage) {
-    const MESSAGE_TIME = 2000;
-    setTimeout(() => {
-      setShowMessage(false);
-    }, MESSAGE_TIME);
-  }
 
   const redirectClick = (recipe) => {
     if (recipe.type === 'drink') {
@@ -123,17 +108,10 @@ const FavoritesRecipes = () => {
                   ? (` ${recipe.nationality} - ${recipe.category}`)
                   : recipe.alcoholicOrNot}
               </Card.Subtitle>
-              <button
-                type="button"
-                onClick={ handleShareRecipe }
-              >
-                <img
-                  src={ shareIcon }
-                  alt="Share Icon"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  name={ `/${recipe.type}s/${recipe.id}` }
-                />
-              </button>
+              <ShareBtn
+                testId={ `${index}-horizontal-share-btn` }
+                route={ `/${recipe.type}s/${recipe.id}` }
+              />
               <button
                 type="button"
                 onClick={ () => removeFavoriteRecipe(recipe) }
@@ -144,7 +122,6 @@ const FavoritesRecipes = () => {
                   data-testid={ `${index}-horizontal-favorite-btn` }
                 />
               </button>
-              {showMessage ? 'Link copied!' : ''}
             </Card.Body>
           </Card>
         ))

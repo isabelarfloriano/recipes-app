@@ -3,14 +3,12 @@ import Card from 'react-bootstrap/Card';
 import { useLocation } from 'react-router-dom';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
-import shareIcon from '../images/shareIcon.svg';
 import Context from '../context/Context';
 import {
   FAVORITE_RECIPES_TOKEN,
   readStorage, removeFromStorage, SaveStorage,
 } from '../services/recipesStorage';
-
-const copy = require('clipboard-copy');
+import ShareBtn from './ShareBtn';
 
 function DetailsImage() {
   const location = useLocation();
@@ -35,11 +33,6 @@ function DetailsImage() {
     }
 
     setFavorite((prevFavorite) => (!prevFavorite));
-  };
-
-  const handleShareRecipe = () => {
-    copy(window.location.href.split('/in-progress')[0]);
-    setShowMessage(true);
   };
 
   if (showMessage) {
@@ -102,12 +95,6 @@ function DetailsImage() {
         </Card.Subtitle>
         <button
           type="button"
-          onClick={ handleShareRecipe }
-        >
-          <img src={ shareIcon } alt="Share Icon" data-testid="share-btn" />
-        </button>
-        <button
-          type="button"
           onClick={ handleFavoriteRecipe }
         >
           <img
@@ -116,7 +103,7 @@ function DetailsImage() {
             data-testid="favorite-btn"
           />
         </button>
-        {showMessage ? 'Link copied!' : ''}
+        <ShareBtn testId="share-btn" route={ `/${recipeInfo.type}s/${recipeInfo.id}` } />
       </Card.Body>
     </Card>
   );

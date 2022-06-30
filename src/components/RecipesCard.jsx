@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
 import Badge from 'react-bootstrap/Badge';
-import shareIcon from '../images/shareIcon.svg';
-
-const copy = require('clipboard-copy');
+import ShareBtn from './ShareBtn';
 
 function RecipesCard(props) {
-  const [showMessage, setShowMessage] = useState(false);
-
   const {
     index,
     image,
@@ -22,19 +18,6 @@ function RecipesCard(props) {
     type,
     id,
   } = props;
-
-  const handleShareRecipe = (typeRecipe, idRecipe) => {
-    const BASE_URL = 'http://localhost:3000/';
-    copy(`${BASE_URL}${typeRecipe}s/${idRecipe}`);
-    setShowMessage(true);
-  };
-
-  if (showMessage) {
-    const MESSAGE_TIME = 2000;
-    setTimeout(() => {
-      setShowMessage(false);
-    }, MESSAGE_TIME);
-  }
 
   return (
     <Card
@@ -56,18 +39,11 @@ function RecipesCard(props) {
           {
             nationality ? `${nationality} - ${categoryText}` : alcoholic
           }
-          <button
-            type="button"
-            onClick={ () => handleShareRecipe(type, id) }
-          >
-            <img
-              src={ shareIcon }
-              alt="Share Icon"
-              data-testid={ `${index}-horizontal-share-btn` }
-            />
-          </button>
+          <ShareBtn
+            testId={ `${index}-horizontal-share-btn` }
+            route={ `/${type}s/${id}` }
+          />
         </Card.Subtitle>
-        {showMessage ? 'Link copied!' : ''}
         <Link to={ `/${type}s/${id}` }>
           <Card.Title
             data-testid={ `${index}-horizontal-name` }
