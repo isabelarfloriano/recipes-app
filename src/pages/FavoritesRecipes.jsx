@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import Card from 'react-bootstrap/Card';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
@@ -13,8 +13,6 @@ import {
 const copy = require('clipboard-copy');
 
 const FavoritesRecipes = () => {
-  const history = useHistory();
-
   const favoriteRecipes = readStorage(FAVORITE_RECIPES_TOKEN);
 
   const [favorite, setFavorite] = useState(true);
@@ -44,14 +42,6 @@ const FavoritesRecipes = () => {
       setShowMessage(false);
     }, MESSAGE_TIME);
   }
-
-  const redirectClick = (recipe) => {
-    if (recipe.type === 'drink') {
-      history.push(`/drinks/${recipe.id}`);
-    } else {
-      history.push(`/foods/${recipe.id}`);
-    }
-  };
 
   const filterByAll = async () => {
     setFilteredRecipes(favoriteRecipes);
@@ -96,33 +86,35 @@ const FavoritesRecipes = () => {
         filteredRecipes.length > 0
         && filteredRecipes.map((recipe, index) => (
           <Card key={ `${recipe.name}${index}` }>
-            <button
-              type="button"
-              onClick={ () => redirectClick(recipe) }
+            <Link
+              to={ recipe.type === 'drink'
+                ? `/drinks/${recipe.id}` : `/foods/${recipe.id}` }
             >
+
               <Card.Img
                 variant="top"
                 src={ recipe.image }
                 data-testid={ `${index}-horizontal-image` }
               />
-            </button>
+
+            </Link>
             <Card.Body>
-              <button
-                type="button"
-                onClick={ () => redirectClick(recipe) }
+              <Link
+                to={ recipe.type === 'drink'
+                  ? `/drinks/${recipe.id}` : `/foods/${recipe.id}` }
               >
                 <Card.Title data-testid={ `${index}-horizontal-name` }>
                   { recipe.name }
                 </Card.Title>
-              </button>
-              <Card.Subtitle
-                className="mb-2 text-muted"
-                data-testid={ `${index}-horizontal-top-text` }
-              >
-                { recipe.type === 'food'
-                  ? (` ${recipe.nationality} - ${recipe.category}`)
-                  : recipe.alcoholicOrNot}
-              </Card.Subtitle>
+                <Card.Subtitle
+                  className="mb-2 text-muted"
+                  data-testid={ `${index}-horizontal-top-text` }
+                >
+                  { recipe.type === 'food'
+                    ? (` ${recipe.nationality} - ${recipe.category}`)
+                    : recipe.alcoholicOrNot}
+                </Card.Subtitle>
+              </Link>
               <button
                 type="button"
                 onClick={ handleShareRecipe }
