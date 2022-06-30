@@ -1,11 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import Context from '../context/Context';
 
 function CarouselCard({ index }) {
-  const history = useHistory();
   const location = useLocation();
 
   const { recomendation } = useContext(Context);
@@ -32,7 +31,7 @@ function CarouselCard({ index }) {
   }, [recomendation]);
 
   return (
-    <button type="button" onClick={ () => history.push(cardInfo.route) }>
+    <Link to={ cardInfo.route }>
       <Card data-testid={ `${index}-recomendation-card` }>
         <Card.Img variant="top" src={ cardInfo.thumb } />
         <Card.Body>
@@ -44,7 +43,7 @@ function CarouselCard({ index }) {
           </Card.Title>
         </Card.Body>
       </Card>
-    </button>
+    </Link>
   );
 }
 
