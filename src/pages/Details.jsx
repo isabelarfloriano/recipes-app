@@ -15,7 +15,7 @@ const Details = () => {
   useEffect(() => {
     const endpoints = location.pathname.split('/');
     getDetailsPageInfo(endpoints[1], endpoints[2]);
-  }, []);
+  }, [location]);
 
   return loading ? <h2>Carregando...</h2> : (
     <>
