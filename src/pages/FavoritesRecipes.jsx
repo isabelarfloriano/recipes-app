@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import Card from 'react-bootstrap/Card';
 import Header from '../components/Header';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
@@ -27,26 +27,6 @@ const FavoritesRecipes = () => {
 
     setFavorite((prevFavorite) => (!prevFavorite));
   };
-
-  const redirectClick = (recipe) => {
-    if (recipe.type === 'drink') {
-      history.push(`/drinks/${recipe.id}`);
-    } else {
-      history.push(`/foods/${recipe.id}`);
-    }
-  };
-
-  const handleShareRecipe = ({ target }) => {
-    copy(`${window.location.origin}${target.name}`);
-    setShowMessage(true);
-  };
-
-  if (showMessage) {
-    const MESSAGE_TIME = 2000;
-    setTimeout(() => {
-      setShowMessage(false);
-    }, MESSAGE_TIME);
-  }
 
   const filterByAll = async () => {
     setFilteredRecipes(favoriteRecipes);
@@ -95,13 +75,11 @@ const FavoritesRecipes = () => {
               to={ recipe.type === 'drink'
                 ? `/drinks/${recipe.id}` : `/foods/${recipe.id}` }
             >
-
               <Card.Img
                 variant="top"
                 src={ recipe.image }
                 data-testid={ `${index}-horizontal-image` }
               />
-
             </Link>
             <Card.Body>
               <Link
@@ -111,8 +89,7 @@ const FavoritesRecipes = () => {
                 <Card.Title data-testid={ `${index}-horizontal-name` }>
                   { recipe.name }
                 </Card.Title>
-
-              </button>
+              </Link>
               <Card.Subtitle
                 className="mb-2 text-muted"
                 data-testid={ `${index}-horizontal-top-text` }
@@ -125,28 +102,6 @@ const FavoritesRecipes = () => {
                 testId={ `${index}-horizontal-share-btn` }
                 route={ `/${recipe.type}s/${recipe.id}` }
               />
-
-                <Card.Subtitle
-                  className="mb-2 text-muted"
-                  data-testid={ `${index}-horizontal-top-text` }
-                >
-                  { recipe.type === 'food'
-                    ? (` ${recipe.nationality} - ${recipe.category}`)
-                    : recipe.alcoholicOrNot}
-                </Card.Subtitle>
-              </Link>
-              <button
-                type="button"
-                onClick={ handleShareRecipe }
-              >
-                <img
-                  src={ shareIcon }
-                  alt="Share Icon"
-                  data-testid={ `${index}-horizontal-share-btn` }
-                  name={ `/${recipe.type}s/${recipe.id}` }
-                />
-              </button>
-
               <button
                 type="button"
                 onClick={ () => removeFavoriteRecipe(recipe) }
