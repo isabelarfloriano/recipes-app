@@ -3,7 +3,7 @@ import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './helpers/renderWithRouter';
 import App from '../App';
-import { mealsIngredients, drinksIngredients } from './helpers/data';
+import { mealsIngredients, drinksIngredients } from './helpers/dataIngredients';
 
 const exploreFoods = '/explore/foods';
 const exploreDrinks = '/explore/drinks';
