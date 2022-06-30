@@ -12,13 +12,13 @@ const Explore = () => (
     <Header />
     <Container>
       <Card className="mb-3">
-        <Link to="foods">
+        <Link to="/explore/foods" data-testid="explore-foods">
           <Card.Img variant="top" src={ foodsImage } />
           <Card.Title className="text-danger text-center my-3">Explore Foods</Card.Title>
         </Link>
       </Card>
       <Card>
-        <Link to="drinks">
+        <Link to="/explore/drinks" data-testid="explore-drinks">
           <Card.Img variant="top" src={ drinksImage } />
           <Card.Title className="text-danger text-center my-3">Explore Drinks</Card.Title>
         </Link>
