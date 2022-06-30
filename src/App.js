@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './pages/Login';
 import Explore from './pages/Explore';
 import NationalitiesFoods from './pages/NationalitiesFoods';
@@ -15,6 +14,8 @@ import Details from './pages/Details';
 import ExploreRecipes from './pages/ExploreRecipes';
 import IngredientsRecipes from './pages/IngredientsRecipes';
 import ProgressRecipe from './pages/ProgressRecipe';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Card, Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 
 function Recipes() {
   const { recipes, recipesByIngredient } = useContext(Context);
   const [usedRecipes, setUsedRecipes] = useState([]);
-  const history = useHistory();
 
   useEffect(() => {
     if (recipesByIngredient.length) {
@@ -16,33 +16,37 @@ function Recipes() {
   }, [recipesByIngredient, recipes]);
 
   return (
-    <section>
+    <Container className="d-flex flex-wrap">
       {usedRecipes
         && usedRecipes.map((recipe, index) => (
-          <div key={ index } data-testid={ `${index}-recipe-card` }>
-            <button
-              type="button"
-              onClick={ () => {
-                history.push(
-                  `/${recipe.idMeal
-                    ? 'foods' : 'drinks'}/${recipe.idMeal
-                    ? recipe.idMeal : recipe.idDrink}`,
-                );
-              } }
+          <Card
+            style={ { width: '8rem' } }
+            key={ index }
+            data-testid={ `${index}-recipe-card` }
+            className="mx-2 mb-4 shadow"
+          >
+            <Link
+              to={ `/${recipe.idMeal ? 'foods' : 'drinks'}/${recipe.idMeal
+                ? recipe.idMeal : recipe.idDrink}` }
             >
-              <img
+              <Card.Img
+                variant="top"
                 src={ recipe.strMealThumb ? recipe.strMealThumb : recipe.strDrinkThumb }
                 alt="recipe thumb"
                 data-testid={ `${index}-card-img` }
+                className="mb-4"
               />
 
-              <p data-testid={ `${index}-card-name` }>
+              <Card.Title
+                className="text-center text-danger"
+                data-testid={ `${index}-card-name` }
+              >
                 {recipe.strMeal ? recipe.strMeal : recipe.strDrink}
-              </p>
-            </button>
-          </div>
+              </Card.Title>
+            </Link>
+          </Card>
         ))}
-    </section>
+    </Container>
   );
 }
 
