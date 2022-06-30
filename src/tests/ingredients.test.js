@@ -7,6 +7,8 @@ import { mealsIngredients, drinksIngredients } from './helpers/dataIngredients';
 
 const exploreFoods = '/explore/foods';
 const exploreDrinks = '/explore/drinks';
+const foodsIngredients = '/explore/foods/ingredients';
+const drinksIngredientsRoute = '/explore/drinks/ingredients';
 
 describe('Tests Ingredients Recipes', () => {
   test('Verify route for foods ingredients', () => {
@@ -17,7 +19,7 @@ describe('Tests Ingredients Recipes', () => {
       name: /By Ingredient/i,
     });
     userEvent.click(ingredientsButton);
-    expect(history.location.pathname).toBe('/explore/foods/ingredients');
+    expect(history.location.pathname).toBe(foodsIngredients);
   });
 
   test('Verify route for drinks ingredients', () => {
@@ -28,12 +30,12 @@ describe('Tests Ingredients Recipes', () => {
       name: /By Ingredient/i,
     });
     userEvent.click(ingredientsButton);
-    expect(history.location.pathname).toBe('/explore/drinks/ingredients');
+    expect(history.location.pathname).toBe(drinksIngredientsRoute);
   });
 
   test('Header and Footer must be render', () => {
     const { history } = renderWithRouter(<App />);
-    history.push(exploreFoods);
+    history.push(foodsIngredients);
     const ingredientsTitle = screen.getByRole('heading');
     expect(ingredientsTitle).toBeInTheDocument();
     const foodsImg = screen.getByAltText(/Food Icon/i);
@@ -42,7 +44,7 @@ describe('Tests Ingredients Recipes', () => {
     expect(drinksImg).toBeInTheDocument();
     const exploreImg = screen.getByAltText(/Explore Icon/i);
     expect(exploreImg).toBeInTheDocument();
-    history.push(exploreDrinks);
+    history.push(drinksIngredientsRoute);
     expect(ingredientsTitle).toBeInTheDocument();
     expect(foodsImg).toBeInTheDocument();
     expect(drinksImg).toBeInTheDocument();
@@ -83,12 +85,12 @@ describe('Tests Ingredients Recipes', () => {
     );
 
     const { history } = renderWithRouter(<App />);
-    history.push('/explore/drinks');
+    history.push(exploreDrinks);
     const ingredientsButton = screen.getByRole('button', {
       name: /By Ingredient/i,
     });
     userEvent.click(ingredientsButton);
-    expect(history.location.pathname).toBe('/explore/drinks/ingredients');
+    expect(history.location.pathname).toBe(drinksIngredientsRoute);
     const ingredientCardEl = await screen.findByRole('button', { name: /light rum/i });
     expect(ingredientCardEl).toBeInTheDocument();
     userEvent.click(ingredientCardEl);
