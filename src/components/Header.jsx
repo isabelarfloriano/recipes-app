@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import profileIcon from '../images/profileIcon.svg';
 import searchTopBTN from '../images/searchIcon.svg';
 import SearchBar from './SearchBar';
@@ -33,16 +33,20 @@ export default function Header() {
   return (
     <header className="border-bottom pb-2 mb-4">
       <section className="d-flex justify-content-between align-items-center mx-2">
-        <Link to="/profile">
+        <button
+          type="button"
+          className="icon-button"
+          onClick={ () => history.push('/profile') }
+        >
           <img src={ profileIcon } alt="Profile Icon" data-testid="profile-top-btn" />
-        </Link>
-        <p data-testid="page-title">{title.toUpperCase()}</p>
+        </button>
+        <h5 data-testid="page-title">{title}</h5>
         { hasSearchBtn
         && (
           <button
             type="button"
             onClick={ () => setHasSearchBar(!hasSearchBar) }
-            style={ { border: 'none', background: 'none' } }
+            className="icon-button"
           >
             <img src={ searchTopBTN } alt="Search Icon" data-testid="search-top-btn" />
           </button>)}
