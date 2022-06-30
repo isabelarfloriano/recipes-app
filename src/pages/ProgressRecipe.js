@@ -14,14 +14,10 @@ const ProgressRecipe = () => {
   const endpoints = location.pathname.split('/');
 
   const matchEndPointKey = () => {
-    switch (endpoints[1]) {
-    case 'foods':
+    if (endpoints[1] === 'foods') {
       return 'meals';
-    case 'drinks':
-      return 'cocktails';
-    default:
-      return undefined;
     }
+    return 'cocktails';
   };
 
   useEffect(() => {

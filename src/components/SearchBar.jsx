@@ -17,15 +17,6 @@ export default function SearchBar() {
 
   useEffect(() => {
     switch (pathname) {
-    case '/foods':
-      setSearchData((prevData) => ({
-        ...prevData,
-        baseUrl: 'themealdb',
-      }));
-      if (recipes.length === 1) {
-        history.push(`/foods/${recipes[0].idMeal}`);
-      }
-      break;
     case '/drinks':
       setSearchData((prevData) => ({
         ...prevData,
@@ -36,6 +27,13 @@ export default function SearchBar() {
       }
       break;
     default:
+      setSearchData((prevData) => ({
+        ...prevData,
+        baseUrl: 'themealdb',
+      }));
+      if (recipes.length === 1) {
+        history.push(`/foods/${recipes[0].idMeal}`);
+      }
       break;
     }
   }, [recipes, history, pathname]);
@@ -57,7 +55,6 @@ export default function SearchBar() {
     default:
       return undefined;
     }
-
     if (!apiData.meals && !apiData.drinks) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
