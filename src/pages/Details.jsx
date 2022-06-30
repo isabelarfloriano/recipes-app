@@ -6,6 +6,7 @@ import DetailsInstructions from '../components/DetailsInstructions';
 import DetailsRecommended from '../components/DetailsRecommended';
 import DetailsVideo from '../components/DetailsVideo';
 import InitRecipeBtn from '../components/InitRecipeBtn';
+import Loading from '../components/Loading';
 import Context from '../context/Context';
 
 const Details = () => {
@@ -17,7 +18,7 @@ const Details = () => {
     getDetailsPageInfo(endpoints[1], endpoints[2]);
   }, [location]);
 
-  return loading ? <h2>Carregando...</h2> : (
+  return loading ? <Loading /> : (
     <>
       <DetailsHeader />
       <DetailsIngredients />

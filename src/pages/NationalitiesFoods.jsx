@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import Context from '../context/Context';
 import { fetchFoodNationality, fetchFoodByArea } from '../services/API';
 
 const NationalitiesFoods = () => {
   const history = useHistory();
 
-  const { recipes, getRecipesInfo, categories } = useContext(Context);
+  const { recipes, getRecipesInfo, categories, loading } = useContext(Context);
   const [nationatilyFoods, setNationatilyFoods] = useState([]);
   const [filteredFoods, setFilteredFoods] = useState([]);
 
@@ -36,7 +37,7 @@ const NationalitiesFoods = () => {
     }
   };
 
-  return (
+  return loading ? <Loading /> : (
     <div>
       <Header />
       <select

@@ -51,6 +51,8 @@ const Provider = ({ children }) => {
     let categoriesList = [];
     let recipesList = [];
 
+    setLoading(true);
+
     if (recipeType === 'foods') {
       categoriesList = await fetchFoodCategory();
       recipesList = await fetchFoodRecipe();
@@ -63,12 +65,13 @@ const Provider = ({ children }) => {
       categories: categoriesList.slice(0, MAX_N_CATEGORIES),
     }));
     setRecipes(recipesList.slice(0, MAX_N_RECIPES));
+    setLoading(false);
   };
 
   const handleCategoryFilters = async (recipeType, category) => {
     const MAX_N_CATEGORIES = 12;
     let data = [];
-
+    setLoading(true);
     setCategoriesFilter((prevCategories) => ({
       ...prevCategories,
       currentCategory: category,
@@ -91,6 +94,7 @@ const Provider = ({ children }) => {
     const dataSlice = data.slice(0, MAX_N_CATEGORIES);
 
     setRecipes(dataSlice);
+    setLoading(false);
   };
 
   const getIngredients = async (recipeType) => {
@@ -98,6 +102,7 @@ const Provider = ({ children }) => {
 
     let ingredientsList = [];
 
+    setLoading(true);
     if (recipeType === 'foods') {
       ingredientsList = await fetchFoodIngredient();
     } else {
@@ -105,17 +110,18 @@ const Provider = ({ children }) => {
     }
 
     setIngredients(ingredientsList.slice(0, MAX_N_INGREDIENTS));
+    setLoading(false);
   };
 
   const handleIngredientFilter = async (recipeType, ingredientName) => {
     const MAX_N_INGREDIENTS = 12;
     let data = [];
 
+    setLoading(true);
     if (recipeType === 'foods') {
       data = await fetchFoodsByIngredient(ingredientName);
     } else {
       data = await fetchDrinksByIngredient(ingredientName);
-      console.log('teste');
     }
 
     setRecipesByIngredient(data.slice(0, MAX_N_INGREDIENTS));
@@ -125,6 +131,8 @@ const Provider = ({ children }) => {
     } else {
       history.push('/drinks');
     }
+
+    setLoading(false);
   };
 
   const { categories } = categoriesFilter;

@@ -2,11 +2,13 @@ import React, { useContext, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Loading from '../components/Loading';
 import Context from '../context/Context';
 
 const IngredientsRecipes = () => {
   const location = useLocation();
-  const { ingredients, getIngredients, handleIngredientFilter } = useContext(Context);
+  const { ingredients, getIngredients,
+    handleIngredientFilter, loading } = useContext(Context);
 
   useEffect(() => {
     if (location.pathname.includes('foods')) {
@@ -16,7 +18,7 @@ const IngredientsRecipes = () => {
     }
   }, []);
 
-  return (
+  return loading ? <Loading /> : (
     <div>
       <Header />
       {ingredients.map((ingredient, index) => (
