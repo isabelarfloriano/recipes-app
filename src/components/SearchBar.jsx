@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Context from '../context/Context';
 import { fetchByFirstLetter, fetchByIngredient, fetchByName } from '../services/API';
-import FormInput from './FormInput';
 
 export default function SearchBar() {
   const [searchData, setSearchData] = useState({
@@ -86,48 +86,59 @@ export default function SearchBar() {
   };
 
   return (
-    <form onSubmit={ handleSubmit }>
-      <FormInput
-        dataTestId="search-input"
-        placeholder="Search"
-        name="searchValue"
-        value={ searchData.searchValue }
-        onChange={ handleChange }
-      />
-      <br />
-      <FormInput
-        labelText="Ingredient"
-        dataTestId="ingredient-search-radio"
-        type="radio"
-        name="searchRadio"
-        value="Ingredient"
-        onChange={ handleChange }
-      />
-      <FormInput
-        labelText="Name"
-        dataTestId="name-search-radio"
-        type="radio"
-        name="searchRadio"
-        value="Name"
-        onChange={ handleChange }
-      />
-      <FormInput
-        labelText="First Letter"
-        dataTestId="first-letter-search-radio"
-        type="radio"
-        name="searchRadio"
-        value="First Letter"
-        onChange={ handleChange }
-      />
-      <br />
-      <button
-        type="submit"
-        data-testid="exec-search-btn"
-      >
-        Search
-      </button>
-
-    </form>
+    <Container>
+      <Form onSubmit={ handleSubmit }>
+        <Form.Group className="mb-3" controlId="formSearch">
+          <Form.Control
+            type="text"
+            placeholder="Search"
+            name="searchValue"
+            value={ searchData.searchValue }
+            onChange={ handleChange }
+            data-testid="search-input"
+          />
+        </Form.Group>
+        <section>
+          <Form.Check
+            inline
+            type="radio"
+            label="Ingredient"
+            value="Ingredient"
+            name="searchRadio"
+            onChange={ handleChange }
+            data-testid="ingredient-search-radio"
+          />
+          <Form.Check
+            inline
+            type="radio"
+            label="First Letter"
+            value="First Letter"
+            name="searchRadio"
+            onChange={ handleChange }
+            data-testid="first-letter-search-radio"
+          />
+          <Form.Check
+            inline
+            type="radio"
+            label="Name"
+            value="Name"
+            name="searchRadio"
+            onChange={ handleChange }
+            data-testid="name-search-radio"
+          />
+        </section>
+        <section className="d-flex justify-content-center mt-3 mb-2">
+          <Button
+            variant="outline-danger"
+            type="submit"
+            className="w-75"
+            data-testid="exec-search-btn"
+          >
+            Search
+          </Button>
+        </section>
+      </Form>
+    </Container>
 
   );
 }
