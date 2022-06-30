@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Button, Container } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import Context from '../context/Context';
 
@@ -14,26 +15,29 @@ function Categories() {
   };
 
   return (
-    <section>
+    <Container className="my-4 d-flex flex-wrap">
       {categories !== null && categories.map((category, index) => (
-        <div key={ index }>
-          <button
-            type="button"
-            data-testid={ `${category.strCategory}-category-filter` }
-            onClick={ setCategoryFilters }
-          >
-            {category.strCategory}
-          </button>
-        </div>
+        <Button
+          type="button"
+          variant="danger"
+          data-testid={ `${category.strCategory}-category-filter` }
+          onClick={ setCategoryFilters }
+          className="mx-1 my-1"
+          key={ index }
+        >
+          {category.strCategory}
+        </Button>
       ))}
-      <button
+      <Button
         type="button"
+        variant="danger"
         data-testid="All-category-filter"
+        className="mx-1 my-1"
         onClick={ setCategoryFilters }
       >
         All
-      </button>
-    </section>
+      </Button>
+    </Container>
   );
 }
 
