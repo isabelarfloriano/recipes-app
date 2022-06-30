@@ -9,7 +9,6 @@ const Profile = () => {
   const getEmail = getUser('user');
 
   const handleClick = () => {
-    console.log('works');
     localStorage.clear();
     history.push('/');
   };
