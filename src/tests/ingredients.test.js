@@ -50,6 +50,6 @@ describe('Tests Ingredients Recipes', () => {
   // const { history } = renderWithRouter(<App />);
   // history.push('/explore/foods');
 
-  // ISA... aqui, precisa abordar o botão dos ingredientes, vai da linha 23-27 do IngredientsRecipes.jsx, aí o 100 vem, não pude dar sequência por falta de tempo, consertei os problemas de lint e amanhã ajudo mais...
+  // ISA ... aqui, precisa abordar o botão dos ingredientes, vai da linha 23-27 do IngredientsRecipes.jsx, aí o 100 vem, não pude dar sequência por falta de tempo, consertei os problemas de lint e amanhã ajudo mais...
 });
 // });
