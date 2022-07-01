@@ -29,7 +29,6 @@ export default function FinishRecipeBtn(props) {
       tags = [];
     }
 
-
     if (recipeType === 'foods') {
       return ({
         id: recipeDetails.idMeal,
@@ -43,7 +42,6 @@ export default function FinishRecipeBtn(props) {
         doneDate: getDate(),
       });
     }
-
 
     return ({
       id: recipeDetails.idDrink,
