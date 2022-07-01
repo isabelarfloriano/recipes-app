@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { Container } from 'react-bootstrap';
 import Context from '../context/Context';
 import './DetailsIngredientsInProgress.css';
 import {
@@ -91,8 +92,8 @@ function DetailsIngredientsInProgress(props) {
   }, [checkIngredients]);
 
   return (
-    <section>
-      <h2>Ingredients</h2>
+    <Container>
+      <h2 className="name-title">Ingredients</h2>
       <ul>
         {usedIngredients.map((ingredient, index) => (
           <li
@@ -116,7 +117,7 @@ function DetailsIngredientsInProgress(props) {
           </li>
         ))}
       </ul>
-    </section>
+    </Container>
   );
 }
 
