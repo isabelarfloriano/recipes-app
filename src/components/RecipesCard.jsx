@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Card from 'react-bootstrap/Card';
-import Badge from 'react-bootstrap/Badge';
 import ShareBtn from './ShareBtn';
 
 function RecipesCard(props) {
@@ -19,21 +18,26 @@ function RecipesCard(props) {
     id,
   } = props;
 
+  console.log(tags);
+
   return (
     <Card
-      className="d-flex flex-row mw-50"
+      className="d-flex flex-row mb-3 shadow"
     >
-      <Link to={ `/${type}s/${id}` }>
+      <Link
+        className="w-50"
+        to={ `/${type}s/${id}` }
+      >
         <Card.Img
-          className="w-25"
           variant="top"
           src={ image }
+          alt="done-recipes-thumb"
           data-testid={ `${index}-horizontal-image` }
         />
       </Link>
-      <Card.Body>
+      <Card.Body className="d-flex flex-column w-50">
         <Card.Subtitle
-          className="mb-2 text-muted"
+          className="text-muted d-flex justify-content-between subtitle-text"
           data-testid={ `${index}-horizontal-top-text` }
         >
           {
@@ -46,6 +50,7 @@ function RecipesCard(props) {
         </Card.Subtitle>
         <Link to={ `/${type}s/${id}` }>
           <Card.Title
+            className="text-danger"
             data-testid={ `${index}-horizontal-name` }
           >
             {recipeName}
@@ -53,19 +58,24 @@ function RecipesCard(props) {
         </Link>
         <Card.Text
           data-testid={ `${index}-horizontal-done-date` }
+          className="date-text"
         >
+          Done in:
+          {' '}
           {dateText}
         </Card.Text>
-        {tags.map((tagName) => (
-          <Badge
-            pill
-            bg="light"
-            key={ `${index}-${tagName}` }
-            data-testid={ `${index}-${tagName}-horizontal-tag` }
-          >
-            {tagName}
-          </Badge>
-        ))}
+        <section className="d-flex flex-wrap">
+          {tags.map((tagName) => (
+            <p
+              className="subtitle-text border border-danger
+              rounded-pill p-1 mx-1 mb-1 tags-text bg-danger text-white"
+              key={ `${index}-${tagName}` }
+              data-testid={ `${index}-${tagName}-horizontal-tag` }
+            >
+              {tagName}
+            </p>
+          ))}
+        </section>
       </Card.Body>
     </Card>
   );

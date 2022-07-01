@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../components/GenericButton';
+import { Button, ButtonGroup, Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import RecipesCard from '../components/RecipesCard';
 import { readStorage, DONE_RECIPES_TOKEN } from '../services/recipesStorage';
@@ -26,30 +26,41 @@ function DoneRecipes() {
   }, [recipeFilters]);
   return (
 
-    <>
+    <section>
       <Header />
-      <Button
-        dataTestId="filter-by-all-btn"
-        buttonText="All"
-        onClick={
-          () => setRecipeFilters({ all: true, foods: false, drinks: false })
-        }
-      />
-      <Button
-        dataTestId="filter-by-food-btn"
-        buttonText="Food"
-        onClick={
-          () => setRecipeFilters({ all: false, foods: true, drinks: false })
-        }
-      />
-      <Button
-        dataTestId="filter-by-drink-btn"
-        buttonText="Drinks"
-        onClick={
-          () => setRecipeFilters({ all: false, foods: false, drinks: true })
-        }
-      />
-      <section>
+      <ButtonGroup size="lg" className="d-flex mx-2 mb-3 bg-white">
+        <Button
+          variant="outline-danger"
+          type="button"
+          onClick={
+            () => setRecipeFilters({ all: true, foods: false, drinks: false })
+          }
+          data-testid="filter-by-all-btn"
+        >
+          All
+        </Button>
+        <Button
+          variant="outline-danger"
+          type="button"
+          onClick={
+            () => setRecipeFilters({ all: false, foods: true, drinks: false })
+          }
+          data-testid="filter-by-food-btn"
+        >
+          Foods
+        </Button>
+        <Button
+          variant="outline-danger"
+          type="button"
+          onClick={
+            () => setRecipeFilters({ all: false, foods: false, drinks: true })
+          }
+          data-testid="filter-by-drink-btn"
+        >
+          Drinks
+        </Button>
+      </ButtonGroup>
+      <Container>
         { filteredRecipes.map((recipe, index) => (
           <RecipesCard
             key={ `${recipe.id}` }
@@ -65,8 +76,8 @@ function DoneRecipes() {
             id={ Number(recipe.id) }
           />
         )) }
-      </section>
-    </>
+      </Container>
+    </section>
   );
 }
 

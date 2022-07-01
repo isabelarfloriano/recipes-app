@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
+
 import Context from '../context/Context';
 import { DONE_RECIPES_TOKEN, SaveStorage } from '../services/recipesStorage';
 
@@ -20,6 +22,13 @@ export default function FinishRecipeBtn(props) {
   };
   const createObjectAndSaveOnLocalStorage = () => {
     const recipeType = location.pathname.split('/')[1];
+    let tags = '';
+    if (recipeDetails.strTags) {
+      tags = recipeDetails.strTags.split(',');
+    } else {
+      tags = [];
+    }
+
     if (recipeType === 'foods') {
       return ({
         id: recipeDetails.idMeal,
@@ -29,10 +38,11 @@ export default function FinishRecipeBtn(props) {
         alcoholicOrNot: '',
         name: recipeDetails.strMeal,
         image: recipeDetails.strMealThumb,
-        tags: [recipeDetails.strTags],
+        tags,
         doneDate: getDate(),
       });
     }
+
     return ({
       id: recipeDetails.idDrink,
       type: 'drink',
@@ -41,7 +51,8 @@ export default function FinishRecipeBtn(props) {
       alcoholicOrNot: recipeDetails.strAlcoholic,
       name: recipeDetails.strDrink,
       image: recipeDetails.strDrinkThumb,
-      tags: [recipeDetails.strTags],
+      tags,
+
       doneDate: getDate(),
     });
   };
@@ -53,14 +64,17 @@ export default function FinishRecipeBtn(props) {
   };
 
   return (
-    <button
+    <Button
+      variant="danger"
+      block
+      size="lg"
       type="button"
       data-testid="finish-recipe-btn"
       onClick={ handleDFinishRecipe }
       disabled={ disabedBtn }
     >
       Finish Recipe
-    </button>
+    </Button>
   );
 }
 

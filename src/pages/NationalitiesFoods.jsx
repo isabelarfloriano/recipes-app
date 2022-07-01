@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Card, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -40,57 +41,74 @@ const NationalitiesFoods = () => {
   return loading ? <Loading /> : (
     <div>
       <Header />
-      <select
-        data-testid="explore-by-nationality-dropdown"
-        onChange={ handleChange }
-      >
+      <Container>
+        <Form.Control
+          as="select"
+          data-testid="explore-by-nationality-dropdown"
+          onChange={ handleChange }
+          className="mb-3"
+        >
 
-        <option>Selecione uma nacionalidade</option>
-        <option data-testid="All-option">All</option>
-        { nationatilyFoods.map((nationality, index) => (
-          <option
-            key={ index }
-            data-testid={ `${nationality.strArea}-option` }
-            value={ `${nationality.strArea}` }
-          >
-            { nationality.strArea }
-          </option>
-        ))}
-      </select>
+          <option>Selecione uma nacionalidade</option>
+          <option data-testid="All-option">All</option>
+          { nationatilyFoods.map((nationality, index) => (
+            <option
+              key={ index }
+              data-testid={ `${nationality.strArea}-option` }
+              value={ `${nationality.strArea}` }
+            >
+              { nationality.strArea }
+            </option>
+          ))}
+        </Form.Control>
+        <Form.Control
+          as="select"
+          onChange={ handleChange }
+        >
+          <option>Selecione uma categoria</option>
+          { categories.map(({ strCategory }, index) => (
+            <option
+              key={ index }
+              data-testid={ `${strCategory}-option` }
+              value={ `${strCategory}` }
+            >
+              { strCategory }
+            </option>
+          ))}
+        </Form.Control>
+      </Container>
 
-      <select
-        onChange={ handleChange }
-      >
-        <option>Selecione uma categoria</option>
-        { categories.map(({ strCategory }, index) => (
-          <option
-            key={ index }
-            data-testid={ `${strCategory}-option` }
-            value={ `${strCategory}` }
-          >
-            { strCategory }
-          </option>
-        ))}
-      </select>
-
-      {filteredFoods.map((filterFood, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
+      <Container className="d-flex flex-wrap mt-3 mb-5">
+        {filteredFoods.map((filterFood, index) => (
           <button
+            key={ index }
             type="button"
+            className="icon-button"
             onClick={ () => { history.push(`/foods/${filterFood.idMeal}`); } }
           >
-            <img
-              src={ filterFood.strMealThumb }
-              alt={ filterFood.strMeal }
-              data-testid={ `${index}-card-img` }
-            />
+            <Card
+              className="mb-2 mx-1"
+              style={ { width: '9rem' } }
+              data-testid={ `${index}-recipe-card` }
+            >
 
-            <p data-testid={ `${index}-card-name` }>
-              {filterFood.strMeal}
-            </p>
+              <Card.Img
+                variant="top"
+                src={ filterFood.strMealThumb }
+                alt={ filterFood.strMeal }
+                data-testid={ `${index}-card-img` }
+              />
+
+              <Card.Title
+                className="text-center text-danger mt-2"
+                data-testid={ `${index}-card-name` }
+              >
+                {filterFood.strMeal}
+              </Card.Title>
+            </Card>
           </button>
-        </div>
-      ))}
+        ))}
+      </Container>
       <Footer />
     </div>
   );

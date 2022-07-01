@@ -6,7 +6,7 @@ function Loading() {
     <section className="d-flex align-items-center justify-content-center min-vh-100">
       <ReactLoading
         type="bubbles"
-        color="00000"
+        color="#dc3545"
         width={ 100 }
         height={ 100 }
       />

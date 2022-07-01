@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Container } from 'react-bootstrap';
 import Context from '../context/Context';
 
 function DetailsVideo() {
@@ -7,8 +8,8 @@ function DetailsVideo() {
   const { strYoutube } = recipeDetails;
 
   return (
-    <section>
-      <h2>Video</h2>
+    <Container className="mt-2">
+      <h2 className="name-title">Video</h2>
       <iframe
         src={ `https://www.youtube.com/embed/${strYoutube && strYoutube.split('=')[1]}` }
         frameBorder="0"
@@ -18,7 +19,7 @@ function DetailsVideo() {
         title="Embedded youtube"
         data-testid="video"
       />
-    </section>
+    </Container>
   );
 }
 

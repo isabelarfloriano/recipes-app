@@ -31,22 +31,26 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header>
-      <button
-        type="button"
-        onClick={ () => history.push('/profile') }
-      >
-        <img src={ profileIcon } alt="Profile Icon" data-testid="profile-top-btn" />
-      </button>
-      <h2 data-testid="page-title">{title}</h2>
-      { hasSearchBtn
-      && (
+    <header className="border-bottom pb-2 mb-4">
+      <section className="d-flex justify-content-between align-items-center mx-2">
         <button
           type="button"
-          onClick={ () => setHasSearchBar(!hasSearchBar) }
+          className="icon-button"
+          onClick={ () => history.push('/profile') }
         >
-          <img src={ searchTopBTN } alt="Search Icon" data-testid="search-top-btn" />
-        </button>) }
+          <img src={ profileIcon } alt="Profile Icon" data-testid="profile-top-btn" />
+        </button>
+        <h5 className="name-title" data-testid="page-title">{title}</h5>
+        { hasSearchBtn
+        && (
+          <button
+            type="button"
+            onClick={ () => setHasSearchBar(!hasSearchBar) }
+            className="icon-button"
+          >
+            <img src={ searchTopBTN } alt="Search Icon" data-testid="search-top-btn" />
+          </button>)}
+      </section>
       { hasSearchBar && <SearchBar />}
     </header>
   );

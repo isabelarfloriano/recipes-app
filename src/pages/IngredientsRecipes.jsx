@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { Card, Container } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -19,35 +20,42 @@ const IngredientsRecipes = () => {
   }, []);
 
   return loading ? <Loading /> : (
-    <div>
+    <div className="bg-light">
       <Header />
-      {ingredients.map((ingredient, index) => (
-        <button
-          type="button"
-          onClick={
-            () => (location.pathname.includes('foods')
-              ? handleIngredientFilter('foods', ingredient.strIngredient)
-              : handleIngredientFilter('drinks', ingredient.strIngredient1))
-          }
-          key={ index }
-          data-testid={ `${index}-recipe-card` }
-        >
-          <div data-testid={ `${index}-ingredient-card` }>
-            <img
-              src={ location.pathname.includes('foods')
-                ? `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`
-                : `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
-              alt={ ingredient.strIngredient }
-              data-testid={ `${index}-card-img` }
-            />
+      <Container className="mb-5">
+        {ingredients.map((ingredient, index) => (
+          <button
+            type="button"
+            onClick={
+              () => (location.pathname.includes('foods')
+                ? handleIngredientFilter('foods', ingredient.strIngredient)
+                : handleIngredientFilter('drinks', ingredient.strIngredient1))
+            }
+            key={ index }
+            data-testid={ `${index}-recipe-card` }
+            className="icon-button"
+          >
+            <Card
+              className="mb-2"
+              data-testid={ `${index}-ingredient-card` }
+              style={ { width: '9rem' } }
+            >
+              <Card.Img
+                src={ location.pathname.includes('foods')
+                  ? `https://www.themealdb.com/images/ingredients/${ingredient.strIngredient}-Small.png`
+                  : `https://www.thecocktaildb.com/images/ingredients/${ingredient.strIngredient1}-Small.png` }
+                alt={ ingredient.strIngredient }
+                data-testid={ `${index}-card-img` }
+              />
 
-            <p data-testid={ `${index}-card-name` }>
-              {location.pathname.includes('foods')
-                ? ingredient.strIngredient : ingredient.strIngredient1}
-            </p>
-          </div>
-        </button>
-      ))}
+              <Card.Title className="text-danger" data-testid={ `${index}-card-name` }>
+                {location.pathname.includes('foods')
+                  ? ingredient.strIngredient : ingredient.strIngredient1}
+              </Card.Title>
+            </Card>
+          </button>
+        ))}
+      </Container>
       <Footer />
     </div>
   );

@@ -15,15 +15,15 @@ const RecipesPage = () => {
   useEffect(() => {
     const endpoints = location.pathname.split('/');
     getRecipesInfo(endpoints[1]);
-  }, []);
+  }, [location]);
 
   return loading ? <Loading /> : (
-    <>
+    <section className="bg-light">
       <Header />
       <Categories />
       <Recipes />
       <Footer />
-    </>
+    </section>
   );
 };
 

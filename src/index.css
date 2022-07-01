@@ -11,3 +11,25 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+a {
+  text-decoration: none !important;
+}
+
+.icon-button {
+  background: none !important;
+  border: none !important;
+}
+
+.subtitle-text {
+  font-size: 0.7rem !important;
+}
+
+.tags-text {
+  font-size: 0.55rem !important;
+  font-weight: 700;
+}
+
+.date-text {
+  font-size: 0.8rem !important;
+}

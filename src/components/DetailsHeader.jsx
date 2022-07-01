@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import { useLocation } from 'react-router-dom';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import BlackHeartIcon from '../images/blackHeartIcon.svg';
+
 import Context from '../context/Context';
 import {
   FAVORITE_RECIPES_TOKEN,
   readStorage, removeFromStorage, SaveStorage,
 } from '../services/recipesStorage';
-import ShareBtn from './ShareBtn';
+import ButtonsRecipe from './ButtonsRecipe';
 
 function DetailsImage() {
   const location = useLocation();
@@ -84,26 +83,40 @@ function DetailsImage() {
         data-testid="recipe-photo"
       />
       <Card.Body>
-        <Card.Title data-testid="recipe-title">
-          { recipeInfo.name }
-        </Card.Title>
+        <section className="d-flex justify-content-between">
+          <Card.Title data-testid="recipe-title">
+            { recipeInfo.name }
+          </Card.Title>
+          <section>
+            <ButtonsRecipe
+              handleClick={ handleFavoriteRecipe }
+              favorite={ favorite }
+              recipeInfo={ recipeInfo }
+            />
+          </section>
+          {/*  <button
+            className="icon-button"
+            type="button"
+            onClick={ handleFavoriteRecipe }
+          >
+            <img
+              src={ favorite ? BlackHeartIcon : whiteHeartIcon }
+              alt="Favorite Icon"
+              data-testid="favorite-btn"
+            />
+          </button>
+          <ShareBtn
+            testId="share-btn"
+            route={ `/${recipeInfo.type}s/${recipeInfo.id}` }
+          /> */}
+        </section>
+
         <Card.Subtitle
           className="mb-2 text-muted"
           data-testid="recipe-category"
         >
           { recipeInfo.type === 'food' ? recipeInfo.category : recipeInfo.alcoholicOrNot}
         </Card.Subtitle>
-        <button
-          type="button"
-          onClick={ handleFavoriteRecipe }
-        >
-          <img
-            src={ favorite ? BlackHeartIcon : whiteHeartIcon }
-            alt="Favorite Icon"
-            data-testid="favorite-btn"
-          />
-        </button>
-        <ShareBtn testId="share-btn" route={ `/${recipeInfo.type}s/${recipeInfo.id}` } />
       </Card.Body>
     </Card>
   );
