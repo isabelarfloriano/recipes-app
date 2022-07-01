@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { Button, Container } from 'react-bootstrap';
 import { getUser } from '../services/login';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
@@ -14,39 +15,52 @@ const Profile = () => {
   };
 
   return (
-    <>
-
+    <section className="bg-light min-vh-100">
       <Header />
-
-      <p data-testid="profile-email">{getEmail?.email}</p>
-
-      <button
-        type="button"
-        data-testid="profile-done-btn"
-        onClick={ () => { history.push('/done-recipes'); } }
+      <section
+        className="d-flex justify-content-center mt-5"
       >
-        Done Recipes
-      </button>
+        <Container className="d-flex flex-column align-items-center">
+          <section>
+            <h5 data-testid="profile-email">{getEmail?.email}</h5>
+          </section>
+          <Button
+            variant="danger"
+            size="lg"
+            type="button"
+            className="mb-3 w-100 mt-5"
+            data-testid="profile-done-btn"
+            onClick={ () => { history.push('/done-recipes'); } }
+          >
+            Done Recipes
+          </Button>
 
-      <button
-        type="button"
-        data-testid="profile-favorite-btn"
-        onClick={ () => { history.push('/favorite-recipes'); } }
-      >
-        Favorite Recipes
-      </button>
+          <Button
+            variant="danger"
+            size="lg"
+            type="button"
+            className="mb-3 w-100"
+            data-testid="profile-favorite-btn"
+            onClick={ () => { history.push('/favorite-recipes'); } }
+          >
+            Favorite Recipes
+          </Button>
 
-      <button
-        type="button"
-        data-testid="profile-logout-btn"
-        onClick={ handleClick }
-      >
-        Logout
-      </button>
+          <Button
+            variant="danger"
+            size="lg"
+            type="button"
+            className="mb-3 w-100"
+            data-testid="profile-logout-btn"
+            onClick={ handleClick }
+          >
+            Logout
+          </Button>
 
+        </Container>
+      </section>
       <Footer />
-
-    </>
+    </section>
   );
 };
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { setMealsToken, setCocktailsToken, setUserLogin } from '../services/login';
-import loginImage from '../images/loginPage.jpg';
+import logo from '../images/appLogo.svg';
 
 const Login = () => {
   const history = useHistory();
@@ -42,11 +42,18 @@ const Login = () => {
     <section
       className="d-flex align-items-center justify-content-center
      min-vh-100 bg-light"
-      style={ { backgroundImage: `url(${loginImage})`, backgroundSize: 'cover' } }
     >
       <Container
         className="border mx-4 shadow p-3 mb-5 bg-white rounded"
       >
+        <section className="d-flex flex-column align-items-center">
+          <img
+            src={ logo }
+            alt="app logo"
+            style={ { width: '65vw' } }
+          />
+          <h2 className="name-title">My Personal Chef</h2>
+        </section>
         <Form>
           <Form.Group className="mb-3" controlId="formEmail">
             <Form.Label className="text-muted">Email</Form.Label>

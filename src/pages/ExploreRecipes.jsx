@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { Card, Container } from 'react-bootstrap';
 import Footer from '../components/Footer';
 import { fetchDrink, fetchFood } from '../services/API';
@@ -31,25 +31,36 @@ const ExploreRecipes = () => {
       <Header />
       <Container>
         <Card className="mb-3">
-          <Link to="/explore/foods" data-testid="by-ingredient">
+          <button
+            type="button"
+            onClick={ () => history.push(`/explore/${pathname.includes('foods')
+              ? 'foods' : 'drinks'}/ingredients`) }
+            data-testid="explore-by-ingredient"
+            className="icon-button"
+          >
             <Card.Img variant="top" src={ exploreByRecipe } />
             <Card.Title
               className="text-danger text-center my-3"
             >
               By Ingredient
             </Card.Title>
-          </Link>
+          </button>
         </Card>
         {pathname.includes('foods') && (
           <Card className="mb-3">
-            <Link to="/explore/foods" data-testid="by-nationality">
+            <button
+              type="button"
+              onClick={ () => history.push('/explore/foods/nationalities') }
+              data-testid="explore-by-nationality"
+              className="icon-button"
+            >
               <Card.Img variant="top" src={ exploreByNationalities } />
               <Card.Title
                 className="text-danger text-center my-3"
               >
-                By Nationalities
+                By Nationality
               </Card.Title>
-            </Link>
+            </button>
           </Card>)}
         <Card className="mb-3">
           <button
@@ -62,7 +73,7 @@ const ExploreRecipes = () => {
             <Card.Title
               className="text-danger text-center my-3"
             >
-              Surprise me
+              Surprise me!
             </Card.Title>
           </button>
         </Card>
