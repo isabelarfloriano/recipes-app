@@ -3,3 +3,8 @@
 .name-title {
   font-family: Lobster , cursive;
 }
+
+
+.backgroud-notFound {
+  background-color: rgba(255, 3, 3, 0.373);
+}
