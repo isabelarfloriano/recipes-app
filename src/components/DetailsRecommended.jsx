@@ -1,11 +1,11 @@
 import React from 'react';
-import { CardGroup, Carousel } from 'react-bootstrap';
+import { CardGroup, Carousel, Container } from 'react-bootstrap';
 import CarouselCard from './CarouselCard';
 
 function DetailsRecommended() {
   return (
-    <section className="mb-5">
-      <h2>Recommended</h2>
+    <Container className="mb-5 mt-3">
+      <h2 className="name-title">Recommended</h2>
       <Carousel>
         <Carousel.Item>
           <CardGroup className="d-flex justify-content-between">
@@ -26,7 +26,7 @@ function DetailsRecommended() {
           </CardGroup>
         </Carousel.Item>
       </Carousel>
-    </section>
+    </Container>
   );
 }
 

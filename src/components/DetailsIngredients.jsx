@@ -1,5 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Container, ListGroup } from 'react-bootstrap';
 import Context from '../context/Context';
+
+import listIcon from '../images/listIcon.svg';
 
 function DetailsIngredients() {
   const { recipeDetails } = useContext(Context);
@@ -31,23 +34,26 @@ function DetailsIngredients() {
   }, [recipeDetails]);
 
   return (
-    <section>
-      <h2>Ingredients</h2>
-      <ul>
+    <Container className="mt-2">
+      <h2 className="name-title">Ingredients</h2>
+      <ListGroup variant="flush">
         {usedIngredients.map((ingredient, index) => (
-          <li
+          <ListGroup.Item
             key={ index }
             data-testid={ `${index}-ingredient-name-and-measure` }
           >
+            <span>
+              <img src={ listIcon } alt="List icon" />
+            </span>
             {ingredient}
             {' '}
             -
             {' '}
             {ingredientQuantity[index]}
-          </li>
+          </ListGroup.Item>
         ))}
-      </ul>
-    </section>
+      </ListGroup>
+    </Container>
   );
 }
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import {
@@ -45,14 +46,16 @@ function InitRecipeBtn() {
   };
 
   return startButton.enableButton && (
-    <button
+    <Button
+      variant="danger"
+      size="lg"
       type="button"
       className="fixed-bottom"
       onClick={ handleClick }
       data-testid="start-recipe-btn"
     >
       {startButton.buttonText}
-    </button>
+    </Button>
   );
 }
 

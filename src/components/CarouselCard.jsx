@@ -35,8 +35,13 @@ function CarouselCard({ index }) {
       <Card data-testid={ `${index}-recomendation-card` }>
         <Card.Img variant="top" src={ cardInfo.thumb } />
         <Card.Body>
-          <Card.Subtitle className="mb-2 text-muted">{ cardInfo.subtitle }</Card.Subtitle>
+          <Card.Subtitle
+            className="mb-2 text-muted subtitle-text"
+          >
+            {cardInfo.subtitle}
+          </Card.Subtitle>
           <Card.Title
+            className="text-danger text-center"
             data-testid={ `${index}-recomendation-title` }
           >
             {cardInfo.title}
