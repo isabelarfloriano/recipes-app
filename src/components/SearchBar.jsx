@@ -86,7 +86,7 @@ export default function SearchBar() {
   };
 
   return (
-    <Container>
+    <Container className="mt-3">
       <Form onSubmit={ handleSubmit }>
         <Form.Group className="mb-3" controlId="formSearch">
           <Form.Control

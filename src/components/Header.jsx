@@ -40,7 +40,7 @@ export default function Header() {
         >
           <img src={ profileIcon } alt="Profile Icon" data-testid="profile-top-btn" />
         </button>
-        <h5 data-testid="page-title">{title}</h5>
+        <h5 className="name-title" data-testid="page-title">{title}</h5>
         { hasSearchBtn
         && (
           <button
