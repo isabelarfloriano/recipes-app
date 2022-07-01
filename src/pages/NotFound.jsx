@@ -13,7 +13,11 @@ const NotFound = () => (
       <section>
         <TypeAnimation
           cursor={ false }
-          sequence={ ['Ops! This Page is Melted in the Sun', TYPE_TIME, '', TYPE_TIME] }
+          sequence={ [
+            'Ops, Not Found! This Page is Melted in the Sun',
+            TYPE_TIME,
+            '',
+            TYPE_TIME] }
           wrapper="h2"
           className="text-danger text-monospace"
           repeat={ Infinity }
