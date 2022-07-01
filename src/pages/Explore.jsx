@@ -10,7 +10,7 @@ import drinksImage from '../images/drinksImage.jpg';
 const Explore = () => (
   <div className="bg-light">
     <Header />
-    <Container>
+    <Container className="mb-5">
       <Card className="mb-3">
         <Link to="/explore/foods" data-testid="explore-foods">
           <Card.Img variant="top" src={ foodsImage } />
