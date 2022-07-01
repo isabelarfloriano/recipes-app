@@ -7,8 +7,8 @@ import Footer from '../components/Footer';
 const TYPE_TIME = 2000;
 
 const NotFound = () => (
-  <section className="backgroud-notFound min-vh-100">
-    <Container className="mb-5">
+  <section className="backgroud-notFound min-vh-100 mb-5">
+    <Container>
       <img style={ { width: '80vw' } } src={ notFound } alt="notfound icon" />
       <section>
         <TypeAnimation
