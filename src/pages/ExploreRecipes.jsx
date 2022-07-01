@@ -29,7 +29,7 @@ const ExploreRecipes = () => {
   return (
     <div className="bg-light">
       <Header />
-      <Container>
+      <Container className="mb-5">
         <Card className="mb-3">
           <button
             type="button"
