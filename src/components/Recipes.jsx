@@ -16,7 +16,7 @@ function Recipes() {
   }, [recipesByIngredient, recipes]);
 
   return (
-    <Container className="d-flex flex-wrap">
+    <Container className="d-flex flex-wrap mb-5">
       {usedRecipes
         && usedRecipes.map((recipe, index) => (
           <Card
