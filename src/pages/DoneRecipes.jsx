@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
+import { Button, ButtonGroup, Container } from 'react-bootstrap';
 import Header from '../components/Header';
 import RecipesCard from '../components/RecipesCard';
 import { readStorage, DONE_RECIPES_TOKEN } from '../services/recipesStorage';
@@ -60,7 +60,7 @@ function DoneRecipes() {
           Drinks
         </Button>
       </ButtonGroup>
-      <section>
+      <Container>
         { filteredRecipes.map((recipe, index) => (
           <RecipesCard
             key={ `${recipe.id}` }
@@ -76,7 +76,7 @@ function DoneRecipes() {
             id={ Number(recipe.id) }
           />
         )) }
-      </section>
+      </Container>
     </section>
   );
 }

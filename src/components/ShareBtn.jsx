@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import shareIcon from '../images/shareIcon.svg';
+import shareIconCard from '../images/shareIconCard.svg';
 
 const copy = require('clipboard-copy');
 
 function ShareBtn({ testId, route }) {
+  const location = useLocation();
   const [showMessage, setShowMessage] = useState(false);
 
   if (showMessage) {
@@ -27,7 +30,7 @@ function ShareBtn({ testId, route }) {
         className="icon-button"
       >
         <img
-          src={ shareIcon }
+          src={ location.pathname.includes('done-recipes') ? shareIconCard : shareIcon }
           alt="Share Icon"
           data-testid={ testId }
         />
