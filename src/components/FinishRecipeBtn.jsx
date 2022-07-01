@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+
 import Context from '../context/Context';
 import { DONE_RECIPES_TOKEN, SaveStorage } from '../services/recipesStorage';
 
@@ -28,6 +29,7 @@ export default function FinishRecipeBtn(props) {
       tags = [];
     }
 
+
     if (recipeType === 'foods') {
       return ({
         id: recipeDetails.idMeal,
@@ -42,6 +44,7 @@ export default function FinishRecipeBtn(props) {
       });
     }
 
+
     return ({
       id: recipeDetails.idDrink,
       type: 'drink',
@@ -51,6 +54,7 @@ export default function FinishRecipeBtn(props) {
       name: recipeDetails.strDrink,
       image: recipeDetails.strDrinkThumb,
       tags,
+
       doneDate: getDate(),
     });
   };
