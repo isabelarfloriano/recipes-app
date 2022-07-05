@@ -31,7 +31,7 @@ export default function Header() {
   }, [pathname]);
 
   return (
-    <header className="border-bottom pb-2 mb-4">
+    <header className="border-bottom pb-2 mb-2">
       <section className="d-flex justify-content-between align-items-center mx-2">
         <button
           type="button"

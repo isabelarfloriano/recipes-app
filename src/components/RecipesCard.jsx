@@ -18,8 +18,6 @@ function RecipesCard(props) {
     id,
   } = props;
 
-  console.log(tags);
-
   return (
     <Card
       className="d-flex flex-row mb-3 shadow"
