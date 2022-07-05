@@ -23,7 +23,7 @@ function Recipes() {
       {usedRecipes
         && usedRecipes.map((recipe, index) => (
           <Card
-            style={ { width: '11rem' } }
+            style={ { width: '9rem' } }
             key={ index }
             data-testid={ `${index}-recipe-card` }
             className="mx-2 mb-4 shadow"
