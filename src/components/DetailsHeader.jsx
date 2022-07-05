@@ -8,6 +8,7 @@ import {
   readStorage, removeFromStorage, SaveStorage,
 } from '../services/recipesStorage';
 import ButtonsRecipe from './ButtonsRecipe';
+import GoBackBtn from './GoBackBtn';
 
 function DetailsImage() {
   const location = useLocation();
@@ -77,6 +78,7 @@ function DetailsImage() {
 
   return (
     <Card>
+      <GoBackBtn />
       <Card.Img
         variant="top"
         src={ recipeInfo.image }

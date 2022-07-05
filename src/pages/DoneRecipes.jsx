@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Button, ButtonGroup, Container } from 'react-bootstrap';
+import GoBackBtn from '../components/GoBackBtn';
 import Header from '../components/Header';
 import RecipesCard from '../components/RecipesCard';
 import { readStorage, DONE_RECIPES_TOKEN } from '../services/recipesStorage';
@@ -28,7 +29,8 @@ function DoneRecipes() {
 
     <section>
       <Header />
-      <ButtonGroup size="lg" className="d-flex mx-2 mb-3 bg-white">
+      <GoBackBtn />
+      <ButtonGroup size="lg" className="d-flex mx-2 mb-3 bg-white mt-2">
         <Button
           variant="outline-danger"
           type="button"

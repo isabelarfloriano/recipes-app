@@ -9,6 +9,7 @@ import {
   removeFromStorage,
 } from '../services/recipesStorage';
 import ShareBtn from '../components/ShareBtn';
+import GoBackBtn from '../components/GoBackBtn';
 
 const FavoritesRecipes = () => {
   const [filteredRecipes, setFilteredRecipes] = useState([]);
@@ -46,7 +47,8 @@ const FavoritesRecipes = () => {
   return (
     <section className="bg-light">
       <Header />
-      <ButtonGroup size="lg" className="d-flex mx-2 mb-3 bg-white">
+      <GoBackBtn />
+      <ButtonGroup size="lg" className="d-flex mx-2 mb-3 bg-white mt-2">
         <Button
           variant="outline-danger"
           type="button"
