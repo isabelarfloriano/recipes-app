@@ -151,6 +151,7 @@ const Provider = ({ children }) => {
     recipesByIngredient,
     handleIngredientFilter,
     setRecipes,
+    setRecipesByIngredient,
   };
 
   return <Context.Provider value={ context }>{children}</Context.Provider>;

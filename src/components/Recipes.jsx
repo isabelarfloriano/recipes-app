@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import Context from '../context/Context';
 
 function Recipes() {
-  const { recipes, recipesByIngredient } = useContext(Context);
+  const { recipes, recipesByIngredient, setRecipesByIngredient } = useContext(Context);
   const [usedRecipes, setUsedRecipes] = useState([]);
 
   useEffect(() => {
@@ -13,6 +13,9 @@ function Recipes() {
     } else {
       setUsedRecipes(recipes);
     }
+    return () => {
+      setRecipesByIngredient([]);
+    };
   }, [recipesByIngredient, recipes]);
 
   return (
@@ -20,7 +23,7 @@ function Recipes() {
       {usedRecipes
         && usedRecipes.map((recipe, index) => (
           <Card
-            style={ { width: '8rem' } }
+            style={ { width: '11rem' } }
             key={ index }
             data-testid={ `${index}-recipe-card` }
             className="mx-2 mb-4 shadow"
