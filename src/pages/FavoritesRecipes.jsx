@@ -27,8 +27,6 @@ const FavoritesRecipes = () => {
 
     setFilteredRecipes(favoriteRecipes);
     setAllRecipes(favoriteRecipes);
-
-    setFavorite((prevFavorite) => (!prevFavorite));
   };
 
   const filterByAll = async () => {
