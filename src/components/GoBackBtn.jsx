@@ -4,6 +4,7 @@ import arrowIcon from '../images/arrowIcon.svg';
 
 function GoBackBtn() {
   const history = useHistory();
+  const { location: { pathname } } = history;
   return (
     <button
       className={ `icon-button shadow-sm rounded-circle py-1 bg-white ml-2
